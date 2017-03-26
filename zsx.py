@@ -14,4 +14,6 @@ os.system("git push -u origin master")
 
 # os.system("pause")
 
+print("ok")
+
 os.system('ping -n 5 127.1>nul')

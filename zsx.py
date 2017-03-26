@@ -12,4 +12,6 @@ os.system("git commit -m commitByZsx")
 
 os.system("git push -u origin master")
 
-os.system("pause")
+# os.system("pause")
+
+os.system('ping -n 5 127.1>nul')

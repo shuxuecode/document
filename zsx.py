@@ -14,6 +14,8 @@ os.system("git push -u origin master")
 
 # os.system("pause")
 
-print("ok")
+print("---------------------------------------------------------------")
+print("commit success !!! ok !")
+print("---------------------------------------------------------------")
 
 os.system('ping -n 5 127.1>nul')

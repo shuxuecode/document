@@ -1,0 +1,13 @@
+git 
+
+$ git rm --cached ".settings/*"
+rm 'spring-boot-registry/.settings/.jsdtscope'
+rm 'spring-boot-registry/.settings/org.eclipse.core.resources.prefs'
+rm 'spring-boot-registry/.settings/org.eclipse.jdt.core.prefs'
+rm 'spring-boot-registry/.settings/org.eclipse.m2e.core.prefs'
+rm 'spring-boot-registry/.settings/org.eclipse.wst.common.component'
+rm 'spring-boot-registry/.settings/org.eclipse.wst.common.project.facet.core.prefs.xml'
+
+
+
+Ã·Ωªº¥ø…

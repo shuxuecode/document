@@ -3,7 +3,7 @@
 添加目录
 
 
-
+mvn clean install -e -U -e详细异常,-U强制更新
 
 
 

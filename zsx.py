@@ -10,7 +10,7 @@ os.system("git add .")
 
 os.system("git commit -m commitByZsx")
 
-os.system("git push -u origin master")
+os.system("git push")
 
 # os.system("pause")
 

@@ -37,9 +37,9 @@ pom.xml
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
-		
+
 	</build>
-</project>
+	</project>
 
 **注意** packaging 为jar
 
@@ -47,7 +47,7 @@ pom.xml
 	package com.zsx.service;
 
 	public interface TestService {
-	
+
 		String test(String name);
 
 	}
@@ -226,8 +226,8 @@ applicationContext.xml
 
 	<!-- 自动扫描dao和service包(自动注入) -->
 	<context:component-scan base-package="com.zsx.*" />
-	
-	
+
+
 	<!-- 引入同文件夹下的redis属性配置文件 -->
     <import resource="applicationContext-dubbo.xml"/>
 
@@ -240,8 +240,8 @@ springMVC-servlet.xml
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:p="http://www.springframework.org/schema/p"
-	   xmlns:context="http://www.springframework.org/schema/context" 
-	   xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
 xsi:schemaLocation="http://www.springframework.org/schema/beans  
       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
       http://www.springframework.org/schema/context  
@@ -256,7 +256,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 	</context:component-scan>
-	
+
 	<!-- <context:component-scan /> -->
 	<!-- 扫描指定的包中的类上的注解，常用的注解有： -->
 	<!-- @Controller 声明Action组件 -->
@@ -269,7 +269,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	<!-- @Transactional( rollbackFor={Exception.class}) 事务管理 -->
 	<!-- @ResponseBody将内容或对象作为 HTTP 响应正文返回，并调用适合HttpMessageConverter的Adapter转换对象，写入输出流 -->
 	<!-- @Scope("prototype") 设定bean的作用域 -->
-	
+
 
 	<!-- 启用spring mvc 注解 -->
 	<!-- <context:annotation-config /> -->
@@ -286,7 +286,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 
 
 	<!-- 静态资源访问，方案1 -->
-	<!--<mvc:resources mapping="/static/**" location="/static/" /> 
+	<!--<mvc:resources mapping="/static/**" location="/static/" />
 		<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />
 		<mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
 		<mvc:resources mapping="/js/**" location="/WEB-INF/js/" />-->
@@ -302,7 +302,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		<!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
 		<property name="suffix" value=".jsp"></property>
 	</bean>
-	
+
 	<!-- Spring MVC JSON配置 -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 	    <property name="messageConverters">
@@ -323,12 +323,12 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 						</list>
 					</property>
 				</bean>
-	    	
+
 	    	</list>
-	    	
+
 	    </property>
 	</bean>
- 
+
 	<!-- 文件上传配置 -->
 	<!-- <bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -342,7 +342,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 			<value>4096</value>
 		</property>
 	</bean> -->
-	
+
 
 </beans>  
 
@@ -353,7 +353,7 @@ applicationContext-dubbo.xml
 
 	<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  
        http://www.springframework.org/schema/beans/spring-beans.xsd  
@@ -364,25 +364,25 @@ applicationContext-dubbo.xml
 	<!-- 提供方应用信息，用于计算依赖关系 -->
 	<dubbo:application name="3GOLDENRESTService" />
 
-	<!-- 使用multicast广播注册中心暴露服务地址 <dubbo:registry address="multicast://224.5.6.7:1234" 
+	<!-- 使用multicast广播注册中心暴露服务地址 <dubbo:registry address="multicast://224.5.6.7:1234"
 		/> -->
 
 	<!-- 使用zookeeper注册中心暴露服务地址 172.16.2.169-->
 	<dubbo:registry id="defaultRegistry" address="zookeeper://127.0.0.1:2181"
 		timeout="10000"/>
-	
+
 	<!-- 多个注册中心配置 -->
 	<!-- <dubbo:registry id="crawlerQueryRegistry" address="zookeeper://172.16.2.21:12181"
 		timeout="10000" default="false"/> -->		
-		
-		
+
+
 
 	<!-- 用dubbo协议在20880端口暴露服务 <dubbo:protocol name="dubbo" port="20880" /> -->
 
-	<!-- 为了使用HTTPS，暂时使用server="servlet" accepts="500" keepalive="false" extension="com.tg.web.filter.ContentTypeFilter" 
+	<!-- 为了使用HTTPS，暂时使用server="servlet" accepts="500" keepalive="false" extension="com.tg.web.filter.ContentTypeFilter"
 		暂时禁用ContentTypeFilter com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter, -->
 		<!-- contextpath="services" -->
-<!-- 
+<!--
 	<dubbo:protocol name="rest" port="8080" contextpath="services"
 		server="servlet" />
 -->
@@ -394,15 +394,15 @@ applicationContext-dubbo.xml
 	<!-- 声明需要暴露的服务接口 -->
 
 	<dubbo:service interface="com.zsx.service.TestService" ref="testService" />
-	
+
 	<!-- <dubbo:reference interface="com.tg.dc.controller.IsSave2DBService" id="isSave2DBService" timeout="300000" />
 	 -->
-	
-	
+
+
 	<!-- 爬虫服务 调用其它注册中心的服务-->
 	<!-- <dubbo:reference registry="crawlerQueryRegistry" interface="cn.golden.grab.single.provider.api.ICrawlerQueryService" id="crawlerQueryService" timeout="300000" />
 	 -->
-	
+
 </beans>  
 
 
@@ -612,8 +612,8 @@ applicationContext.xml
 
 	<!-- 自动扫描dao和service包(自动注入) -->
 	<context:component-scan base-package="com.zsx.*" />
-	
-	
+
+
 	<!-- 引入同文件夹下的redis属性配置文件 -->
     <import resource="applicationContext-dubboConsumer.xml"/>
 
@@ -626,8 +626,8 @@ springMVC-servlet.xml
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:p="http://www.springframework.org/schema/p"
-	   xmlns:context="http://www.springframework.org/schema/context" 
-	   xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
 xsi:schemaLocation="http://www.springframework.org/schema/beans  
       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
       http://www.springframework.org/schema/context  
@@ -642,7 +642,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 	</context:component-scan>
-	
+
 	<!-- <context:component-scan /> -->
 	<!-- 扫描指定的包中的类上的注解，常用的注解有： -->
 	<!-- @Controller 声明Action组件 -->
@@ -655,7 +655,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	<!-- @Transactional( rollbackFor={Exception.class}) 事务管理 -->
 	<!-- @ResponseBody将内容或对象作为 HTTP 响应正文返回，并调用适合HttpMessageConverter的Adapter转换对象，写入输出流 -->
 	<!-- @Scope("prototype") 设定bean的作用域 -->
-	
+
 
 	<!-- 启用spring mvc 注解 -->
 	<!-- <context:annotation-config /> -->
@@ -672,7 +672,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 
 
 	<!-- 静态资源访问，方案1 -->
-	<!--<mvc:resources mapping="/static/**" location="/static/" /> 
+	<!--<mvc:resources mapping="/static/**" location="/static/" />
 		<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />
 		<mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
 		<mvc:resources mapping="/js/**" location="/WEB-INF/js/" />-->
@@ -688,7 +688,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		<!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
 		<property name="suffix" value=".jsp"></property>
 	</bean>
-	
+
 	<!-- Spring MVC JSON配置 -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 	    <property name="messageConverters">
@@ -709,12 +709,12 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 						</list>
 					</property>
 				</bean>
-	    	
+
 	    	</list>
-	    	
+
 	    </property>
 	</bean>
- 
+
 	<!-- 文件上传配置 -->
 	<!-- <bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -728,7 +728,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 			<value>4096</value>
 		</property>
 	</bean> -->
-	
+
 
 </beans>  
 
@@ -755,7 +755,7 @@ applicationContext-dubboConsumer.xml
 
 	<!-- 生成远程服务代理，可以像使用本地bean一样使用demoService -->
 	<dubbo:reference interface="com.zsx.service.TestService" id="testService" timeout="300000" />
-	
+
 </beans>  
 
 ---
@@ -773,10 +773,10 @@ applicationContext-dubboConsumer.xml
 
 	@Controller
 	public class TestController {
-	
+
 		@Autowired
 		private TestService testService;
-	
+
 		@GetMapping("/demo")
 		@ResponseBody
 		public String asdf(String name){
@@ -784,7 +784,3 @@ applicationContext-dubboConsumer.xml
 		}
 
 	}
-
-
-
-		

@@ -1,0 +1,39 @@
+PATH
+
+D:\Program Files (64)\gradle-3.1\bin;
+D:\Program Files\MySQL\MySQL Server 5.5\bin;
+C:\Users\A\AppData\Local\atom\bin
+
+
+
+C:\Program Files (x86)\AMD APP\bin\x86_64;
+C:\Program Files (x86)\AMD APP\bin\x86;
+%SystemRoot%\system32;
+%SystemRoot%;
+%SystemRoot%\System32\Wbem;
+%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;
+C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;
+%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
+
+%MAVEN_HOME%\bin;
+
+D:\Program Files\TortoiseSVN\bin;
+D:\Program Files\Git\bin;
+C:\OpenVPN\bin;
+
+D:\Python34;
+D:\Python34\Scripts;
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- 

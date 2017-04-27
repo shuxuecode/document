@@ -1,0 +1,5 @@
+git gui 会提示 compress the database now?
+
+执行 git config --global gui.gcwarning false 即可
+
+git config --global gui.encoding utf-8

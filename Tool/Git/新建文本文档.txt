@@ -11,11 +11,33 @@ git branch -a
 
 - 查看本地分支
 
-git branch  
+git branch  	
 
 - 创建分支
 
 git branch test  
+
+------------
+fatal: Not a valid object name: 'master'.
+原因：
+
+ 问题描述-一个非法的master,原因：本地还没有创建master
+解决方案：
+
+  如果本地没有文件，添加一个文件
+
+git vi readme.md
+
+git add .
+
+git commit -m 'add'
+
+git branch 出现了 master
+
+然后执行创建命令就可以了
+
+
+
 
 查看  git branch
 

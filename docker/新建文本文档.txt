@@ -1,0 +1,12 @@
+
+## 启动tomcat
+
+docker run -p 8899:8080 daocloud.io/daocloud/dao-tomcat:v7.0.55
+
+## 查看日志
+
+docker logs [容器ID或者name]
+
+## 停止
+
+docker stop 容器ID或者name

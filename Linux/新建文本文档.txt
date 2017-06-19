@@ -1,0 +1,19 @@
+## 查看文件夹大小
+
+du -h --max-depth=1 
+
+## 查看文件夹下文件的大小
+
+ll -h 
+
+
+## 查看端口方式一
+lsof -i:端口号，用于查看某一端口的占用情况，比如查看22号端口使用情况，lsof -i:22
+
+
+## 查看端口方式二
+netstat -tunlp|grep 端口号
+netstat -tunlp|grep 端口号，用于查看指定端口号的进程情况，如查看22端口的情况，netstat -tunlp|grep 22
+
+
+

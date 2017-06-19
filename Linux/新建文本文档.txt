@@ -16,4 +16,11 @@ netstat -tunlp|grep 端口号
 netstat -tunlp|grep 端口号，用于查看指定端口号的进程情况，如查看22端口的情况，netstat -tunlp|grep 22
 
 
+## 解压war包
+
+unzip qdp-monitor.war -d monitor
+还有就是
+jar xvf temp.war
+
+
 

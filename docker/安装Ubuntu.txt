@@ -1,0 +1,10 @@
+﻿## 拉取
+
+ docker pull daocloud.io/library/ubuntu:16.10
+
+## 启动
+
+docker run --name ubuntua -p 60022:22 -d daocloud.io/library/ubuntu:16.10
+
+docker run --name ubuntub -p 60022:22 daocloud.io/library/ubuntu:16.10 grep -v '^#' /etc/apt/sources.list
+ 

@@ -18,3 +18,4 @@ nihao
 7
 commitByZsx
 commitByZsx
+auto

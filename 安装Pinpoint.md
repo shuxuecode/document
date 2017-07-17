@@ -123,7 +123,7 @@ mv apache-tomcat-7.0.69 pp-web
 
 
 
-##
+## 安装pinpoint-agent
 
 
 
@@ -137,6 +137,9 @@ CATALINA_OPTS="$CATALINA_OPTS -javaagent:/data/pinpoint/pp-agent/pinpoint-bootst
 CATALINA_OPTS="$CATALINA_OPTS -Dpinpoint.agentId=myapp"
 CATALINA_OPTS="$CATALINA_OPTS -Dpinpoint.applicationName=MyTestPP"
 ```
+
+
+
 
 
 

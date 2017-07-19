@@ -6,6 +6,11 @@ git remote get-url origin
 git remote set-url origin git@git.iqdnet.cn:qdp/qdp-ark-client.git
 
 
+
+- 将本地的仓库关联到github上
+
+git remote add origin https://github.com/hanhailong/CustomRatingBar
+
 - 查看远程分支
 git branch -a  
 

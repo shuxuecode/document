@@ -24,3 +24,5 @@ commitByZsx
 commitByZsx
 commitByZsx
 auto
+commitByZsx
+auto

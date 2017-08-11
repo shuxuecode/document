@@ -1,0 +1,10 @@
+
+
+## 定时任务
+
+crontab -e 
+
+crontab -l
+
+/etc/init.d/cron restart
+/etc/init.d/crond restart

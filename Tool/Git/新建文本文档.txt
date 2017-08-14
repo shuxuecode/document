@@ -58,4 +58,5 @@ git checkout test
 
 É¾³ıÔ¶³Ì·ÖÖ§  
 git branch -r -d origin/branch-name 
+git push --delete origin dev_1.0.1
 

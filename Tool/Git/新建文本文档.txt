@@ -46,6 +46,9 @@ git branch 出现了 master
 
 查看  git branch
 
+- 重命名分支
+git branch -m oldName newName
+
 - 把分支推到远程分支 
 git push origin test 
 
@@ -59,4 +62,6 @@ git checkout test
 删除远程分支  
 git branch -r -d origin/branch-name 
 git push --delete origin dev_1.0.1
+git push origin --delete <branchName>
+
 

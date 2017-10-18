@@ -4,5 +4,46 @@
 
 ## 启动
 
+docker run --name u1 -t -i -p 60022:22 -p 8080:8080 daocloud.io/library/ubuntu:16.10 /bin/bash 
 
- 
+## 安装ssh
+
+apt-get update
+
+apt-get install openssh*
+
+## 修改root密码
+
+passwd root
+
+## 设置root用户可以ssh远程连接
+
+- 修改 /etc/ssh/sshd_config :
+
+vi /etc/ssh/sshd_config
+
+- 注释掉 #PermitRootLogin without-password，添加 PermitRootLogin yes
+
+# Authentication:
+LoginGraceTime 120
+#PermitRootLogin without-password
+PermitRootLogin yes
+StrictModes yes
+
+- 重启 ssh  服务
+
+service ssh restart
+或者  sudo service ssh restart
+
+
+## 使用传输文件的命令： rz  sz
+需要安装：  apt-get install lrzsz
+
+##
+
+
+
+
+
+
+

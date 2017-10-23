@@ -71,5 +71,10 @@ cp -fr /root/.jenkins/workspace/demo /data/tomcat-8081/webapps/demo
 /data/tomcat-8081/webapps
 
 
+## 配置好环境后，可以提交容器到镜像
+
+docker commit 8e036a632f14 jenkins-1
+
+
 
 

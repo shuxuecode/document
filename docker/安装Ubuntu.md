@@ -1,4 +1,4 @@
-﻿## 拉取
+## 拉取
 
  docker pull daocloud.io/library/ubuntu:16.10
 

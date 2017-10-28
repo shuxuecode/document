@@ -1,3 +1,7 @@
 ## 查看进程占用的端口号
 
 ps -ef | grep qdp-monitor|grep -v grep|awk '{print $2}'
+
+## 安装ping
+
+apt-get install inetutils-ping

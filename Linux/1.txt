@@ -5,3 +5,8 @@ ps -ef | grep qdp-monitor|grep -v grep|awk '{print $2}'
 ## 安装ping
 
 apt-get install inetutils-ping
+
+
+## 查看端口占用
+
+netstat -ano | findstr 22

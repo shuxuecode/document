@@ -1,0 +1,6 @@
+
+
+mvn archetype:generate -DgroupId=com -DartifactId=zsx -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeCatalog=internal
+
+
+mvn archetype:generate -DgroupId=com.zsx -DartifactId=springBootWeb -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeCatalog=internal

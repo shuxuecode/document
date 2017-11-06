@@ -1,0 +1,6 @@
+## docker build
+
+使用当前目录的Dockerfile创建镜像。
+docker build -t com/ubuntu:zsx .
+注意最后一个点，表示当前目录下的Dockerfile
+

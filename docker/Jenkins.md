@@ -9,3 +9,10 @@
 - 设置jdk
 
 - 记得目录不能以\结尾
+
+
+
+---
+
+
+安装Deploy to container Plugin

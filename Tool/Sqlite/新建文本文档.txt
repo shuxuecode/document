@@ -1,5 +1,8 @@
 ## 下载两个后，解压，并把路径加到环境变量path中
 
+sqlite-dll-win64-x64-3210000.zip
+sqlite-tools-win32-x86-3210000.zip
+
 ## 命令行：  sqlite3  zhao.db  即可创建一个数据库
 
 

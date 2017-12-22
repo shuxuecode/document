@@ -92,7 +92,7 @@ rocketmq.config.namesrvAddr=localhost:9876
 浏览器访问:8080
 
 
-
+## netstat -ntlp
 
 
 

@@ -54,8 +54,12 @@ x='ceshi'; print(x)
 print("a", end='')
 print("b", end='')
 print("c", end='')
+print()
 
 
+import sys
+sysPath = sys.path
+print(sysPath)
 
 
 

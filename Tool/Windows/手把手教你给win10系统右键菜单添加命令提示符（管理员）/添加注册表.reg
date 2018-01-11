@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\runas]
+
+@="命令提示符（管理员）" 
+
+"icon"="C:\Windows\System32\shell32.dll,24" 
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\runas\command]
+
+@="cmd.exe /s /k pushd \"%V\"" 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+			   http://code.alibabatech.com/schema/dubbo
+			   http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+        >
+    <!-- consumer application name -->
+    <dubbo:application name="qdp-monitor"/>
+
+    <!-- registry address -->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry.default.address}"/>
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry.group.address}" 
+                    id="dubbo_group_id" default="false" />
+
+    <dubbo:reference id="registryService" interface="com.alibaba.dubbo.registry.RegistryService"/>
+
+    <dubbo:monitor protocol="registry"/>
+
+    <dubbo:consumer>
+        <dubbo:parameter key="loglevel" value="8" />
+    </dubbo:consumer>
+
+    <dubbo:provider>
+        <dubbo:parameter key="loglevel" value="10" />
+    </dubbo:provider>
+
+</beans>

@@ -12,6 +12,11 @@ apt-get update
 
 apt-get install openssh*
 
+## 安装vi
+
+apt-get install vim
+
+
 ## 修改root密码
 
 passwd root

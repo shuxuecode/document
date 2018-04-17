@@ -1,23 +1,23 @@
-xShellÁ¬½ÓLinux·þÎñÆ÷ÌáÊ¾ÃÜÂë´íÎó¡£ 
-1¡¢¼ì²éÐéÄâ»úSSH·þÎñÊÇ·ñ¿ªÆô£º 
-service sshd status£¬Èç¹ûÃ»ÓÐ¿ªÆô£¬ÇëÖ´ÐÐservice sshd startÆô¶¯¸Ã·þÎñ£¬»òÕßÍ¨¹ýservice sshd restartÖØÆô¸Ã·þÎñ£»
+xShellè¿žæŽ¥LinuxæœåŠ¡å™¨æç¤ºå¯†ç é”™è¯¯ã€‚ 
+1ã€æ£€æŸ¥è™šæ‹ŸæœºSSHæœåŠ¡æ˜¯å¦å¼€å¯ï¼š 
+service sshd statusï¼Œå¦‚æžœæ²¡æœ‰å¼€å¯ï¼Œè¯·æ‰§è¡Œservice sshd startå¯åŠ¨è¯¥æœåŠ¡ï¼Œæˆ–è€…é€šè¿‡service sshd restarté‡å¯è¯¥æœåŠ¡ï¼›
 
-2¡¢¼ì²é /etc/ssh/ssh_configÎÄ¼þ£º 
-ssh·þÎñ¶Ë¿ÚÊÇ·ñÎª22£¬ProtocolÐ­Òé°æ±¾ÊÇ·ñÎª2£¨Ò»°ãÎª2°²È«¡£1Îªssh 1²»°²È«£¬ÓÐ¿ÉÄÜ½ûÖ¹µÇÂ½£©£» 
-3¡¢¼ì²é/etc/ssh/sshd_config£º 
-½«
+2ã€æ£€æŸ¥ /etc/ssh/ssh_configæ–‡ä»¶ï¼š 
+sshæœåŠ¡ç«¯å£æ˜¯å¦ä¸º22ï¼ŒProtocolåè®®ç‰ˆæœ¬æ˜¯å¦ä¸º2ï¼ˆä¸€èˆ¬ä¸º2å®‰å…¨ã€‚1ä¸ºssh 1ä¸å®‰å…¨ï¼Œæœ‰å¯èƒ½ç¦æ­¢ç™»é™†ï¼‰ï¼› 
+3ã€æ£€æŸ¥/etc/ssh/sshd_configï¼š 
+å°†
 
     # Authentication:
     LoginGraceTime 120
     PermitRootLogin without passwd
     StrictModes yes
 
-¸Ä³É
+æ”¹æˆ
     # Authentication:
     LoginGraceTime 120
     PermitRootLogin yes
     StrictModes yes
 
-»òÕß
-µ±SSHÅäÖÃ±»×¢ÊÍµôÊ±£¬½«×¢ÊÍÊÍ·Å¾Í¿ÉÒÔ¡£
-ÖØÆôÐéÄâ»ú¡£
+æˆ–è€…
+å½“SSHé…ç½®è¢«æ³¨é‡ŠæŽ‰æ—¶ï¼Œå°†æ³¨é‡Šé‡Šæ”¾å°±å¯ä»¥ã€‚
+é‡å¯è™šæ‹Ÿæœºã€‚

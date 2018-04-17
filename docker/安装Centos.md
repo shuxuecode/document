@@ -7,91 +7,91 @@ docker pull daocloud.io/library/centos:7
 
 docker run --name centos7 -t -i -p 60022:22 daocloud.io/library/centos:7 /bin/bash 
 
-È»ºó  docker start centos7 À´Æô¶¯
+ç„¶å  docker start centos7 æ¥å¯åŠ¨
 
-## °²×°ssh
+## å®‰è£…ssh
 
 
-yum install openssh-server -y  »òÕß  yum install openssh*   £¨×¢ÒâĞÇºÅ*£©
+yum install openssh-server -y  æˆ–è€…  yum install openssh*   ï¼ˆæ³¨æ„æ˜Ÿå·*ï¼‰
 
 ## 
 
-### Ìí¼ÓÒ»¸öÓÃ»§×émygroup  ( groupdel peter  É¾³ı×é)
+### æ·»åŠ ä¸€ä¸ªç”¨æˆ·ç»„mygroup  ( groupdel peter  åˆ é™¤ç»„)
 groupadd mygroup
 
-### È»ºó£¬Ìí¼ÓÒ»¸öĞÂµÄÓÃ»§
+### ç„¶åï¼Œæ·»åŠ ä¸€ä¸ªæ–°çš„ç”¨æˆ·
 
 useradd -d /home/admin -s /bin/bash -m admin
 
-ÉÏÃæÃüÁîÖĞ£¬²ÎÊıd±íÊ¾Ö¸¶¨ÓÃ»§µÄÖ÷Ä¿Â¼£¬²ÎÊısÖ¸¶¨ÓÃ»§µÄshell£¬²ÎÊım±íÊ¾Èç¹û¸ÃÄ¿Â¼²»´æÔÚ£¬Ôò´´½¨¸ÃÄ¿Â¼¡£
+ä¸Šé¢å‘½ä»¤ä¸­ï¼Œå‚æ•°dè¡¨ç¤ºæŒ‡å®šç”¨æˆ·çš„ä¸»ç›®å½•ï¼Œå‚æ•°sæŒ‡å®šç”¨æˆ·çš„shellï¼Œå‚æ•°mè¡¨ç¤ºå¦‚æœè¯¥ç›®å½•ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºè¯¥ç›®å½•ã€‚
 
 
-### ÉèÖÃĞÂÓÃ»§µÄÃÜÂë¡£
+### è®¾ç½®æ–°ç”¨æˆ·çš„å¯†ç ã€‚
 
 	passwd admin
 
-½«adminÌí¼Óµ½ÓÃ»§×émygroupÖĞ
+å°†adminæ·»åŠ åˆ°ç”¨æˆ·ç»„mygroupä¸­
 
 	usermod -a -G mygroup admin
 
-ÎªadminÓÃ»§Éè¶¨sudoÈ¨ÏŞ
+ä¸ºadminç”¨æˆ·è®¾å®šsudoæƒé™
 
 	vi /etc/sudoers
 
-ÃüÁî»á´ò¿ªÎÄ¼ş/etc/sudoers£¬ÕÒµ½ÈçÏÂÒ»ĞĞ
+å‘½ä»¤ä¼šæ‰“å¼€æ–‡ä»¶/etc/sudoersï¼Œæ‰¾åˆ°å¦‚ä¸‹ä¸€è¡Œ
 
 	root    ALL=(ALL) ALL
 
-Ìí¼ÓÒ»ĞĞ
+æ·»åŠ ä¸€è¡Œ
 
 	admin   ALL=(ALL) NOPASSWD: ALL
 
-ÉÏÃæµÄNOPASSWD±íÊ¾£¬ÇĞ»»sudoµÄÊ±ºò£¬²»ĞèÒªÊäÈëÃÜÂë£¬ÎÒÏ²»¶ÕâÑù±È½ÏÊ¡ÊÂ¡£Èç¹û³öÓÚ°²È«¿¼ÂÇ£¬Ò²¿ÉÒÔÇ¿ÖÆÒªÇóÊäÈëÃÜÂë¡£
+ä¸Šé¢çš„NOPASSWDè¡¨ç¤ºï¼Œåˆ‡æ¢sudoçš„æ—¶å€™ï¼Œä¸éœ€è¦è¾“å…¥å¯†ç ï¼Œæˆ‘å–œæ¬¢è¿™æ ·æ¯”è¾ƒçœäº‹ã€‚å¦‚æœå‡ºäºå®‰å…¨è€ƒè™‘ï¼Œä¹Ÿå¯ä»¥å¼ºåˆ¶è¦æ±‚è¾“å…¥å¯†ç ã€‚
 
-Áí¿ªÒ»¸öÖÕ¶Ë£¬ÒÔadminÓÃ»§µÇÂ¼£¬¼ì²éÊÇ·ñÉèÖÃ³É¹¦
+å¦å¼€ä¸€ä¸ªç»ˆç«¯ï¼Œä»¥adminç”¨æˆ·ç™»å½•ï¼Œæ£€æŸ¥æ˜¯å¦è®¾ç½®æˆåŠŸ
 
 
 
 ### 
 
-ĞŞ¸Ä
+ä¿®æ”¹
 
 vi /etc/ssh/sshd_config
 
 
 ---
-ĞŞ¸ÄÈçÏÂÉèÖÃ²¢È·±£È¥³ıÁË#ºÅ
+ä¿®æ”¹å¦‚ä¸‹è®¾ç½®å¹¶ç¡®ä¿å»é™¤äº†#å·
 
-ÔÚÅäÖÃÎÄ¼şÖĞÕÒµ½ #Port 22£¬ĞŞ¸ÄÄ¬ÈÏµÄ¶Ë¿Ú£¬·¶Î§¿ÉÒÔ´Ó1025µ½65536
+åœ¨é…ç½®æ–‡ä»¶ä¸­æ‰¾åˆ° #Port 22ï¼Œä¿®æ”¹é»˜è®¤çš„ç«¯å£ï¼ŒèŒƒå›´å¯ä»¥ä»1025åˆ°65536
 
 Port 22
 
 
-Protocol 2  ÆôÓÃSSH°æ±¾2Ğ­Òé
+Protocol 2  å¯ç”¨SSHç‰ˆæœ¬2åè®®
 
-#½ûÖ¹rootÓÃ»§µÇÂ¼
+#ç¦æ­¢rootç”¨æˆ·ç™»å½•
 
 PermitRootLogin no
 
 
-#½ûÖ¹Ê¹ÓÃÃÜÂëµÇÂ¼
+#ç¦æ­¢ä½¿ç”¨å¯†ç ç™»å½•
 
 PasswordAuthentication no
 PermitEmptyPasswords no
 PasswordAuthentication yes
 
-×îºó£¬ÔÚÅäÖÃÎÄ¼şµÄÄ©Î²Ìí¼ÓÒ»ĞĞÓÃÀ´Ö¸¶¨¿ÉÒÔµÇÂ¼µÄÓÃ»§
+æœ€åï¼Œåœ¨é…ç½®æ–‡ä»¶çš„æœ«å°¾æ·»åŠ ä¸€è¡Œç”¨æ¥æŒ‡å®šå¯ä»¥ç™»å½•çš„ç”¨æˆ·
 
 AllowUsers admin
 
 
 ###
 
-3. İ”Èë    sudo systemctl restart sshd.service    ÖØĞÂ†¢„Ó
+3. è¼¸å…¥    sudo systemctl restart sshd.service    é‡æ–°å•Ÿå‹•
 
 
 
-4. İ”Èë    sudo systemctl enable sshd.service    ÔO¶¨é_™C†¢„Ó
+4. è¼¸å…¥    sudo systemctl enable sshd.service    è¨­å®šé–‹æ©Ÿå•Ÿå‹•
 
 
 

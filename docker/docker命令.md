@@ -1,13 +1,13 @@
 ## docker build
 
-Ê¹ÓÃµ±Ç°Ä¿Â¼µÄDockerfile´´½¨¾µÏñ¡£
+ä½¿ç”¨å½“å‰ç›®å½•çš„Dockerfileåˆ›å»ºé•œåƒã€‚
 docker build -t com/ubuntu:zsx .
-×¢Òâ×îºóÒ»¸öµã£¬±íÊ¾µ±Ç°Ä¿Â¼ÏÂµÄDockerfile
+æ³¨æ„æœ€åä¸€ä¸ªç‚¹ï¼Œè¡¨ç¤ºå½“å‰ç›®å½•ä¸‹çš„Dockerfile
 
 	docker build -t ubuntu:zsx .
 
-## É¾³ı¾µÏñ
+## åˆ é™¤é•œåƒ
 
-Ç¿ÖÆÉ¾³ı±¾µØ¾µÏñrunoob/ubuntu:v4¡£
+å¼ºåˆ¶åˆ é™¤æœ¬åœ°é•œåƒrunoob/ubuntu:v4ã€‚
 
 docker rmi -f runoob/ubuntu:v4

@@ -1,13 +1,13 @@
-## 拉取镜像:
+## 鎷夊彇闀滃儚:
 docker pull daocloud.io/library/mysql:latest
 
 docker pull daocloud.io/library/mysql:5.7.5
 
-## 启动容器
+## 鍚姩瀹瑰櫒
 docker run --name mysqlb -p 33306:3306 -e MYSQL_ROOT_PASSWORD=root -d daocloud.io/library/mysql:latest
 
 
-宿主机直接连接localhost:33306 root root  即可成功
+瀹夸富鏈虹洿鎺ヨ繛鎺ocalhost:33306 root root  鍗冲彲鎴愬姛
 
 
 

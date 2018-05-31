@@ -24,8 +24,8 @@ def main(gif_file, png_dir):
 
 
 if __name__=='__main__':
-    gif_file = 'D:/git/zhaoshuxue/document/Python/gif-to-mp4/test.gif'
-    gif_file = 'D:/git/oschina/准备发布的/3.gif'
+    gif_file = 'D:/git/gitee/先放到腾讯云上的/111.gif'
+    # gif_file = 'D:/git/oschina/准备发布的/被壁咚之后的神情，做的很到位.gif'
     png_dir = gif_file[:-4] + '/'
     # 创建同名文件夹
     os.mkdir(png_dir)
@@ -44,7 +44,10 @@ if __name__=='__main__':
     per = png_num / total_time
     print('mp4的帧率：', per)
 
-    cmd = 'D:/ProgramFilesFree/ffmpeg/bin/ffmpeg.exe -f image2 -r ' + str(per) + '  -i %d.png 1111123.mp4'
+    cmd = 'D:/ProgramFiles/ffmpeg/bin/ffmpeg.exe -f image2 -r ' + str(per) + '  -i %d.png 111.mp4'
+	
+	
+	
     # os.system('ffmpeg -f image2 -r 14.285  -i %d.png  ../test12.mp4')
     print(cmd)
     os.chdir(png_dir)

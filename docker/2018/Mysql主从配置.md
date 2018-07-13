@@ -25,7 +25,7 @@ mysql -u root -p
 
 在主数据库上创建同步账号。
 
-GRANT REPLICATION SLAVE,FILE ON *.* TO 'mstest'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+GRANT REPLICATION SLAVE,FILE ON *.* TO 'mytest'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
 
 GRANT REPLICATION SLAVE,FILE ON *.* TO 'mstest'@'172.17.0.2' IDENTIFIED BY '123456' WITH GRANT OPTION;
 
@@ -46,6 +46,12 @@ server-id=1
 log-bin=log
 sync-binlog=1
 ```
+
+mysql -uroot -p  ##登录mysql
+mysql>grant replication slave on *.* to 'zhao'@'172.17.0.3' identified by '123456';   ##授权给从数据库服务器192.168.1.201，用户名mark，密码123456
+mysql>show master status ; ##查看主库的状态  file,position这两个值很有用。要放到slave配置中
+
+show master status;
 
 docker commit faf5399c7539 debian:mysql
 
@@ -76,3 +82,30 @@ mysql -uroot -p
 mysql> change master to  master_host='172.17.0.3', master_user='mark' ,master_password='123456', master_log_file='log.000004' ,master_log_pos=502;
 mysql> start slave;  ##开启从库   (stop slave：关闭从库）
 mysql> show slave status; ###Slave_IO_Running,Slave_SQL_Running 都为Yes的时候表示配置成功 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+docker run --name mysql1 -t -i -p 60028:22 -p 43306:3306 debian:mysql /bin/bash 
+
+
+
+
+docker run --name mysql2 -t -i -p 60029:22 -p 53306:3306 debian:mysql /bin/bash 

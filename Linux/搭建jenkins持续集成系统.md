@@ -2,6 +2,16 @@
 
 [https://jenkins.io/](https://jenkins.io/)
 
+
+# 删除jenkins 构建历史 jobs
+
+```
+
+rm -rf `find */builds/* -mtime +7 -type d`
+
+```
+
+
 ## 初始化
 
 cat /root/.jenkins/secrets/initialAdminPassword

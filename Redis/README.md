@@ -1,3 +1,10 @@
+## windows启动
+
+```
+redis-server.exe redis.windows.conf
+```
+
+
 ## redis 远程连接
 
 - 一

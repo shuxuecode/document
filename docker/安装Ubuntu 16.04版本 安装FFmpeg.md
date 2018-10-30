@@ -52,6 +52,8 @@ apt-get install netcat libncurses5-dev
 
 ## 解压安装包
 
+http://www.ffmpeg.org/download.html
+
  tar -xjf ffmpeg-4.0.tar.bz2
 
 ## 编译

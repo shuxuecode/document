@@ -4,7 +4,7 @@
 
 ## 启动
 
-docker run --name u1 -t -i -p 60022:22 -p 8080:8080 ubuntu:17.10 /bin/bash 
+docker run --name u1 -t -i -p 60022:22 -p 8080:8080 ubuntu:17.10 /bin/bash
 
 ## 升级
 
@@ -54,5 +54,3 @@ docker ps -a
 docker commit 7253e2e01b4f zhaoubuntu
 
 这样在docker images 时会发现zhaoubuntu的镜像
-
-

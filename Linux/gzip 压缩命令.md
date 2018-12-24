@@ -37,7 +37,6 @@ gzip -v file1.txt
 
 gzip file1.txt file2.txt
 
-
 ## 压缩过程中，保留原文件
 
 gzip -k file1.txt

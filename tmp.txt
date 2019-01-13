@@ -6,25 +6,4 @@ nihao\n
 nihao\r\n
 nihao\r\n
 nihao\n
-nihao\nabc
-nihao
-abc
-nihao
 
-
-
-7
-commitByZsx
-commitByZsx
-auto
-auto
-commitByZsx
-commitByZsx
-
-auto
-commitByZsx
-auto
-:sunglasses:
-Merge branch 'master' of https://github.com/zhaoshuxue/document into HEAD
-commitByZsx
-commitByZsx

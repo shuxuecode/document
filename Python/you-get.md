@@ -2,6 +2,9 @@
 # 更新
 python -m pip install --upgrade you-get
 
+# 更新pip
+python -m pip install --upgrade pip
+
 
 # 卸载
 

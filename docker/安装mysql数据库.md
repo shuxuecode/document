@@ -10,6 +10,20 @@ docker run --name mysqlb -p 33306:3306 -e MYSQL_ROOT_PASSWORD=root -d daocloud.i
 宿主机直接连接localhost:33306 root root  即可成功
 
 
+## mysql 5.7版本
+docker run --name mysql -p 3306:3306 -p 33061:33060 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
+
+```
+docker exec -it mysql bash
+
+/# mysql -u root -p
+root
+
+grant all privileges on *.* to root@'%' identified by 'root';
+
+FLUSH PRIVILEGES;
+
+```
 
 
 

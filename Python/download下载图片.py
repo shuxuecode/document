@@ -1,12 +1,12 @@
 
 import os
 import requests
-import random
 
 
 os.makedirs('D:/1/image/', exist_ok=True)
 
 imgUrls = [
+<<<<<<< HEAD
 "https://wx3.sinaimg.cn/mw690/acf60537gy1fqc1x9lloyj20hs0q8abp.jpg",
 "https://wx3.sinaimg.cn/mw690/acf60537gy1fqc1x9kmrgj20hs0ugwgd.jpg",
 "https://wx1.sinaimg.cn/mw690/c5eeee85ly1fqgy6jyvcrg20a005lb2c.gif",
@@ -163,6 +163,18 @@ imgUrls = [
 "https://wx4.sinaimg.cn/mw690/6927e7a5ly1fqh3tw6n6ej20hs0hsmym.jpg",
 "http://wx2.sinaimg.cn/mw690/b11e11f9ly1fx0oznf2iwg206908gu0z.gif"
 
+=======
+"https://wx2.sinaimg.cn/mw690/7cc829d3ly1g1mz0wuvlpg208w053qv5.gif",
+"https://wx4.sinaimg.cn/mw690/006FzHykgy1g1ag3cyaogj30v919x1kx.jpg",
+"https://wx3.sinaimg.cn/mw690/7a722219gy1fzgdfpkmivj20hs0m7jt4.jpg",
+"https://wx3.sinaimg.cn/mw690/7a722219gy1fzgdfpkscmj20hs0m8tb8.jpg",
+"https://wx4.sinaimg.cn/mw690/7a722219gy1fzgdfph632j20hs0bmmyc.jpg",
+"https://wx2.sinaimg.cn/mw690/7a722219gy1fzgdfpfqtmj20hs0m5ac4.jpg",
+"https://wx2.sinaimg.cn/mw690/7a722219gy1fzgdfpb7m4j20hs0hswg4.jpg",
+"https://wx3.sinaimg.cn/mw690/7a722219gy1fzgdfpaylrj20hs0hstai.jpg",
+"https://wx4.sinaimg.cn/mw690/7a722219gy1fzgdfpdud3j20u011i0v4.jpg",
+"https://wx2.sinaimg.cn/mw690/7a722219gy1fzgdfpnh7sj20u011h7ae.jpg" 
+>>>>>>> 3c19c0fad159fd2e24266f6ee407c577c7dc9e5e
 ]
 
 # for url in imgUrls:

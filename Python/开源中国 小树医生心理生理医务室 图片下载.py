@@ -40,7 +40,10 @@ def getImgUrl(url):
         # print(p[0].attrib['src'])
         # return p[0].attrib['src']
 
-        return root.xpath("//strong[contains(text(),'小树医生心理生理医务室')]/../following-sibling::p[1]/img/attribute::src")[0]
+        src = root.xpath("//strong[contains(text(),'小树医生心理生理医务室')]/../following-sibling::p[1]/img/attribute::src")
+        if src :
+            return src[0]
+        return ''
     return ''
 
 # 下载
@@ -58,11 +61,12 @@ url = 'https://my.oschina.net/xxiaobian/widgets/_space_index_newest_blog?p='
 #
 if __name__ == "__main__":
 
-    for i in range(1,2):
+    for i in range(42,60):
         urls = getHTML(url + str(i))
         print(urls)
         for blogUrl in urls:
             imgUrl = getImgUrl(blogUrl)
             print(imgUrl)
+            print(i)
             if(imgUrl != ''):
                 download(imgUrl)

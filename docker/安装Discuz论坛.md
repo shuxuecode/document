@@ -134,6 +134,8 @@ cp -r upload/* /var/www/html/bbs
 
 浏览器访问  http://localhost/bbs， 可以看到安装向导。
 
+*记得重启apache2*
+
 ### 开始给文件夹授权
 
 设置目录权限

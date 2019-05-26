@@ -1,11 +1,62 @@
 
-ECSʵ����ȫ��Ĭ�ϵĹ�������ɾ�������޷�pingͨ
+ECS实例安全组默认的公网规则被删除导致无法ping通
 
-���������
+分析解决：
 
-    �Ų���֣����ڸ�ECSʵ����ȫ��Ĭ�ϵĹ�������ɾ�����£����乫����ڰ�ȫ����򼴿ɡ�
+    排查后发现，由于该ECS实例安全组默认的公网规则被删除导致，重配公网入口安全组规则即可。
 
-PING��ICMPЭ�飬������״̬�ģ����Իذ�����ϣ�����������뷽��ICMP����
+PING是ICMP协议，且是无状态的，所以回包被阻断，所以请放行入方向ICMP即可
 
 
 https://help.aliyun.com/knowledge_detail/40596.html
+
+
+
+
+## 安装frp内网穿透
+
+服务器端
+
+frps.ini 配置文件
+
+
+# cat frps.ini 
+[common]
+bind_port = 7000
+vhost_http_port = 8881
+
+subdomain_host = frp.baidu.com
+
+dashboard_port = 7500
+dashboard_user = admin
+dashboard_pwd = admin
+
+后台启动   nohup ./frps -c frps.ini &
+
+
+域名解析添加  
+
+- A记录
+    - frp  值为ip地址
+
+- CNAME记录
+    - *.frp  值为 frp.baidu.com
+
+## 安装客户端
+
+frpc.ini  配置文件
+# cat frpc.ini 
+[common]
+server_addr = ip地址
+server_port = 7000
+
+[web]
+type = http
+local_port = 80
+subdomain = bbs
+
+后台启动  nohup ./frpc -c frpc.ini &
+
+
+这样可以访问  http://bbs.frp.funimg.top:8881/bbs/forum.php
+

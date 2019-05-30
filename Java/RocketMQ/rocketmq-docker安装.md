@@ -3,8 +3,8 @@
 
 https://github.com/apache/rocketmq-externals
 
-
-https://github.com/apache/rocketmq-externals/tree/master/rocketmq-docker/image-build
+> docker 安装目录
+> https://github.com/apache/rocketmq-externals/tree/master/rocketmq-docker/image-build
 
 ## 首先构建Docker镜像
 

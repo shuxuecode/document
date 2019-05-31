@@ -80,6 +80,8 @@ ServerName localhost:80
 
 这时访问 http://localhost 就可以看到apache的页面
 
+![](img/mk-2019-05-31-19-51-02.png)
+
 ## 安装mysql
 
 apt-get install mysql-server -y
@@ -123,6 +125,7 @@ vim /var/www/html/index.php
 ```
 然后执行命令 service apache2 restart 重启apache服务，然后访问 http://localhost/index.php 即可看到php的安装信息界面。
 
+![](img/mk-2019-05-31-19-51-53.png)
 
 # 安装Discuz
 

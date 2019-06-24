@@ -117,3 +117,12 @@ systemctl restart postgresql-11
 # 卸载
 
 yum remove postgresql*
+
+
+
+
+
+参考文章：
+
+https://www.cnblogs.com/stulzq/p/7766409.html
+

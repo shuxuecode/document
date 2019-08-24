@@ -15,7 +15,7 @@ pom.xml
 </dependency>
 ```
 
-在<build>添加插件
+在`<build>`添加插件
 
 ```
 <build>

@@ -1,9 +1,9 @@
 package com.zsx;
 
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexReaderContext;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.index.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -27,6 +27,17 @@ public class Demo {
 
             indexWriter = new IndexWriter(directory, config);
 
+
+            Document document = new Document();
+            FieldType fieldType = new FieldType();
+            fieldType.setStored(true);
+
+            document.add(new Field("name", "zsx", fieldType));
+
+            indexWriter.addDocument(document);
+
+            indexWriter.commit();
+            directory.close();
 
         } catch (IOException e) {
             e.printStackTrace();

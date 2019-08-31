@@ -33,6 +33,9 @@ public class Demo {
             fieldType.setStored(true);
 
             document.add(new Field("name", "zsx", fieldType));
+            document.add(new Field("name2", "zsx2", fieldType));
+            document.add(new Field("name3", "zsx3", fieldType));
+            document.add(new Field("name4", "zsx4", fieldType));
 
             indexWriter.addDocument(document);
 

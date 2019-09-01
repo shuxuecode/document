@@ -3,6 +3,7 @@ package com.zsx;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -36,6 +37,10 @@ public class Demo {
             document.add(new Field("name2", "zsx2", fieldType));
             document.add(new Field("name3", "zsx3", fieldType));
             document.add(new Field("name4", "zsx4", fieldType));
+
+
+            document.add(new TextField("filename","asdafs", Field.Store.YES));
+            document.add(new TextField("content","123123123", Field.Store.YES));
 
             indexWriter.addDocument(document);
 

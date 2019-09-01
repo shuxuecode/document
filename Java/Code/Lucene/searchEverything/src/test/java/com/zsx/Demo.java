@@ -47,12 +47,7 @@ public class Demo {
         }
 
 
-//        new IndexWriter("", null);
 
-
-//        IndexReader indexReader = new IndexReader("");
-
-//        IndexReaderContext context = new IndexReader().getContext();
     }
 
 }

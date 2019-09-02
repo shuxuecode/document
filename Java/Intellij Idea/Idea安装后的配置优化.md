@@ -62,7 +62,9 @@ SequenceDiagram
 
 
 
+## 关闭代码检查
 
+Settings —— Editor —— Inspections , 把不必要的代码检查关闭
 
 
 

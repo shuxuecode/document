@@ -99,6 +99,16 @@ AllowUsers admin
 
 
 
+---
+
+https://hub.docker.com/r/bestwu/ewomail/
+
+docker pull bestwu/ewomail
+
+docker run  -d -h mail.edu.funimg.top --restart=always   -p 25:25   -p 109:109   -p 110:110   -p 143:143   -p 465:465   -p 587:587   -p 993:993   -p 995:995    -p 80:80   -p 8080:8080   --name ewomail bestwu/ewomail
+
+
+
 
 
 

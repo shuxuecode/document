@@ -67,9 +67,11 @@ SequenceDiagram
 Settings —— Editor —— Inspections , 把不必要的代码检查关闭
 
 
+## TODO配置
 
+Settings —— Editor —— Live Templates —— +号 —— Template Group 自定义一个名字 —— +号 —— Live Template 
 
-
+![](img/mk-2019-09-06-15-15-43.png)
 
 
 

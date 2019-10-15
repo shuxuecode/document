@@ -8,6 +8,9 @@
 <script>
 export default {
   name: 'HelloWorld',
+  // components: {
+  //   GithubDB : require(githubDB).default
+  // },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
@@ -15,7 +18,9 @@ export default {
   }
 }
 
-var GithubDB = require('..').default;
+// var GithubDB = require('github-db').default;
+
+// console.log(GithubDB)
 
 
 </script>

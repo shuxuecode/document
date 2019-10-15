@@ -3,6 +3,22 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+// import GithubDB from 'github-db'
+// import GithubDB from 'github'
+
+// Vue.use(GithubDB)
+
+const nodeExternals = require('webpack-node-externals')
+
+const config = function(){
+  return {
+    externals: [
+      nodeExternals()
+    ]
+  }
+}
+
+module.exports = config
 
 Vue.config.productionTip = false
 

@@ -18,10 +18,9 @@ export default {
   }
 }
 
-// var GithubDB = require('github-db').default;
-
-// console.log(GithubDB)
-
+console.info(1)
+const DB = require('../db')
+console.log(DB)
 
 </script>
 

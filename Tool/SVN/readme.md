@@ -15,6 +15,6 @@ TortoiseSVN → Unversion and add to ignore list,取消版本控制并添加至�
 
 　　　　　　　　右键->增加至忽略列表->server.xml(recursively),此种方式会与服务端同步,整个团队的所有人将会同步此忽略,所有该两种文件会以忽略图标的样式显示.
 
- 
+ ![](img/mk-2019-11-07-14-35-00.png)
 
 ---

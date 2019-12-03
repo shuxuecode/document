@@ -20,3 +20,8 @@ pip3 install you-get
 you-get -i url
 
 you-get --format=mp4hd -o D:/1/0 url
+
+
+## 新的下载方式
+
+https://github.com/iawia002/annie

@@ -4,6 +4,8 @@
 
 - 命令：
 
+> 注意要先update   `apt-get update`
+
 ```
 sudo apt-get install nginx
 ```

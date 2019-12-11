@@ -11,7 +11,7 @@ docker run --name mysqlb -p 33306:3306 -e MYSQL_ROOT_PASSWORD=root -d daocloud.i
 
 
 ## mysql 5.7版本
-docker run --name mysql -p 3306:3306 -p 33061:33060 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
+docker run --name mysql -p 3306:3306 -p 33060:33060 --restart=always -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
 
 ```
 docker exec -it mysql bash

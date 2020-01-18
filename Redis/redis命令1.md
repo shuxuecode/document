@@ -1,4 +1,11 @@
 
+
+## redis显示中文
+
+redis-cli.exe --raw
+
+
+
 ## 查询key过期时间
 
 keys *          --查询所有key

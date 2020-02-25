@@ -41,7 +41,7 @@ grant all on *.* to root@'%' identified by '你的密码' with grant option;
 flush privileges;
 ```
 
-然后执行quit命令退出mysql服务，执行如下命令重启mysql：
+然后执行quit命令退出mysql服务，执行如下命令重启mysql：**必须要重启**
 
 ```
 service mysql restart
@@ -55,7 +55,7 @@ service mysql restart
 
 
 ```
-update mysql.user set authentication_string=password('123qwe') where user='root';
+update mysql.user set authentication_string=password('root') where user='root';
 ```
 
 5.7以前

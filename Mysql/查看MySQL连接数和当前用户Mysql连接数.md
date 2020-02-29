@@ -1,15 +1,31 @@
-�鿴MySQL�������͵�ǰ�û�Mysql������
 
+## 查看连接数
 
-���ù���Ա���ݽ���mysql��ʾ����
+```
+show processlist;
+show full processlist;
+
+例如：
 #mysql -uroot -pxxxx
-mysql> show processlist; ������ʾǰ100��������Ϣ show full processlist; ������ʾȫ�������˵�£��������ͨ�˺ŵ�¼����ֻ��ʾ���û��ġ�ע��������зֺš�
+mysql> show processlist;
 
-���������鿴��̨���������á� #vi /etc/my.cnf
-set-variable=max_user_connections=30 ������ǵ��û���������
-set-variable=max_connections=800 �����ȫ�ֵ�����������
+```
 
+## 查询数据库当前设置的最大连接数  
 
+```
+mysql> show variables like '%max_connections%';
+```    
+
+## 修改连接数
+
+在/etc/my.cnf里面设置数据库的最大连接数  
+max_connections = 1000  
+```
+#vi /etc/my.cnf
+max_user_connections=30 最大用户连接数
+max_connections=800 最大连接数  
+```
 
 
 

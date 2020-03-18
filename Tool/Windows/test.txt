@@ -1,5 +1,11 @@
 .LOG
 123
-0:20 2018/5/7 ����һ
+0:20 2018/5/7 ����һ
 
 0:
+
+
+
+## 查看运行多久
+
+(get-date) - (gcim Win32_OperatingSystem).LastBootUpTime

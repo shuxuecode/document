@@ -39,9 +39,64 @@
 
 
 
+# 下面提供一种新的解决方式
+
+后端配置
+
+```
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.annotation.Order;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebFilter(urlPatterns = "/*", filterName = "corsFilter")
+@Order(1)
+public class CorsFilter implements Filter {
+    @Override
+    public void init(FilterConfig fc) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse resp,
+                         FilterChain chain) throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) resp;
+        HttpServletRequest request = (HttpServletRequest) req;
+        // 由于本地和测试环境域名+端口号访问 这种方式可以解决端口号跨域问题
+        if (StringUtils.isNotEmpty(request.getHeader("Origin"))) {
+            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+        } else {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+        }
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "36000");
+        response.setHeader("Access-Control-Allow-Headers", "accept,Access-Control-Request-Method,Access-Control-Request-Headers,Origin,token,x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN");
+        response.setHeader("Access-Control-Expose-Headers", "Content-Type, Authorization, credential, Content-Disposition");
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(req, resp);
+        }
+    }
+
+    @Override
+    public void destroy() {
+    }
+
+}
+
+```
 
 
 
 
 
 
+
+
+---

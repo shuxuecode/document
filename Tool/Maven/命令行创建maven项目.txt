@@ -1,4 +1,12 @@
 
+linux 
+
+vim /etc/profile
+
+export MAVEN_HOME=/apache-maven-3.6.3
+export PATH=$PATH:$MAVEN_HOME/bin
+
+
 
 mvn archetype:generate -DgroupId=com -DartifactId=zsx -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeCatalog=internal
 

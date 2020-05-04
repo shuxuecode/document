@@ -20,6 +20,12 @@ hexo g  #生成或 hexo generate
 hexo d  #启动本地服务器 或者 hexo server,这一步之后就可以通过http://localhost:4000  查看了
 ```
 
+## 配置
+
+官网文档：
+https://hexo.io/zh-cn/docs/configuration
+
+
 
 ## 部署到Github
 
@@ -60,7 +66,15 @@ https://hexo.io/themes/
 
 https://theme-next.org/
 
+```
+git clone https://github.com/theme-next/hexo-theme-next themes/next
+```
 
+Set theme in main Hexo root config _config.yml file:
+
+```
+theme: next
+```
 
 ## 配置域名
 

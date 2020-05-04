@@ -74,7 +74,33 @@ github_banner:
 ```  
 
 
-## 添加本地搜索
+## 添加本地搜索 todo
+
+### 安装 hexo-generator-search
+
+```
+npm install hexo-generator-search --save
+```
+
+### 安装 hexo-generator-searchdb
+
+```
+npm install hexo-generator-searchdb --save
+```
+
+### 编辑 站点配置文件，新增以下内容到任意位置：
+
+```
+# 开启本地搜索
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
+  limit: 10000
+```
+
+### next主题配置文件中修改  local_search.enable=true
 
 ```
 # Local Search
@@ -83,6 +109,48 @@ local_search:
   enable: true
 ```  
 
+## 添加字数统计和阅读时长
+
+### 安装hexo-symbols-count-time
+
+```  
+npm install hexo-symbols-count-time --save
+```  
+
+### 在站点配置文件添加如下配置
+
+```
+symbols_count_time:
+  symbols: true                # 文章字数统计
+  time: true                   # 文章阅读时长
+  total_symbols: true          # 站点总字数统计
+  total_time: true             # 站点总阅读时长
+  exclude_codeblock: false     # 排除代码字数统计
+```
+
+### 在NexT主题配置文件添加如下配置（NexT主题已支持该插件，有的话无需再添加）
+
+```
+# Post wordcount display settings
+# Dependencies: https://github.com/theme-next/hexo-symbols-count-time
+symbols_count_time:
+  separated_meta: true     # 是否另起一行（true的话不和发表时间等同一行）
+  item_text_post: true     # 首页文章统计数量前是否显示文字描述（本文字数、阅读时长）
+  item_text_total: false   # 页面底部统计数量前是否显示文字描述（站点总字数、站点阅读时长）
+  awl: 4                   # Average Word Length
+  wpm: 275                 # Words Per Minute（每分钟阅读词数）
+  suffix: mins.
+```
+
+
+
+
+---
+
+# 其它
+
+给hexo静态博客添加RSS - 简书
+https://www.jianshu.com/p/a79422ab2013
 
 
 

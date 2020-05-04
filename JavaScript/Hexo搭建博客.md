@@ -56,6 +56,11 @@ https://hexo.io/themes/
 把下载的主题文件夹`hexo-theme-aero-dual`放到 themes 目录下即可。
 打开`_config.yml`配置文件，修改参数为：theme：hexo-theme-aero-dual （其他主题修改成相应名称即可）
 
+## 使用Next主题
+
+https://theme-next.org/
+
+
 
 ## 配置域名
 

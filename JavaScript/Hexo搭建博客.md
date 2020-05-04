@@ -16,7 +16,7 @@ hexo init <folder>
 ## 运行
 
 ```
-hexo g  #生成或 hexo generate   
+hexo g  #生成或 hexo generate  生成的静态文件在 /***/public 目录下 
 hexo d  #启动本地服务器 或者 hexo server,这一步之后就可以通过http://localhost:4000  查看了
 ```
 
@@ -65,8 +65,12 @@ https://hexo.io/themes/
 ## 使用Next主题
 
 https://theme-next.org/
+https://github.com/theme-next
+
+### 主题安装
 
 ```
+cd hexo   # 进入博客根目录
 git clone https://github.com/theme-next/hexo-theme-next themes/next
 ```
 
@@ -75,6 +79,11 @@ Set theme in main Hexo root config _config.yml file:
 ```
 theme: next
 ```
+
+### Next配置
+
+编辑 /***/themes/next/_config.yml（其中***为博客根目录）文件
+
 
 ## 配置域名
 

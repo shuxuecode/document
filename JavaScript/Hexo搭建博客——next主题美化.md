@@ -35,18 +35,53 @@ hexo new page about
 ```
 
 
+## 设置头像
+
+```
+# Sidebar Avatar
+avatar:
+  # Replace the default image and set the url here.
+  url: /images/avatar.gif
+```
+
+## 添加 链接
+
+```
+# Social Links
+# Usage: `Key: permalink || icon`
+# Key is the link label showing to end users.
+# Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
+social:
+  GitHub: https://github.com/zhaoshuxue || fab fa-github
+  E-Mail: mailto:zhaoshuxue@163.com || fa fa-envelope
+```  
+
+## 外链
+
+```
+links:
+  Title: http://yoursite.com
+```  
+
+## 添加 Follow me on GitHub
+
+```  
+# `Follow me on GitHub` banner in the top-right corner.
+github_banner:
+  enable: true
+  permalink: https://github.com/yourname
+  title: Follow me on GitHub
+```  
 
 
+## 添加本地搜索
 
-
-
-
-
-
-
-
-
-
+```
+# Local Search
+# Dependencies: https://github.com/theme-next/hexo-generator-searchdb
+local_search:
+  enable: true
+```  
 
 
 

@@ -22,11 +22,15 @@ menu:
 hexo new page categories
 ```
 
+添加 type: "categories"
+
 ### 创建标签页
 
 ```
 hexo new page tags
 ```
+
+添加 type: "tags"
 
 ### 创建个人主页
 
@@ -154,8 +158,9 @@ https://www.jianshu.com/p/a79422ab2013
 
 
 
+# todo
 
-
+https://www.jianshu.com/p/78c218f9d1e7
 
 
 

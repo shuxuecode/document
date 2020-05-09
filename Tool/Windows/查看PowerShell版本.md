@@ -23,6 +23,7 @@ SerializationVersion           1.1.0.1
     "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b7}",
     "hidden": false,
     "name": "git bash",
+    "icon": "D:\\Git\\icon.jpg",
     "commandline": "D:\\Git\\bin\\bash.exe"
 }
 ```

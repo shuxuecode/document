@@ -24,6 +24,8 @@ SerializationVersion           1.1.0.1
     "hidden": false,
     "name": "git bash",
     "icon": "D:\\Git\\icon.jpg",
-    "commandline": "D:\\Git\\bin\\bash.exe"
+    "commandline": "D:\\Git\\bin\\bash.exe --login -i"
 }
 ```
+
+> 要使用ll这个命令的话，需要在bash.exe 后面添加` --login -i`，即可。

@@ -1,7 +1,0 @@
-
-
-
-
-## 查看运行多久
-
-(get-date) - (gcim Win32_OperatingSystem).LastBootUpTime

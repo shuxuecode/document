@@ -3,7 +3,7 @@
 
 npm install electron -g
 
-
+## 
 
 
 
@@ -41,6 +41,7 @@ builder-effective-config.yaml 记录打包信息
 my-project Setup 0.0.1.exe  安装文件，默认安装在c盘
 my-project Setup 0.0.1.exe.blockmap 文件系统索引模式
 ```
+
 
 
 ---

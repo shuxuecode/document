@@ -23,7 +23,7 @@ hexo d  #启动本地服务器 或者 hexo server,这一步之后就可以通过
 ## 配置
 
 官网文档：
-https://hexo.io/zh-cn/docs/configuration
+[https://hexo.io/zh-cn/docs/configuration](https://hexo.io/zh-cn/docs/configuration)
 
 
 

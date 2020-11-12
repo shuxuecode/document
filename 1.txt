@@ -1,6 +1,6 @@
 var formData = $("#form_1").serializeArray();
 
-//        ²»ÖªµÀÏÂÃæÕâÖÖpush·½Ê½ÎªÉ¶²»ÉúĞ§£¬ËùÒÔÏÈÓÃÒş²Ø±íµ¥ÊµÏÖ
+//        ä¸çŸ¥é“ä¸‹é¢è¿™ç§pushæ–¹å¼ä¸ºå•¥ä¸ç”Ÿæ•ˆï¼Œæ‰€ä»¥å…ˆç”¨éšè—è¡¨å•å®ç°
 //        formData.push({
 //            "standardInterval" : standardIntervals.join(",")
 //        });
@@ -18,4 +18,4 @@ JSON.stringify(zsx)
 //            "value" : relations
 //        });
 
-Ê¹ÓÃÕâÖÖ·½Ê½²Å¶Ô
+ä½¿ç”¨è¿™ç§æ–¹å¼æ‰å¯¹

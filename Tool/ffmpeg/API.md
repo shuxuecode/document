@@ -1,3 +1,9 @@
+## 安装，升级命令
+
+sudo apt-get update
+sudo apt-get install ffmpeg
+
+
 
 ## 改变视频尺寸
 

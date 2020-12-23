@@ -50,9 +50,7 @@ sudo apt-get install zip 或者 yum install -y unzip zip
 
 ## 
 
-或者直接修改start.bat或start.sh文件也行，因为start文件会调用catalina文件，如：
-如果是windows环境，在startup.bat中加入set JAVA_OPTS=-Xms256m -Xmx1024m
-如果是linux则在startup.sh中加入JAVA_OPTS=-Xms256m -Xmx1024m
+
 
 
 ## 

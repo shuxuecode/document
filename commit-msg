@@ -28,4 +28,4 @@ echo msg
 
 # echo "123" > tmp/tmp.txt
 
-echo $(git log -1 --pretty=format:"%s") >> tmp.txt
+echo $(git log -1 --pretty=format:"%s") >> ../../git_tmp.txt

@@ -13,21 +13,16 @@ TF卡格式化为FAT格式
 
 > 如果是重装系统的话，tf卡只有几十MB，需要使用分区助手把tf卡`删除所有分区`，然后再`创建分区`
 
-
 ## 使用Win32DiskImager安装系统
 
-启动Win32DiskImager
-
- 3. Image File处选择Raspbian映像文件
-      4. Device处选择盘符为你读卡器的盘符
-      5. 点Write，然后点一下Yes确定操作，开始系统写入
-
-  6. 写入完成，提示成功 
+- 启动Win32DiskImager
+- Image File处选择Raspbian映像文件
+- Device处选择盘符为你读卡器的盘符
+- 点Write，然后点一下Yes确定操作，开始系统写入
+- 写入完成，提示成功 
 
  
-
-7.  Micro SD卡插入树莓派，接通电源启动
-
+最后，Micro SD卡插入树莓派，接通电源启动
 
 
 ## 第一次登陆

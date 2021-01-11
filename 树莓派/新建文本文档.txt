@@ -15,6 +15,9 @@ https://help.aliyun.com/knowledge_detail/40596.html
 
 ## 安装frp内网穿透
 
+> 设置执行权限 chmod +x  frps
+
+
 服务器端
 
 frps.ini 配置文件
@@ -34,13 +37,16 @@ dashboard_pwd = admin
 后台启动   nohup ./frps -c frps.ini &
 
 
+---
+
 域名解析添加  
 
 - A记录
-    - frp  值为ip地址
+    - *.frp  值为ip地址
 
-- CNAME记录
-    - *.frp  值为 frp.baidu.com
+这样就可以配置 a.frp.com   b.frp.com  等等    
+
+---
 
 ## 安装客户端
 
@@ -58,5 +64,5 @@ subdomain = bbs
 后台启动  nohup ./frpc -c frpc.ini &
 
 
-这样可以访问  http://bbs.frp.funimg.top:8881/bbs/forum.php
+
 

@@ -4,6 +4,8 @@
 
 ## bean的初始化过程
 
+beandefinition
+
 ## 解决循环依赖
 
 

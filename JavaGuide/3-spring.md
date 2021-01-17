@@ -6,6 +6,14 @@
 
 beandefinition
 
+getBean
+
+各种校验逻辑
+
+判断是否是单例
+
+
+
 ## 解决循环依赖
 
 

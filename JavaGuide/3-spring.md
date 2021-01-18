@@ -31,3 +31,6 @@ Spring先是用构造实例化Bean对象 ，此时Spring会将这个实例化结
 
 
 ---
+
+- 三级缓存
+- applicationContext BeanFactory 的区别

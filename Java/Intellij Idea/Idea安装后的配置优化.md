@@ -34,6 +34,15 @@ CodeGlance
 
 Rainbow Brackets
 
+## 高亮代码块
+HighlightBracketPair
+
+## 缩进高亮
+Indent Rainbow
+
+## 彩虹进度条
+Nyan Progress Bar
+
 ## 统计代码行数
 
 Statistic

@@ -14,6 +14,10 @@ getBean
 
 - 后置处理器？
 
+## bean
+
+单例变多例
+prototype ？
 
 ## 解决循环依赖
 

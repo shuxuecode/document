@@ -12,11 +12,20 @@ bitmap  todo
 
 ## 节点
 
-通过CRC16算法计算key对应的slot，然后路由到该slot所在的redis节点
+Redis Cluster为整个集群定义了一共16384个slot，并通过CRC16的hash算法计算key对应的slot，然后路由到该slot所在的redis节点
 
+#### 1.将节点加入Redis Cluster中
+#### 2.为集群中的节点分配slot(分配完成后，每个即诶单不仅直到自己的slot列表，还需要知道别的节点的slot列表)
+#### 3.分配完成后，key会根据crc16计算出得结果和16384取模进行slot定位，从而定位到具体节点。
 
+### 重新分配slot
+所有分片的算法都会面对一个问题，就是当节点增加或减少时怎么处理,Redis Cluster也不例外
+当有节点D加入进来原本的A,B,C节点需要拿出一部分slot给到D，这样的操作就叫做slot重新分配。
 
+### redis-trib todo
+redis Cluster 是使用redis-trib来自动实现的slot重新分配
 
+---
 ## 分布式锁
 
 ### “占坑”原理

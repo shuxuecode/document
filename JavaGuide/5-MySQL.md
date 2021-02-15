@@ -23,6 +23,8 @@
 
 ## 锁
 
+
+
 ## redo log
 
 持久性依赖 redo log实现

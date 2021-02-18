@@ -8,7 +8,7 @@ bitmap  todo
 redis6.0开始就不是单线程了，
 
 
-
+## 持久化机制
 
 
 ## 节点
@@ -106,7 +106,7 @@ redis支持setNxEx命令
 
 
 
-
+## redis 键过期的删除策略？
 
 
 

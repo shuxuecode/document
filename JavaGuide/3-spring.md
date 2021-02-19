@@ -11,7 +11,7 @@ IOC 可以帮助我们管理对象的依赖关系，极大减少对象的耦合�
 
 ## bean的初始化过程
 
-beandefinition
+beandefinition  重要
 
 getBean
 
@@ -19,7 +19,7 @@ getBean
 
 判断是否是单例
 
-- 后置处理器？
+- 后置处理器？ 可以自定义很多逻辑处理
 
 ## bean
 

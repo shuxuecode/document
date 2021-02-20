@@ -47,3 +47,6 @@ AtomicStampedReference ：原子更新带有版本号的引用类型。该类将
 
 
 
+## ThreadLocal
+
+出现异常时怎么确保finally执行

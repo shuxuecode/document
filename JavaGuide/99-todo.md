@@ -15,3 +15,12 @@
 
 spring的七种事务隔离级别
 
+---
+
+
+
+es分布式，扩容原理
+
+分布式算法Paxos
+
+Zookeeper一致性协议原理Zab，Raft算法

@@ -88,6 +88,11 @@ Java对象存储的地方
 频繁GC的原因？
 
 ---
+
+top jps jstat jmap 定位问题
+
+
+
 ---
 
 

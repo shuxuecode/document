@@ -19,7 +19,25 @@ Spring Boot提供了各种组件的启动器（starters），开发者只要能�
 
 
 
+## SpringCloud
 
+Eureka 微服务注册与发现
+
+Actuator 微服务监控
+
+RestTemplate 服务器远程调用 
+
+Ribbon 客户端的负载均衡
+
+OpenFeign 声明式服务调用
+
+Hystrix 微服务熔断、降级、资源隔离
+
+HystrixDashboard
+
+Zuul 微服务网关
+
+Config 微服务配置中心
 
 
 

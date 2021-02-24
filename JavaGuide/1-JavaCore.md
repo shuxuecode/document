@@ -75,6 +75,11 @@ synchronized和volatile的区别（volatile是一种非锁机制，这种机制�
 
 CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA问题，解决ABA问题是使用版本号机制）
 
+---
+
+##  AQS ?
+
+
 ## 锁
 
 

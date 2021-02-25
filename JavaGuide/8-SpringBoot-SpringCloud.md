@@ -16,6 +16,10 @@ Spring Boot提供了各种组件的启动器（starters），开发者只要能�
 
 
 
+## SpringBoot自动装配原理
+
+扫描所有具有`META-INF/spring.factories`的`jar`包
+
 
 
 

@@ -174,9 +174,97 @@ float 32位
 
 double 64位
 
-字符型 1
+字符型 1  char
 
-布尔型 1
+布尔型 1   boolean
+
+---
+
+String不可变
+
+1. 缓存hash值，hash值经常被使用，例如HashMap的key，不可变这样只需计算一次hash值即可。
+
+2. 字符串常量池 （String Pool），如果一个String对象已被创建过了，则直接从String Pool中取用即可。
+
+   ```java
+   System.out.println(new String("a") == new String("a")); // false
+   System.out.println("a" == "a"); // true
+   ```
+
+   - "a" 这种字面量的形式创建字符串，会自动地将字符串放入 String Pool 中，所以==为true
+
+   - new String("a")这种方式会创建两个字符串对象（前提是池子里没有"a"字符串对象）,一个是放到常量池中的“a”字符串字面量，一个是new方式在堆中创建的字符串对象。
+
+   在 Java 7 之前，String Pool 被放在运行时常量池中，它属于永久代。而在 Java 7，String Pool 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+
+3. 线程安全，可以在多个线程中安全的使用。
+
+---
+
+## 参数传递
+
+Java 的参数是以值传递的形式传入方法中，而不是引用传递。
+以下代码中 Dog dog 的 dog 是一个指针，存储的是对象的地址。在将一个参数传入一个方法时，本质上是将对象的地址以值的方式传递到形参中。因此在方法中使指针引用其它对象，那么这两个指针此时指向的是完全不同的对象，在一方改变其所指向对象的内容时对另一方没有影响。
+
+```
+public class Dog {
+
+    String name;
+
+    Dog(String name) {
+        this.name = name;
+    }
+
+    String getName() {
+        return this.name;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    String getObjectAddress() {
+        return super.toString();
+    }
+}
+```
 
 
+```
+public class PassByValueExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("A");
+        System.out.println(dog.getObjectAddress()); // Dog@4554617c
+        func(dog);
+        System.out.println(dog.getObjectAddress()); // Dog@4554617c
+        System.out.println(dog.getName());          // A
+    }
+
+    private static void func(Dog dog) {
+        System.out.println(dog.getObjectAddress()); // Dog@4554617c
+        dog = new Dog("B");
+        System.out.println(dog.getObjectAddress()); // Dog@74a14482
+        System.out.println(dog.getName());          // B
+    }
+}
+```
+
+如果在方法中改变对象的字段值会改变原对象该字段值，因为改变的是同一个地址指向的内容。
+
+```
+class PassByValueExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("A");
+        func(dog);
+        System.out.println(dog.getName());          // B
+    }
+
+    private static void func(Dog dog) {
+        dog.setName("B");
+    }
+}
+```
+
+
+---
 

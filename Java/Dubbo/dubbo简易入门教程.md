@@ -43,7 +43,7 @@ pom.xml
 
 **注意** packaging 为jar
 
-
+```java
 	package com.zsx.service;
 
 	public interface TestService {
@@ -51,6 +51,7 @@ pom.xml
 		String test(String name);
 
 	}
+```
 
 
 ## 三、创建生成者
@@ -143,6 +144,7 @@ dubbo-productor
 
 web.xml
 
+```xml
 	<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
@@ -198,7 +200,7 @@ web.xml
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>
-
+```
 
 ---
 

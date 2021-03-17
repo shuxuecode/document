@@ -10,6 +10,8 @@ redis6.0开始就不是单线程了，
 
 ## 持久化机制
 
+RDB  AOF ??
+
 ## Redis 与 memcached 相比有哪些优势？
 
 - memcached 所有的值均是简单的字符串，redis 作为其替代者，支持更为丰富的数据类型

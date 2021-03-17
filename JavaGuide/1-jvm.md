@@ -91,13 +91,259 @@ Java对象存储的地方
 
 top jps jstat jmap 定位问题
 
+### jmap
+
+#### 查看实例个数以及占用内存信息
+
+`jmap -histo pid`
+
+![](img/2021-03-17-11-16-06.png)
+
+num：代表序号 instances：代表实例数量 bytes：代表占用空间大小 classname：代表类的名称
+
+#### 查看堆的使用情况
+
+`jmap -heap pid`
+
+查看垃圾回收器，堆的参数以及堆的使用情况等信息。
+
+![](img/2021-03-17-11-20-42.png)
+
+
+#### 生成dump文件
+
+```
+jmap -dump:format=b,file=文件名 [pid]
+jmap -dump:format=b,file=E:/demo.hprof pid
+```
+
+
+> 可以使用java自带可视化工具 jvisualvm 分析
+
+通过Jvm参数可设置内存溢出后自动导出Dump文件：
+
+```
+-XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=D:\jvm.dump
+```
+
+
+### jstack
+
+`jstack pid`
+
+jstack命令主要用来查看Java线程的调用堆栈的，可以用来分析线程问题（如死锁）。
+
+### jstat
+
+jvm自带的调优工具，可以查看堆内存各部分的使用量，以及加载类的数量等。
+
+- 垃圾回收统计
+
+`jstat -gc pid`
+
+![](img/2021-03-17-14-46-43.png)
+
+参数解释如下：
+
+```
+S0C:第一个Survivor大小（kb）
+S1C:第二个Survivor大小
+S0U:第一个Survivor区的使用大小
+S1U:第二个Survivor区的使用大小
+EC:eden区大小
+EU:eden区的使用大小
+OC:老年代大小
+OU:老年代使用大小
+MC:方法区大小（元空间）
+MU:方法区使用大小
+CCSC:压缩类空间大小
+CCSU:压缩类空间使用大小
+YGC:YoungGC次数
+YGCT:YoungGC时间（s）
+FGC:FullGC次数
+FGCT:FullGC时间（s）
+GCT:总的GC时间（s）
+```
+
+- 垃圾回收比例统计
+
+`jstat -gcutil pid`
+
+![](img/2021-03-17-14-48-25.png)
+
+```
+S0：第一个Survivor区当前使用比例
+S1：第二个Survivor区当前使用比例
+E：eden区使用比例
+O：老年代使用比例
+M：元数据区使用比例
+CCS：压缩使用比例
+YGC：YoungGC次数
+FGC：FullGC次数
+FGCT：FullGC消耗时间
+GCT：垃圾回收消耗总时间
+```
+
+- 堆内存统计
+
+`jstat -gccapacity pid`
+
+![](img/2021-03-17-14-49-30.png)
+
+```
+NGCMN：新生代最小容量
+NGCMX：新生代最大容量
+NGC：当前新生代容量
+S0C：第一个Survivor区大小
+S1C：第二个Survivor区的大小
+EC：eden区的大小
+OGCMN：老年代最小容量
+OGCMX：老年代最大容量
+OGC：当前老年代大小
+OC：当前老年代大小
+MCMN：最小元数据容量
+MCMX：最大元数据容量
+MC：当前元数据空间大小
+CCSMN：最小压缩类空间大小
+CCSMX：最大压缩类空间大小
+CCSC：当前压缩类空间大小
+YGC：YoungGC次数
+FGC：FullGC次数
+```
+
+- 新生代垃圾回收统计
+
+`jstat -gcnew pid`
+
+![](img/2021-03-17-14-50-45.png)
+
+
+
+```
+S0C：第一个Survivor区的大小
+S1C：第二个Survivor区的大小
+S0U：第一个Survivor区的使用大小
+S1U：第二个Survivor区的使用大小
+TT：对象在新生代存活的次数
+MTT：对象在新生代存活的最大次数
+DSS：期望的幸存区大小
+EC：eden区的大小
+EU：eden区的使用大小
+YGC：年轻代垃圾回收次数
+YGCT：年轻代垃圾回收消耗时间
+```
+
+-  新生代内存统计
+
+`jstat -gcnewcapacity pid`
+
+![](img/2021-03-17-14-54-22.png)
+
+```
+NGCMN：新生代最小容量
+NGCMX：新生代最大容量
+NGC：当前新生代容量
+S0CMX：第一个Survivor区最大容量
+S0C：第一个Survivor区大小
+S1CMX：第二个Survivor区最大容量
+S1C：第二个Survivor区大小
+ECMX：eden区最大容量
+EC：当前eden区大小
+YGC：年轻代垃圾回收次数
+FGC：老年代回收次数
+```
+
+- 老年代垃圾回收统计
+
+`jstat -gcold pid`
+
+![](img/2021-03-17-14-54-57.png)
+
+```
+MC：方法区大小
+MU：方法区使用大小
+CCSC：压缩类空间大小
+CCSU：压缩类空间使用大小
+OC：老年代大小
+OU：老年代使用大小
+YGC：年轻代垃圾回收次数
+FGC：老年代垃圾回收次数
+FGCT：老年代垃圾回收消耗时间
+GCT：垃圾回收消耗总时间
+```
+
+- 统计老年代内存的使用情况
+
+`jstat -gcoldcapacity pid`
+
+![](img/2021-03-17-14-55-12.png)
+
+```
+OGCMN：老年代最小容量
+OGCMX：老年代最大容量
+OGC：当前老年代大小
+OC：老年代大小
+YGC：年轻代垃圾回收次数
+FGC：老年代垃圾回收次数
+FGCT：老年代垃圾回收消耗时间
+GCT：垃圾回收消耗总时间
+```
+
+- 统计元数据空间的情况
+
+`jstat -gcmetacapacity pid`
+
+![](img/2021-03-17-14-55-30.png)
+
+```
+MCMN：最小元数据容量
+MCMX：最大元数据容量
+MC：当前元数据空间大小
+CCSMN：最小压缩类空间大小
+CCSMX：最大压缩类空间大小
+CCSC：当前压缩类空间大小
+YGC：年轻代垃圾回收次数
+FGC：老年代垃圾回收次数
+FGCT：老年代垃圾回收消耗时间
+GCT：垃圾回收消耗总时间
+```
+
+
+
+
+
+### 其他命令
+
+- 查看正在运行的Java项目参数 查看jvm的参数：
+
+`jinfo -flags pid `
+
+- 查看Java系统参数
+
+`jinfo -sysprops pid`
+
+- 观察分析年轻代对象的增长情况
+
+`jstat -gc pid 5000 10`
+
+每5秒执行一次，共执行10次
+
+
+### 打印gc日志
+
+通过增加JVM参数的方式打印gc日志：
+
+```
+-XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -Xloggc:./gc.log
+```
+
 
 
 ---
 
 
-## 导出整个JVM 中内存信息
-jmap -dump:format=b,file=文件名 [pid]
+
+
 
 
 ---

@@ -29,6 +29,7 @@ https://github.com/alibaba/p3c
 ## 小地图
 
 CodeGlance
+>  Ctrl+Shift+G  显示/隐藏
 
 ## 括号美化
 

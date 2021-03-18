@@ -71,4 +71,13 @@ ArrayList的扩容？（ArrayList底层是基于数组实现，所以创建Array
 
 
 
+## HashMap在Java1.7与1.8中的区别：
 
+JDK1.7中使用一个Entry数组来存储数据，用key的hashcode取模来决定key会被放到数组里的位置，如果hashcode相同，或者hashcode取模后的结果相同（hash collision），那么这些key会被定位到Entry数组的同一个格子里，这些key会形成一个链表。在hashcode特别差的情况下，比方说所有key的hashcode都相同，这个链表可能会很长，那么put/get操作都可能需要遍历这个链表。也就是说时间复杂度在最差情况下会退化到O(n)。
+
+JDK1.8中使用一个Node数组来存储数据，但这个Node可能是链表结构，也可能是红黑树结构。如果插入的key的hashcode相同，那么这些key也会被定位到Node数组的同一个格子里。如果同一个格子里的key不超过8个，使用链表结构存储。如果超过了8个，那么会调用treeifyBin函数，将链表转换为红黑树。那么即使hashcode完全相同，由于红黑树的特点，查找某个特定元素，也只需要O(log n)的开销。也就是说put/get的操作的时间复杂度最差只有O(log n)。
+
+ 
+## ConcurrentHashMap在Java1.7与1.8中的区别：
+
+ConcurrentHashMap在jdk1.7中采用Segment + HashEntry的方式进行实现；1.8中放弃了Segment臃肿的设计，取而代之的是采用Node + CAS + Synchronized来保证并发安全进行实现

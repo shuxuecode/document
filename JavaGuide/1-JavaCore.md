@@ -6,7 +6,10 @@
 
 
 
-
+## synchronized
+## volatile
+## ReentrantLock
+## JUC包下面的原子类
 
 ## 并发包  JUC
 

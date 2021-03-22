@@ -9,6 +9,15 @@
 ## synchronized
 ## volatile
 ## ReentrantLock
+
+
+## 三个类 ？
+
+countDownLatch的await方法是否安全？怎么改造？
+
+
+
+
 ## JUC包下面的原子类
 
 ## 并发包  JUC
@@ -76,8 +85,6 @@ synchronized和volatile的区别（volatile是一种非锁机制，这种机制�
 
 ## 	CAS
 
-
-
 CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA问题，解决ABA问题是使用版本号机制）
 
 ---
@@ -85,9 +92,7 @@ CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA�
 ##  AQS ?
 
 
-## 锁
-
-
+## 锁  ***
 
 悲观锁和乐观锁的区别，应用？（java中的Synchronized关键字和lock锁使用的都是悲观锁；CAS机制是乐观锁的一种实现方式）
 
@@ -97,12 +102,22 @@ CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA�
 
 可重入锁和不可重入锁（不可重入锁容易导致死锁发生，大多数锁都是可重入的，例如Synchronized锁和ReentrantLock）
 
+锁偏向？
+
+轻量级锁？
+
+
 ### 死锁产生的四个必要条件以及死锁的处理策略
-
-
 
 ---
 
+
+## future  ？
+
+futureTask
+
+
+## 对象的深浅复制？
 
 
 ## java8新特性

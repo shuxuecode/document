@@ -83,3 +83,10 @@ JDK1.8中使用一个Node数组来存储数据，但这个Node可能是链表结
 ## ConcurrentHashMap在Java1.7与1.8中的区别：
 
 ConcurrentHashMap在jdk1.7中采用Segment + HashEntry的方式进行实现；1.8中放弃了Segment臃肿的设计，取而代之的是采用Node + CAS + Synchronized来保证并发安全进行实现
+
+
+## ConcurrentSkipListMap
+
+HashMap是线程不安全的，而ConcurrentHashMap和ConcurrentSkipListMap是线程安全的，它们内部都使用无锁CAS算法实现了同步。ConcurrentHashMap中的元素是无序的，ConcurrentSkipListMap中的元素是有序的。
+
+

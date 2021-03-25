@@ -36,6 +36,10 @@ hession、hession2、java序列化
 参考文章：
 https://cloud.tencent.com/developer/article/1502742
 https://blog.csdn.net/u012965203/article/details/98253914
+
+令牌桶
+漏桶
+
 ---
 
 

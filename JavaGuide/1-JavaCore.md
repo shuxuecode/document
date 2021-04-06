@@ -14,7 +14,7 @@
 ## ReentrantLock
 
 
-## 三个类 ？
+## CountDownLatch  CyclicBarrier  Semaphore
 
 countDownLatch的await方法是否安全？怎么改造？
 
@@ -92,7 +92,9 @@ CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA�
 
 ---
 
-##  AQS ?
+##  AQS原理
+
+执行过程？
 
 
 ## 锁  ***

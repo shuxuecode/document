@@ -23,4 +23,9 @@
 
 ## mq如何保证顺序
 
+kafka同一个partition下的场景，可以保证FIFO的顺序。不同partition之间不能保证顺序。多partition下无法保障消息的顺序性
+
+Kafka 中发送1条消息的时候，可以指定(topic, partition, key) 3个参数。partiton 和 key 是可选的。如果你指定了 partition，那就是所有消息发往同1个 partition，就是有序的。并且在消费端，Kafka 保证，1个 partition 只能被1个 consumer 消费。或者你指定 key（比如 order id），具有同1个 key 的所有消息，会发往同1个 partition。也是有序的。
+
+
 ## 消息积压

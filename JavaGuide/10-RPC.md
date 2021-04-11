@@ -62,6 +62,13 @@ https://blog.csdn.net/u012965203/article/details/98253914
 - 直连 url=""
 
 
+## gRPC
+
+是Google开发的高性能、通用的开源RPC框架，其由Google主要面向移动应用开发并基于HTTP/2协议标准而设计，基于ProtoBuf(Protocol Buffers)序列化协议开发。本身它不是分布式的，所以要实现上面的框架的功能需要进一步的开发。
+
+## thrift
+
+最初是由 Facebook 开发的内部系统跨语言的高性能 RPC 框架，2007 年贡献给了 Apache 基金，成为 Apache 开源项目之一， 跟 gRPC 一样，Thrift 也有一套自己的接口定义语言 IDL，可以通过代码生成器，生成各种编程语言的 Client 端和 Server 端的 SDK 代码，支持多种语言。
 
 ---
 

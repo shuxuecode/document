@@ -1,6 +1,9 @@
 
 ## Spark
 
+## Storm 
+
+Apache Storm 是一个能近实时地在数据之上运行用户代码片段的流式数据处理框架。它实际上是一系列连在一起的管道。通常用于简单的分析任务 ，诸如计算，以及清洗，使其常规化，并且准备摄入用于长期存储的数据。
 
 
 
@@ -21,8 +24,13 @@ JobManager
 
 ---
 
-## Hbase
+## Hadoop
 
+Hadoop实现了一个分布式文件系统(Hadoop Distributed File System)，简称HDFS。Hadoop的框架最核心的设计就是：HDFS和MapReduce。HDFS为海量的数据提供了存储，MapReduce则为海量的数据提供了计算。
+
+
+## Hbase
+开放源代码，非关系型，分布式数据库，采用Google的BigTable建模，用Java编写，并在HDFS上运行。
 
 
 ## ES

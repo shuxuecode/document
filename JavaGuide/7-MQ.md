@@ -94,3 +94,5 @@ Kafka 中发送1条消息的时候，可以指定(topic, partition, key) 3个参
 
 
 ## 消息积压
+
+## mq持久化

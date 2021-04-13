@@ -11,13 +11,46 @@
 
 
 ## volatile
-## ReentrantLock
+
+
+volatile如何保证可见性（MESI缓存一致性协议）
+
+volatile如何保证有序性（内存屏障——lock前缀指令）
+
+synchronized和volatile的区别（volatile是一种非锁机制，这种机制可以避免锁机制引起的线程上下文切换和调度问题。因此，volatile的执行成本比synchronized更低；volatile只能保证可见性有序性；synchronized可以保证原子性可见性有序性）
+
+### volatile和synchronized的区别:
+
+- volatile关键字解决的是变量在多个线程之间的可见性（对于用volatile修饰的变量，JVM虚拟机只是保证从主内存加载到线程工作内存的值是最新的）；而sychronized关键字解决的是多个线程之间访问共享资源的同步性。 
+- volatile仅能使用在变量级别；synchronized则可以使用在变量、方法、和类级别的；
+- volatile仅能实现变量的修改可见性，不能保证原子性；而synchronized则可以保证变量的修改可见性和原子性
+- volatile不会造成线程的阻塞；synchronized可能会造成线程的阻塞。
+- volatile修饰变量适合于一写多读的并发场景，而多写场景一定会产生线程安全问题（因此使用volatile而不是synchronized的唯一安全情况是类中只有一个可变的域）。
+- 因为所有的操作都需要同步给内存变量，所以volatile一定会使线程的执行速度变慢。
+
+---
+
+### synchronized和lock区别：
+
+1）Lock是一个接口，而synchronized是Java中的关键字，synchronized是内置的语言实现；
+2）synchronized在发生异常时，会自动释放线程占有的锁，因此不会导致死锁现象发生；而Lock在发生异常时，如果没有主动通过unLock()去释放锁，则很可能造成死锁现象，因此使用Lock时需要在finally块中释放锁；
+3）Lock可以让等待锁的线程响应中断，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断；
+4）通过Lock可以知道有没有成功获取锁，而synchronized却无法办到。
+5）Lock可以提高多个线程进行读操作的效率（读写锁）。
+
+> 在性能上来说，如果竞争资源不激烈，两者的性能是差不多的，而当竞争资源非常激烈时（即有大量线程同时竞争），此时Lock的性能要远远优于synchronized。所以说，在具体使用时要根据适当情况选择。 
+
+
+## ReentrantLock  todo
 
 
 ## CountDownLatch  CyclicBarrier  Semaphore
 
 countDownLatch的await方法是否安全？怎么改造？
 
+## Exchange ？？
+
+两个线程间的数据交换
 
 ## Unsafe类
 
@@ -26,27 +59,53 @@ countDownLatch的await方法是否安全？怎么改造？
 
 ## ThreadLocal
 
-出现异常时怎么确保finally执行
+
+
 
 
 
 ---
 
-volatile如何保证可见性（MESI缓存一致性协议）
-
-volatile如何保证有序性（内存屏障——lock前缀指令）
-
-synchronized和volatile的区别（volatile是一种非锁机制，这种机制可以避免锁机制引起的线程上下文切换和调度问题。因此，volatile的执行成本比synchronized更低；volatile只能保证可见性有序性；synchronized可以保证原子性可见性有序性）
-
----
-
-## 	CAS
+## 	CAS  (Compare And Swap)
 
 CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA问题，解决ABA问题是使用版本号机制）
 
+使用AtomicStampedReference解决ABA问题
+
+
+
 ---
 
-##  AQS原理
+##  AQS原理   AbstractQueuedSynchronizer
+
+![](img/2021-04-13-20-55-46.png)
+
+维护了一个volatile int state（代表共享资源）和一个FIFO线程等待队列（多线程争用资源被阻塞时会进入此队列）。
+state的访问方式有三种:
+getState()
+setState()
+compareAndSetState()
+
+
+### 工作机制：
+AQS的等待队列是基于链表实现的FIFO的等待队列，队列每个节点只关心其前驱节点的状态，线程唤醒时只唤醒队头等待线程（即head的后继节点，并且等待状态不大于0）
+
+
+### 两种资源共享方式
+AQS定义两种资源共享方式：Exclusive（独占，只有一个线程能执行，如ReentrantLock）和Share（共享，多个线程可同时执行，如Semaphore/CountDownLatch）。
+
+#### 独占
+只有一个线程能执行，如 ReentrantLock。又可分为公平锁和非公平锁,ReentrantLock 同时支持两种锁,下面以 ReentrantLock 对这两种锁的定义做介绍：
+
+**公平锁：**  按照线程在队列中的排队顺序，先到者先拿到锁
+**非公平锁：**  当线程要获取锁时，先通过两次 CAS 操作去抢锁，如果没抢到，当前线程再加入到队列中等待唤醒。
+
+
+#### 共享
+多个线程可同时执行，如 Semaphore/CountDownLatch。Semaphore、CountDownLatCh、CyclicBarrier、ReadWriteLock 我们都会在后面讲到。
+
+ReentrantReadWriteLock 可以看成是组合式，因为ReentrantReadWriteLock 也就是读写锁允许多个线程同时对某一资源进行读。
+
 
 执行过程？
 
@@ -68,7 +127,14 @@ CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA�
 
 ### 死锁产生的四个必要条件以及死锁的处理策略
 
+1、互斥条件：一个资源每次只能被一个进程使用。
+2、不可抢占：进程已获得的资源，在末使用完之前，不能强行剥夺，只能在进程使用完时由自己释放。
+3、占有且申请：一个进程因请求资源而阻塞时，对已获得的资源保持不放。
+4、循环等待：若干进程之间形成一种头尾相接的循环等待资源关系。
+
+
 ---
+
 
 
 ## future  ？

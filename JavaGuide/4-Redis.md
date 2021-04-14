@@ -6,7 +6,10 @@
 - 链表linkedlist 是一个双向无环链表结构，很多发布订阅、慢查询、监视器功能都是使用链表实现，每个链表的节点由一个listNode结构来表示，每个节点都有指向前置节点和后置节点的指针，同时表示节点的前置和后置节点都指向NULL。
 
 
-bitmap  todo
+### bitmap  todo
+
+布隆过滤器
+
 
 Redis中保存的键值对是保存在一个字典中的（和Java中的HashMap类似，也是通过数组+链表的方式实现的），key的类型都是string，value的类型可以是string，set，list等
 

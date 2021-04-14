@@ -88,14 +88,54 @@ GC Roots对象包括：
 
 ---
 
+
 ## 垃圾回收器
 
-CMS
+### CMS
+是一款并发的、使用标记-清除算法的垃圾回收器，该回收器是针对老年代垃圾回收的，在初始化阶段会导致stw。cms通过参数-XX:+UseConcMarkSweepGC进行设置。
 
-G1
+1）初始标记
+2）并发标记
+3）重新标记
+4）并发清除
+
+下面为更详细的过程描述：
+1. 初始化标记(CMS-initial-mark) ,标记root，会**导致stw**；
+2. 并发标记(CMS-concurrent-mark)，与用户线程同时运行；
+3. 预清理（CMS-concurrent-preclean），与用户线程同时运行；
+4. 重新标记(CMS-remark) ，会**导致stw**；
+5. 并发清除(CMS-concurrent-sweep)，与用户线程同时运行；
+6. 调整堆大小，设置CMS在清理之后进行内存压缩，目的是清理内存中的碎片；
+7. 并发重置状态等待下次CMS的触发(CMS-concurrent-reset)，与用户线程同时运行；
+
+CMS是基于标记-清除算法的，CMS只会删除无用对象，不会对内存做压缩，会造成内存碎片，这时候我们需要用到这个参数：-XX:CMSFullGCsBeforeCompaction=n
+
+
+---
+
+### G1
+通过参数-XX:+UseG1GC来启用
+
+在G1算法中，采用了另外一种完全不同的方式组织堆内存，堆内存被划分为多个大小相等的内存块（Region），每个Region是逻辑连续的一段内存（所以回收得到的空间是连续的，这就是避免了CMS回收器导致的空间不连续的问题），结构如下：
+
+![](img/2021-04-14-16-42-35.png)
+
+每个Region被标记了E、S、O和H，说明每个Region在运行时都充当了一种角色，其中H是以往算法中没有的，它代表Humongous，这表示这些Region存储的是巨型对象（humongous object，H-obj），当新建对象大小超过Region大小一半时，直接在新的一个或多个连续Region中分配，并标记为H。
 
 
 
+#### G1中提供了三种模式垃圾回收模式，young gc、mixed gc 和 full gc，在不同的条件下被触发。
+
+##### young gc
+
+一般对象（除了巨型对象）都是在eden region中分配内存
+和之前的young gc差不多，执行完一次young gc，活跃对象会被拷贝到survivor region或者晋升到old region中，空闲的region会被放入空闲列表中，等待下次被使用。
+
+##### mixed gc
+mixed gc中也有一个阈值参数 -XX:InitiatingHeapOccupancyPercent，当老年代大小占整个堆大小百分比达到该阈值时，会触发一次mixed gc.
+
+##### full gc
+如果对象内存分配速度过快，mixed gc来不及回收，导致老年代被填满，就会触发一次full gc，G1的full gc算法就是单线程执行的serial old gc，会导致异常长时间的暂停时间，需要进行不断的调优，尽可能的避免full gc.
 
 
 

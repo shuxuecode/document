@@ -8,6 +8,10 @@
 
 ## synchronized
 
+### 底层实现：
+synchronized关键字经过编译之后会在同步块前后分别形成monitorenter和monitorexit这两个字节码指令，这两个字节码都需要指明一个reference类型的参数来指明要锁定和解锁的对象。如果没有明确指明，那就根据synchronized修饰的是实例方法还是类方法，去取对应的对象实例或Class对象来作为锁对象。
+
+在执行monitorenter指令时，首先去尝试获取对象的锁，如果这个对象没被锁定，或者当前线程已经拥有那个对象的锁，把锁的计数器加1，相应的，在执行monitorexit指令时将锁计数器减1，当计数器为0时，锁就被释放了。如果获取锁失败了，那当前线程就要阻塞等待，直到对象锁被另一个线程释放为止。
 
 
 ## volatile
@@ -42,17 +46,45 @@ synchronized和volatile的区别（volatile是一种非锁机制，这种机制�
 
 
 ## ReentrantLock  todo
+Synchronized是依赖于JVM实现的，而ReenTrantLock是JDK实现的。
+ReenTrantLock的实现是一种自旋锁，通过循环调用CAS操作来实现加锁。
 
+### 区别
+> 在Synchronized优化以前，synchronized的性能是比ReenTrantLock差很多的，但是自从Synchronized引入了偏向锁，轻量级锁（自旋锁）后，两者的性能就差不多了，在两种方法都可用的情况下，官方甚至建议使用synchronized，其实synchronized的优化我感觉就借鉴了ReenTrantLock中的CAS技术。都是试图在用户态就把加锁问题解决，避免进入内核态的线程阻塞。
 
-## CountDownLatch  CyclicBarrier  Semaphore
+> 便利性：很明显Synchronized的使用比较方便简洁，并且由编译器去保证锁的加锁和释放，而ReenTrantLock需要手工声明来加锁和释放锁，为了避免忘记手工释放锁造成死锁，所以最好在finally中声明释放锁。
+
+> 锁的细粒度和灵活度：很明显ReenTrantLock优于Synchronized
+
+### ReentrantLock 特点
+
+1. ReenTrantLock可以指定是公平锁还是非公平锁。而synchronized只能是非公平锁。所谓的公平锁就是先等待的线程先获得锁。
+2. ReenTrantLock提供了一个Condition（条件）类，用来实现分组唤醒需要唤醒的线程们，而不是像synchronized要么随机唤醒一个线程要么唤醒全部线程。
+3. ReenTrantLock提供了一种能够中断等待锁的线程的机制，通过lock.lockInterruptibly()来实现这个机制。
+
+---
+
+## CountDownLatch  CyclicBarrier  Semaphore （信号量）
 
 countDownLatch的await方法是否安全？怎么改造？
 
-## Exchange ？？
+### 区别
+
+1、CountDownLatch减计数，CyclicBarrier加计数。
+2、CountDownLatch是一次性的，CyclicBarrier可重复使用。
+
+> CountDownLatch强调一个线程等多个线程完成某件事情。CyclicBarrier是多个线程互等，等大家都完成。 
+
+### Semaphore
+两个构造方法，当第二个参数设置为false，则不保证线程获取许可的顺序，还允许插队。设置为true时，将保证按照FIFO的顺序获取许可。
+
+
+## Exchange
 
 两个线程间的数据交换
 
 ## Unsafe类
+Unsafe类提供了硬件级别的原子操作
 
 
 ## JUC包下面的原子类
@@ -114,13 +146,22 @@ ReentrantReadWriteLock 可以看成是组合式，因为ReentrantReadWriteLock �
 
 悲观锁和乐观锁的区别，应用？（java中的Synchronized关键字和lock锁使用的都是悲观锁；CAS机制是乐观锁的一种实现方式）
 
-公平锁和非公平锁（公平锁按照先来先服务，不会出现饥饿；非公平锁会导致饥饿，但是效率更高，默认的锁都是非公平的）
+### 公平锁和非公平锁
+公平锁按照先来先服务，不会出现饥饿；
+非公平锁会导致饥饿，但是效率更高，**默认的锁都是非公平的** 
 
-自旋锁和互斥锁，自旋锁的优缺点？（优点：减少上下文切换和用户态内核态的切换带来的开销；缺点：循环等待消耗CPU）
+自旋锁和互斥锁，
+### 互斥锁：
+用于保护临界区，确保同一时间只有一个线程访问数据。对共享资源的访问，先对互斥量进行加锁，如果互斥量已经上锁，调用线程会阻塞，直到互斥量被解锁。在完成了对共享资源的访问后，要对互斥量进行解锁。
+
+### 自旋锁的优缺点？
+- 优点：减少上下文切换和用户态内核态的切换带来的开销，不会引起调用者睡眠，所以效率更高；
+- 缺点：循环等待消耗CPU，如果不能在很短时间内获得锁，无疑会使CPU效率降低。
+
 
 可重入锁和不可重入锁（不可重入锁容易导致死锁发生，大多数锁都是可重入的，例如Synchronized锁和ReentrantLock）
 
-锁偏向？
+偏向锁？
 
 轻量级锁？
 
@@ -142,8 +183,11 @@ ReentrantReadWriteLock 可以看成是组合式，因为ReentrantReadWriteLock �
 futureTask
 
 
-## 对象的深浅复制？
+## 对象的深浅复制
 
+浅拷贝：基本数据类型的成员变量，会直接进行值传递，创建两个不同的数据，所以一个改变不会影响另一份数据。对于数据类型是引用数据类型的成员变量，会进行引用传递，只是将该成员变量的引用值复制一份给新的对象，这时候改变会影响到另一个对象的该成员变量值。
+
+深拷贝：会新建一个对象空间，然后拷贝里面的内容，所以改变一个不会对另一个产生影响。
 
 ## java8新特性
 

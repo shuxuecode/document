@@ -108,7 +108,7 @@ CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA�
 
 ---
 
-##  AQS原理   AbstractQueuedSynchronizer
+##  AQS原理   AbstractQueuedSynchronizer 是JDK下提供的一套用于实现基于FIFO等待队列的阻塞锁和相关的同步器的一个同步框架。
 
 ![](img/2021-04-13-20-55-46.png)
 

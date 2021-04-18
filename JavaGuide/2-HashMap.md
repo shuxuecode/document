@@ -1,5 +1,6 @@
 
 
+
 ## 扩容机制
 
 拆分元素的过程中，原jdk1.7中会需要重新计算哈希值，但是到jdk1.8中已经进行优化，不在需要重新计算，提升了拆分的性能，设计的还是非常巧妙的。
@@ -22,6 +23,7 @@ HashMap解决hash冲突的方式是链地址法。
 
 
 
+## 哈希冲突？？
 
 
 ## 一致性哈希算法 
@@ -37,6 +39,8 @@ HashMap解决hash冲突的方式是链地址法。
 ## get put 的伪代码 ？？
 
 ## 扩容的伪代码 ？？
+
+> 当容量一定是2^n时，h & (length - 1) == h % length ， 计算位置，位运算，高效
 
 ---
 
@@ -75,19 +79,6 @@ HashMap解决hash冲突的方式是链地址法。
 
 
 
-## HashSet的底层实现？
-
-（基于HashMap来实现的，new 一个 HashSet对象底层实际就是new了一个HashMap，并且使用默认的初始容量16和默认的加载因子0.75；当我们往HashSet里面添加一个元素其实就是往HashMap里面put了一个元素，并且是以key存在的，HashMap的value值都是一样的，是一个静态常量PRESENT，源码为：`private static final Object PRESENT = new Object();` ）
-
----
-
-线程安全的List有哪些？（Vector、CopyOnWriteArrayList、还可以使用Collections类的synchronizedList方法将线程不安全的List转为线程安全的）
-
-为什么ArrayList查询速度快？（ArrayList底层是基于数组实现，可以根据元素下标进行查询，查询方式为（数组首地址+元素长度*下标，基于这个位置读取相应的字节数就可以了），如果数组存的是对象，怎么根据下标定位元素所在位置？（对象数组每个元素存放的是对象的引用，而引用类型如果开启指针压缩占用4字节，不开启则占用8字节，所以对象数组同样适用上面的公式）
-
-ArrayList的扩容？（ArrayList底层是基于数组实现，所以创建ArrayList会给数组指定一个初始容量，默认值为10，因为必须指明数组的长度才能给数组分配空间；由于数组的特性，ArrayList扩容是创建一个更大的数组，然后将原来的元素拷贝到更大的数组中，扩容的核心方法是Arrays.copyOf方法）
-
-
 
 
 ## HashMap在Java1.7与1.8中的区别：
@@ -106,4 +97,19 @@ ConcurrentHashMap在jdk1.7中采用Segment + HashEntry的方式进行实现；
 
 HashMap是线程不安全的，而ConcurrentHashMap和ConcurrentSkipListMap是线程安全的，它们内部都使用无锁CAS算法实现了同步。ConcurrentHashMap中的元素是无序的，ConcurrentSkipListMap中的元素是有序的。
 
+
+## treeMap ？？
+
+
+## HashSet的底层实现？
+
+（基于HashMap来实现的，new 一个 HashSet对象底层实际就是new了一个HashMap，并且使用默认的初始容量16和默认的加载因子0.75；当我们往HashSet里面添加一个元素其实就是往HashMap里面put了一个元素，并且是以key存在的，HashMap的value值都是一样的，是一个静态常量PRESENT，源码为：`private static final Object PRESENT = new Object();` ）
+
+---
+
+线程安全的List有哪些？（Vector、CopyOnWriteArrayList、还可以使用Collections类的synchronizedList方法将线程不安全的List转为线程安全的）
+
+为什么ArrayList查询速度快？（ArrayList底层是基于数组实现，可以根据元素下标进行查询，查询方式为（数组首地址+元素长度*下标，基于这个位置读取相应的字节数就可以了），如果数组存的是对象，怎么根据下标定位元素所在位置？（对象数组每个元素存放的是对象的引用，而引用类型如果开启指针压缩占用4字节，不开启则占用8字节，所以对象数组同样适用上面的公式）
+
+ArrayList的扩容？（ArrayList底层是基于数组实现，所以创建ArrayList会给数组指定一个初始容量，默认值为10，因为必须指明数组的长度才能给数组分配空间；由于数组的特性，ArrayList扩容是创建一个更大的数组，然后将原来的元素拷贝到更大的数组中，扩容的核心方法是Arrays.copyOf方法）
 

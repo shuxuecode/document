@@ -138,7 +138,8 @@ mixed gc中也有一个阈值参数 -XX:InitiatingHeapOccupancyPercent，当老�
 如果对象内存分配速度过快，mixed gc来不及回收，导致老年代被填满，就会触发一次full gc，G1的full gc算法就是单线程执行的serial old gc，会导致异常长时间的暂停时间，需要进行不断的调优，尽可能的避免full gc.
 
 
-
+### ZGC
+JDK11推出的一个垃圾回收器
 
 
 

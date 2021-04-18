@@ -37,3 +37,9 @@ Arthas(阿尔萨斯)  Java诊断工具
 
 云原生
 
+
+## Linux 命令 
+
+find
+
+awk

@@ -18,12 +18,15 @@
 
 HashMap解决hash冲突的方式是链地址法。
 
+
 **泊松分布**
 泊松分布是统计学和概率学常见的离散概率分布，适用于描述单位时间内随机事件发生的次数的概率分布。
 
 
 
-## 哈希冲突？？
+## 哈希冲突
+> 解决哈希表的冲突的方法：**开放地址法**和**链地址法**
+> 开放地址法 的基本思想是：当发生地址冲突时，按照某种方法继续探测哈希表中的其他存储单元，直到找到空位置为止。
 
 
 ## 一致性哈希算法 
@@ -98,18 +101,36 @@ ConcurrentHashMap在jdk1.7中采用Segment + HashEntry的方式进行实现；
 HashMap是线程不安全的，而ConcurrentHashMap和ConcurrentSkipListMap是线程安全的，它们内部都使用无锁CAS算法实现了同步。ConcurrentHashMap中的元素是无序的，ConcurrentSkipListMap中的元素是有序的。
 
 
-## treeMap ？？
+## TreeMap
+基于红黑树实现
 
 
-## HashSet的底层实现？
+## HashSet的底层实现
+基于HashMap来实现的
 
-（基于HashMap来实现的，new 一个 HashSet对象底层实际就是new了一个HashMap，并且使用默认的初始容量16和默认的加载因子0.75；当我们往HashSet里面添加一个元素其实就是往HashMap里面put了一个元素，并且是以key存在的，HashMap的value值都是一样的，是一个静态常量PRESENT，源码为：`private static final Object PRESENT = new Object();` ）
+new 一个 HashSet对象底层实际就是new了一个HashMap，并且使用默认的初始容量16和默认的加载因子0.75；当我们往HashSet里面添加一个元素其实就是往HashMap里面put了一个元素，并且是以key存在的，HashMap的value值都是一样的，是一个静态常量PRESENT，源码为：`private static final Object PRESENT = new Object();` ）
 
 ---
 
-线程安全的List有哪些？（Vector、CopyOnWriteArrayList、还可以使用Collections类的synchronizedList方法将线程不安全的List转为线程安全的）
+### 线程安全的List有哪些？
+（Vector、CopyOnWriteArrayList、还可以使用Collections类的synchronizedList方法将线程不安全的List转为线程安全的）
 
-为什么ArrayList查询速度快？（ArrayList底层是基于数组实现，可以根据元素下标进行查询，查询方式为（数组首地址+元素长度*下标，基于这个位置读取相应的字节数就可以了），如果数组存的是对象，怎么根据下标定位元素所在位置？（对象数组每个元素存放的是对象的引用，而引用类型如果开启指针压缩占用4字节，不开启则占用8字节，所以对象数组同样适用上面的公式）
+### 为什么ArrayList查询速度快？
+（ArrayList底层是基于数组实现，可以根据元素下标进行查询，查询方式为（数组首地址+元素长度*下标，基于这个位置读取相应的字节数就可以了），如果数组存的是对象，怎么根据下标定位元素所在位置？（对象数组每个元素存放的是对象的引用，而引用类型如果开启指针压缩占用4字节，不开启则占用8字节，所以对象数组同样适用上面的公式）
 
-ArrayList的扩容？（ArrayList底层是基于数组实现，所以创建ArrayList会给数组指定一个初始容量，默认值为10，因为必须指明数组的长度才能给数组分配空间；由于数组的特性，ArrayList扩容是创建一个更大的数组，然后将原来的元素拷贝到更大的数组中，扩容的核心方法是Arrays.copyOf方法）
+### ArrayList的扩容？
+（ArrayList底层是基于数组实现，所以创建ArrayList会给数组指定一个初始容量，默认值为10，因为必须指明数组的长度才能给数组分配空间；由于数组的特性，ArrayList扩容是创建一个更大的数组，然后将原来的元素拷贝到更大的数组中，扩容的核心方法是Arrays.copyOf方法）
+
+---
+
+## CopyOnWriteArrayList
+
+底层实现添加的原理是先copy出一个容器(可以简称副本)，再往新的容器里添加这个新的数据，最后把新的容器的引用地址赋值给了之前那个旧的的容器地址，但是在添加这个数据的期间，其他线程如果要去读取数据，仍然是读取到旧的容器里的数据。
+
+缺点:
+1. **内存占有问题**:很明显，两个数组同时驻扎在内存中，如果实际应用中，数据比较多，而且比较大的情况下，占用内存会比较大，针对这个其实可以用ConcurrentHashMap来代替。
+2. **数据一致性**:CopyOnWrite容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的的数据，马上能读到，请不要使用CopyOnWrite容器
+
+
+
 

@@ -5,7 +5,6 @@
 
 
 
-
 ## synchronized
 
 ### 底层实现：
@@ -66,14 +65,17 @@ ReenTrantLock的实现是一种自旋锁，通过循环调用CAS操作来实现�
 
 ## CountDownLatch  CyclicBarrier  Semaphore （信号量）
 
-countDownLatch的await方法是否安全？怎么改造？
+CountDownLatch如果有一个线程因为某种原因无法执行countDown()，则会导致await线程一直阻塞下去。
 
 ### 区别
 
-1、CountDownLatch减计数，CyclicBarrier加计数。
-2、CountDownLatch是一次性的，CyclicBarrier可重复使用。
+- CountDownLatch: 一个线程(或者多个)， 等待另外N个线程完成某个事情之后才能执行。
+- CyclicBrrier: N个线程相互等待，任何一个线程完成之前，所有的线程都必须等待。
 
 > CountDownLatch强调一个线程等多个线程完成某件事情。CyclicBarrier是多个线程互等，等大家都完成。 
+
+1、CountDownLatch减计数。CyclicBarrier加计数，计数达到指定值时，计数置为0重新开始。
+2、CountDownLatch是一次性的，CyclicBarrier可重复使用。
 
 ### Semaphore
 两个构造方法，当第二个参数设置为false，则不保证线程获取许可的顺序，还允许插队。设置为true时，将保证按照FIFO的顺序获取许可。
@@ -87,11 +89,11 @@ countDownLatch的await方法是否安全？怎么改造？
 Unsafe类提供了硬件级别的原子操作
 
 
-## JUC包下面的原子类
+## JUC包下面的原子类  见下面
 
 ## ThreadLocal
-底层实现？？
 
+底层原理：ThreadLocal的本质就是一个内部的静态的map（ThreadLocalMap），key是当前线程的句柄，value是需要保持的值。
 
 
 
@@ -154,7 +156,7 @@ ReentrantReadWriteLock 可以看成是组合式，因为ReentrantReadWriteLock �
 ### 互斥锁：
 用于保护临界区，确保同一时间只有一个线程访问数据。对共享资源的访问，先对互斥量进行加锁，如果互斥量已经上锁，调用线程会阻塞，直到互斥量被解锁。在完成了对共享资源的访问后，要对互斥量进行解锁。
 
-### 自旋锁的优缺点？
+### 自旋锁的优缺点
 - 优点：减少上下文切换和用户态内核态的切换带来的开销，不会引起调用者睡眠，所以效率更高；
 - 缺点：循环等待消耗CPU，如果不能在很短时间内获得锁，无疑会使CPU效率降低。
 
@@ -182,8 +184,8 @@ ReentrantReadWriteLock 可以看成是组合式，因为ReentrantReadWriteLock �
 
 futureTask
 
-## 自动装箱和拆箱 ？？
-
+## 自动装箱和拆箱
+简单一点说，装箱就是自动将基本数据类型转换为包装器类型；拆箱就是自动将包装器类型转换为基本数据类型。
 
 
 ## 对象的深浅复制

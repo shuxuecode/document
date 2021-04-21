@@ -3,6 +3,13 @@
 
 ## 枚举
 
+## 泛型擦除
+> 泛型本质是指类型参数化。意思是允许在定义类、接口、方法时使用类型形参，当使用时指定具体类型，所有使用该泛型参数的地方都被统一化，保证类型一致。如果未指定具体类型，默认是Object类型。集合体系中的所有类都增加了泛型，泛型也主要用在集合。
+
+> 泛型的好处是在编译的时候检查类型安全，并且所有的强制转换都是自动和隐式的，以提高代码的重用率。
+
+**使用泛型的时候加上的类型参数，会在编译器在编译的时候去掉。这个过程就称为类型擦除。**
+
 
 
 ## synchronized
@@ -11,6 +18,8 @@
 synchronized关键字经过编译之后会在同步块前后分别形成monitorenter和monitorexit这两个字节码指令，这两个字节码都需要指明一个reference类型的参数来指明要锁定和解锁的对象。如果没有明确指明，那就根据synchronized修饰的是实例方法还是类方法，去取对应的对象实例或Class对象来作为锁对象。
 
 在执行monitorenter指令时，首先去尝试获取对象的锁，如果这个对象没被锁定，或者当前线程已经拥有那个对象的锁，把锁的计数器加1，相应的，在执行monitorexit指令时将锁计数器减1，当计数器为0时，锁就被释放了。如果获取锁失败了，那当前线程就要阻塞等待，直到对象锁被另一个线程释放为止。
+
+### 锁膨胀？？
 
 
 ## volatile
@@ -67,6 +76,8 @@ ReenTrantLock的实现是一种自旋锁，通过循环调用CAS操作来实现�
 
 CountDownLatch如果有一个线程因为某种原因无法执行countDown()，则会导致await线程一直阻塞下去。
 
+> CyclicBarrier [ˈsaɪklɪk] [ˈbæriər]  
+
 ### 区别
 
 - CountDownLatch: 一个线程(或者多个)， 等待另外N个线程完成某个事情之后才能执行。
@@ -95,6 +106,19 @@ Unsafe类提供了硬件级别的原子操作
 
 底层原理：ThreadLocal的本质就是一个内部的静态的map（ThreadLocalMap），key是当前线程的句柄，value是需要保持的值。
 
+### key 是什么
+
+是ThreadLocal类的实例对象，value是用户的值。而不是线程的名字或者标识。
+
+### 为什么不直接用线程id来作为ThreadLocalMap的key
+
+假如一个线程中有多个Threadlocal对象，那么这时候因为线程id是同一个，就无法区分具体是哪一个threadlocal对象了
+
+### 内存泄露的原因
+
+ThreadLocalMap使用ThreadLocal弱引用作为key，如果一个ThreadLocal没有外部强引用引用他，那么系统gc的时候，这个ThreadLocal势必会被回收，这样的话，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry，如果当前线程迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链。
+
+
 
 
 
@@ -120,6 +144,12 @@ getState()
 setState()
 compareAndSetState()
 
+### 设计思想：
+
+- 持有一个volatile修饰的int型成员变量state，该state代表一种同步状态，具体代表什么由子类自行定义。并提供了getState()、setState()和compareAndSetState()三个方法用来读取或改变state的值。
+- 定义了一个先进先出的同步队列，队列中的节点由AbstractQueuedSynchronizer中的一个静态内部类Node定义。无论是独占锁还是共享锁，都可以通过继承AbstractQueuedSynchronizer来实现，独占锁和共享锁的线程由Node类抽象。
+- 借助LockSupport.park()方法和LockSupport.unpark()方法来使某线程等待和唤醒某线程。
+
 
 ### 工作机制：
 AQS的等待队列是基于链表实现的FIFO的等待队列，队列每个节点只关心其前驱节点的状态，线程唤醒时只唤醒队头等待线程（即head的后继节点，并且等待状态不大于0）
@@ -144,7 +174,7 @@ ReentrantReadWriteLock 可以看成是组合式，因为ReentrantReadWriteLock �
 执行过程？
 
 
-## 锁  ***
+## 锁  **各种锁**
 
 悲观锁和乐观锁的区别，应用？（java中的Synchronized关键字和lock锁使用的都是悲观锁；CAS机制是乐观锁的一种实现方式）
 
@@ -260,27 +290,27 @@ futureTask
 
 ---
 
-## 
+## 基本类型
 
-整型 4
+### 整型 4
 
-byte 8位
+byte 8位  1个字节
 
-short 16位
+short 16位  2个字节
 
-int 32位
+int 32位  4个字节
 
-long 64位
+long 64位  8个字节
 
-浮点型 2
+### 浮点型 2
 
-float 32位
+float 32位  4个字节
 
-double 64位
+double 64位  8个字节
 
-字符型 1  char
+### 字符型 1  char  2个字节
 
-布尔型 1   boolean
+### 布尔型 1   boolean   1个字节
 
 ---
 

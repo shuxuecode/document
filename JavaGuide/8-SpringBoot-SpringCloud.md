@@ -15,6 +15,8 @@ Spring Boot提供了各种组件的启动器（starters），开发者只要能�
 - 老spring项目很难迁移到SpringBoot框架，有一些XML配置无法通过配置实现，还有内置的tomcat等容器的调优也需要深入研究才可以。
 
 
+## SpringBoot 启动过程？？
+
 
 ## SpringBoot自动装配原理
 

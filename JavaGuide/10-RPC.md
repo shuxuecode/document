@@ -10,7 +10,15 @@ AP：关注可用性
 ## 服务高可用？
 
 ## Dubbo
+
+![](img/2021-04-19-17-00-21.png)
+
 服务暴露和引用过程
+
+**参考文章**
+https://developer.aliyun.com/article/38380
+
+
 
 ### 协议
 

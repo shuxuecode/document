@@ -39,7 +39,82 @@ HashMap解决hash冲突的方式是链地址法。
 
 > redis cluster 拥有固定的16384个slot
 
-## get put 的伪代码 ？？
+## get put 的伪代码
+
+```
+// 获取key对应的value
+public V get(Object key) {
+    if (key == null)
+        return getForNullKey();
+    // 获取key的hash值
+    int hash = hash(key.hashCode());
+    // 在“该hash值对应的链表”上查找“键值等于key”的元素
+    for (Entry<K, V> e = table[indexFor(hash, table.length)]; e != null; e = e.next) {
+        Object k;
+        // 判断key是否相同
+        if (e.hash == hash && ((k = e.key) == key || key.equals(k)))
+            return e.value;
+    }
+    // 没找到则返回null
+    return null;
+}
+```
+
+如果key不为null，则先求的key的hash值，根据hash值找到在table中的索引，在该索引对应的单链表中查找是否有键值对的key与目标key相等，有就返回对应的value，没有则返回null。
+
+
+## put
+
+```
+// 将“key-value”添加到HashMap中
+public V put(K key, V value) {
+    // 若“key为null”，则将该键值对添加到table[0]中。
+    if (key == null)
+        return putForNullKey(value);
+    // 若“key不为null”，则计算该key的哈希值，然后将其添加到该哈希值对应的链表中。
+        // 1. 求 key 的 hash 值
+    int hash = hash(key.hashCode());
+    // 2. 找到对应的数组下标
+    int i = indexFor(hash, table.length);
+
+    // 3. 遍历一下对应下标处的链表，看是否有重复的 key 已经存在
+    //    如果有，直接覆盖，put 方法返回旧值就结束了
+    for (Entry<K, V> e = table[i]; e != null; e = e.next) {
+        Object k;
+        // 若“该key”对应的键值对已经存在，则用新的value取代旧的value。然后退出！
+        if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            V oldValue = e.value;
+            e.value = value;
+            e.recordAccess(this);
+            return oldValue;
+        }
+    }
+
+    // 若“该key”对应的键值对不存在，则将“key-value”添加到table中
+    modCount++;
+    // 将key-value添加到table[i]处
+    addEntry(hash, key, value, i);
+    return null;
+}
+```
+
+如果key为null，则将其添加到table[0]对应的链表中，如果key不为null，则同样先求出key的hash值，根据hash值得出在table中的索引，而后遍历对应的单链表，如果单链表中存在与目标key相等的键值对，则将新的value覆盖旧的value，且将旧的value返回，如果找不到与目标key相等的键值对，或者该单链表为空，则将该键值对插入到单链表的头节点位置（每次新插入的节点都是放在头节点的位置），该操作是有addEntry方法实现的，它的源码如下：
+
+```
+// 新增Entry。将“key-value”插入指定位置，bucketIndex是位置索引。
+void addEntry(int hash, K key, V value, int bucketIndex) {
+    // 保存“bucketIndex”位置的值到“e”中
+    Entry<K, V> e = table[bucketIndex];
+    // 设置“bucketIndex”位置的元素为“新Entry”，
+    // 设置“e”为“新Entry的下一个节点”
+    table[bucketIndex] = new Entry<K, V>(hash, key, value, e);
+    // 若HashMap的实际大小 不小于 “阈值”，则调整HashMap的大小
+    if (size++ >= threshold)
+        resize(2 * table.length);
+}
+```
+
+
 
 ## 扩容的伪代码 ？？
 
@@ -100,10 +175,13 @@ ConcurrentHashMap在jdk1.7中采用Segment + HashEntry的方式进行实现；
 
 HashMap是线程不安全的，而ConcurrentHashMap和ConcurrentSkipListMap是线程安全的，它们内部都使用无锁CAS算法实现了同步。ConcurrentHashMap中的元素是无序的，ConcurrentSkipListMap中的元素是有序的。
 
+## HashTable
+底层数据结构？？
 
 ## TreeMap
 基于红黑树实现
 
+## LinkedHashMap ??
 
 ## HashSet的底层实现
 基于HashMap来实现的

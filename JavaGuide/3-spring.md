@@ -4,6 +4,19 @@ IOC 和 AOP，
 IOC 可以帮助我们管理对象的依赖关系，极大减少对象的耦合性，
 而 AOP 的切面编程功能可以更方面的使用动态代理来实现各种动态方法功能（如事务、缓存、日志等）。
 
+## Spring中使用了哪些设计模式
+
+1. 简单工厂模式
+spring中的BeanFactory就是简单工厂模式的体现
+2. 单例模式
+3. 代理模式
+aop动态代理
+4. 观察者模式
+常用的地方是listener的实现。如ApplicationListener、ApplicationEvent。
+5. 模板方法模式
+JdbcTemplate
+
+
 ## AOP
 
 ### Spring AOP的实现原理
@@ -57,7 +70,7 @@ getBean
 
 - 后置处理器？ 可以自定义很多逻辑处理
 
-## bean
+## bean scope （作用域）
 
 单例  singleton
 多例  prototype

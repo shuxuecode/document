@@ -154,6 +154,7 @@ count1*区别？
 
 ## explain ??
 ## explain分析执行计划、SQL语句的优化
+关注的列？
 
 
 

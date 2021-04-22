@@ -74,6 +74,43 @@ ReenTrantLock的实现是一种自旋锁，通过循环调用CAS操作来实现�
 
 ## CountDownLatch  CyclicBarrier  Semaphore （信号量）
 
+### CountDownLatch的实现原理
+
+```
+public class CountDownLatch {
+   
+    private static final class Sync extends AbstractQueuedSynchronizer {
+        private static final long serialVersionUID = 4982264981922014374L;
+        //设置同步状态
+        Sync(int count) {
+            setState(count);
+        }
+        //获取同步状态的值
+        int getCount() {
+            return getState();
+        }
+        //获取共享锁,1、getState>1返回1：表示获取到共享锁，-1：表示没有获取到共享锁
+        protected int tryAcquireShared(int acquires) {
+            return (getState() == 0) ? 1 : -1;
+        }
+        //释放共享锁
+        protected boolean tryReleaseShared(int releases) {
+            // Decrement count; signal when transition to zero
+            for (;;) {
+                int c = getState();
+                if (c == 0)
+                    return false;
+                int nextc = c-1;
+                //通过CAS设置同步状态值，如果设置失败则说明同一时刻有其它线程在设置，但是会通过自旋的方式最终设置成功
+                if (compareAndSetState(c, nextc))
+                    return nextc == 0;
+            }
+        }
+    }
+}
+```
+
+
 CountDownLatch如果有一个线程因为某种原因无法执行countDown()，则会导致await线程一直阻塞下去。
 
 > CyclicBarrier [ˈsaɪklɪk] [ˈbæriər]  

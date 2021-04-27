@@ -168,6 +168,14 @@ ZGC通过着色指针和读屏障技术，解决了转移过程中准确访问�
 
 ---
 
+## happen-before原则
+
+？？
+
+
+---
+
+
 top jps jstat jmap 定位问题
 
 ### jmap

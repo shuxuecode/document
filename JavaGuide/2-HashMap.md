@@ -199,6 +199,8 @@ new 一个 HashSet对象底层实际就是new了一个HashMap，并且使用默�
 ### ArrayList的扩容？
 （ArrayList底层是基于数组实现，所以创建ArrayList会给数组指定一个初始容量，默认值为10，因为必须指明数组的长度才能给数组分配空间；由于数组的特性，ArrayList扩容是创建一个更大的数组，然后将原来的元素拷贝到更大的数组中，扩容的核心方法是Arrays.copyOf方法）
 
+## LinkedList
+
 ---
 
 ## CopyOnWriteArrayList

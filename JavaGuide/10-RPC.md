@@ -84,7 +84,7 @@ https://blog.csdn.net/u012965203/article/details/98253914
 
 ---
 
-## ZooKeeper
+## ZooKeeper   CP模型
 
 它是一个基于ZAB协议实现的可靠的分布式协调系统，它是强一致（CP）、使用基于TCP的私有协议通信
 
@@ -95,4 +95,7 @@ watch监听通知原理
 
 
 
+## nacos ？？
 
+
+与zk的区别？？

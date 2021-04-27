@@ -2,6 +2,28 @@
 
 - 股票利润最大化
 
+## DCL单例模式   Double Check Lock，双重检查锁定
+
+```java
+public class Singleton {
+    private volatile static Singleton singleton;
+
+    private Singleton(){}
+
+    public static Singleton getInstance(){
+        if (singleton == null) {
+            synchronized (Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
+    }
+}
+```
+
+
 ## 栈 的方法 ？？
 
 
@@ -24,3 +46,5 @@
 ## 二分查找
 
 
+PriorityQueue
+DelayQueue

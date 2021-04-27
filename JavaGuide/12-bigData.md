@@ -28,6 +28,8 @@ JobManager
 
 Hadoop实现了一个分布式文件系统(Hadoop Distributed File System)，简称HDFS。Hadoop的框架最核心的设计就是：HDFS和MapReduce。HDFS为海量的数据提供了存储，MapReduce则为海量的数据提供了计算。
 
+shuffle？？
+
 
 ## Hbase
 开放源代码，非关系型，分布式数据库，采用Google的BigTable建模，用Java编写，并在HDFS上运行。
@@ -35,6 +37,12 @@ Hadoop实现了一个分布式文件系统(Hadoop Distributed File System)，简
 
 ## ES
 分布式搜索引擎，底层是Lucene
+
+> 准实时？？
+
+### 倒排索引
+
+查找数据的过程？？ 节点？？
 
 ## ClickHouse
 面向列式存储的关系型数据库

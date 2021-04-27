@@ -27,33 +27,51 @@ Spring Boot提供了各种组件的启动器（starters），开发者只要能�
 
 ## SpringCloud
 
-Eureka 微服务注册与发现
+### Eureka 微服务注册与发现
 
-Actuator 微服务监控
+### Actuator 微服务监控
 
-RestTemplate 服务器远程调用 
+### RestTemplate 服务器远程调用 
 
-Ribbon 客户端的负载均衡
+### Ribbon 客户端的负载均衡
+- RoundRobinRule  默认是轮询
+- WeightedRsponseTimeRule  权重值
+- RandomRule  随机
+- ZoneAvoidanceRule  以区域，可用的服务器为基础进行服务器的选择，使用Zone对服务器进行分类
+- AvailabilityFilteringRule  是否可用性，在默认情况下连接失败3次，这个服务器就会被置为"短路"状态，这个状态将持续30秒。如果再连不上，那么这个状态的持续时间将会持续增加。
 
-OpenFeign 声明式服务调用  ——  dubbo
+### OpenFeign 声明式服务调用  ——  dubbo
 
-Hystrix 微服务熔断、降级、资源隔离
+### Hystrix 微服务熔断、降级、资源隔离
 
-HystrixDashboard
+### HystrixDashboard
 
-Zuul 微服务网关   ——  Spring Cloud Gateway
+### Zuul 微服务网关   ——  Spring Cloud Gateway
 
-Config 微服务配置中心
+### Config 微服务配置中心
 
 
 ## Nacos
 
+Nacos除了服务的注册发现之外，还支持动态配置服务。
 动态监听配置更新 Listener
 
+## 几个注册中心的比较
+
+![](img/2021-04-27-16-42-17.png)
+
+### Nacos
+- 可选择 CP 或 AP，  **raft算法???**
 
 
+### Eureka
+- 一致性协议：AP
 
+### Consul
+- 一致性协议：CP
 
+### Zookeeper
+- 一致性协议：CP
 
 
 

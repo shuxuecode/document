@@ -40,3 +40,11 @@ See "man sudo_root" for details.
 
 
 ---
+
+## 连接wifi
+
+安装wifi扫描工具
+
+sudo apt install wireless-tools
+
+

@@ -71,9 +71,28 @@ Kafka的可靠性，稳定性和功能特性基本满足大多数的应用场景
 
 ## Kafka
 
+### 特性
+1. **高吞吐量、低延迟**   每秒处理几十万消息
+2. **可扩展性**    集群支持热扩展
+3. **持久性、可靠性**    消息被持久化到磁盘，并且支持备份防止数据丢失
+4. **容错性**    允许节点失败
+5. **高并发**    支持数千个客户端同时读写
+
+
 内部原理？工作流程？
 
+1. **Producer** : 消息生产者，就是向kafka broker发消息的客户端；
+2. **Consumer** : 消息消费者，向kafka broker取消息的客户端;
+3. **Topic** : 可以理解为一个队列, 消息的分类。
+4. **Broker** : 一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic；
+5. **Partition** : 为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，一个topic可以分为多个partition，每个partition是一个有序的队列。partition中的每条消息都会被分配一个有序的id（offset）。kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序；
+6. **Replication** 每一个分区都有多个副本，副本的作用是做备胎。当主分区（Leader）故障的时候会选择一个备胎（Follower）上位，成为Leader。在kafka中默认副本的最大数量是10个，且副本的数量不能大于Broker的数量，follower和leader绝对是在不同的机器，同一机器对同一个分区也只可能存放一个副本（包括自己）。
+7. **Offset**：kafka的存储文件都是按照offset.kafka来命名，用offset做名字的好处是方便查找。例如你想找位于2049的位置，只要找到2048.kafka的文件即可。当然the first offset就是00000000000.kafka。
+8. **Consumer Group** （CG）：这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。一个topic可以有多个CG。topic的消息会复制（不是真的复制，是概念上的）到所有的CG，但每个partion只会把消息发给该CG中的一个consumer。如果需要实现广播，只要每个consumer有一个独立的CG就可以了。要实现单播只要所有的consumer在同一个CG。用CG还可以将consumer进行自由的分组而不需要多次发送消息到不同的topic； **各个consumer可以组成一个组，每个消息只能被组中的一个consumer消费，如果一个消息可以被多个consumer消费的话，那么这些consumer必须在不同的组。**
 
+
+### 消息写入流程
+![](img/2021-04-29-16-14-22.png)
 
 除了消息顺序追加、页缓存等技术，Kafka 还使用零拷贝技术来进一步提升性能。所谓的零拷贝是指将数据直接从磁盘文件复制到网卡设备中，而不需要经由应用程序之手。零拷贝大大提高了应用程序的性能，减少了内核和用户模式之间的上下文切换。对 Linux 操作系统而言，零拷贝技术依赖于底层的 sendfile() 方法实现。对应于 Java 语言，FileChannal.transferTo() 方法的底层实现就是 sendfile() 方法。
 

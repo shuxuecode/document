@@ -247,17 +247,30 @@ ReentrantReadWriteLock 可以看成是组合式，因为ReentrantReadWriteLock �
 
 
 **死锁实现**
-```
-????
+```java
+Lock implements Runnable {
+    run(){
+        synchronized(obj1){
+            ...
+            synchronized(obj2){
+                ...
+            }
+        }
+    }
+}
 ```
 
 ---
 
 
+## Future 
+Future代表的是异步执行的结果，意思是当异步执行结束之后，返回的结果将会保存在Future中。
 
-## future  ？
+### FutureTask
+![](img/md-2021-05-02-14-51-42.png)
 
-futureTask
+todo??
+
 
 ## 自动装箱和拆箱
 简单一点说，装箱就是自动将基本数据类型转换为包装器类型；拆箱就是自动将包装器类型转换为基本数据类型。
@@ -323,14 +336,13 @@ futureTask
 
 
 
-## Final, finally, finalize的区别？
+## Final, finally, finalize的区别
 
 - final：他是用来进行修饰方法、类、以及属性变量的，如果修饰的是方法的话，表示方法不能够被覆盖，如果修饰的是类的话，就表示该类不能够被继承，如果修饰的是属性变量的话，就表示该属性变量不能够被修改。
 
 - finally：他一般用来进行try 。。catch语句之后，主要是为了进行释放一些连接资源，无论怎么finally中的代码都会被执行。
 
 - finalize：这个方法是Object对象的protected修饰的方法，当虚拟机在进行回收一个对象之前的时候，会去调用该对象的finalize（）方法，这个方法只能是被动的被调用，就算是我们主动去调用该方法去回收一个对象，也不会起到作用的，因为他是有虚拟机自己去决定的。
-
 
 
 ---

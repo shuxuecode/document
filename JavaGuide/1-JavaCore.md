@@ -30,6 +30,10 @@ volatile如何保证可见性（MESI缓存一致性协议）
 
 volatile如何保证有序性（内存屏障——lock前缀指令）
 
+### CPU指令重排？？
+
+### 内存屏障如何禁止指令重排？？
+
 synchronized和volatile的区别（volatile是一种非锁机制，这种机制可以避免锁机制引起的线程上下文切换和调度问题。因此，volatile的执行成本比synchronized更低；volatile只能保证可见性有序性；synchronized可以保证原子性可见性有序性）
 
 ### volatile和synchronized的区别:
@@ -129,6 +133,7 @@ CountDownLatch如果有一个线程因为某种原因无法执行countDown()，�
 ### Semaphore
 两个构造方法，当第二个参数设置为false，则不保证线程获取许可的顺序，还允许插队。设置为true时，将保证按照FIFO的顺序获取许可。
 
+#### 使用Semaphore做限流？？
 
 ## Exchange
 

@@ -2,8 +2,28 @@
 
 mysql三大范式（1NF即原子性，2NF即消除部分依赖，3NF即消除传递依赖）
 
+![](img/md-2021-05-06-22-31-43.png)
 
 ## 执行计划？
+
+## SQL 的执行顺序
+
+```sql
+SELECT DISTINCT
+    < select_list >
+FROM
+    < left_table > < join_type >
+JOIN < right_table > ON < join_condition >
+WHERE
+    < where_condition >
+GROUP BY
+    < group_by_list >
+HAVING
+    < having_condition >
+ORDER BY
+    < order_by_condition >
+LIMIT < limit_number >
+```
 
 ---
 
@@ -50,21 +70,37 @@ Node节点通过解析各MySQL日志来进行一些操作，Manager节点将和�
 
 ## 存储引擎
 
-Myisam和InnoDB存储引擎的区别？（Myisam不支持外键也不支持事务，支持的是表锁，当执行select操作时，自动给涉及的表加表锁，当执行增删改操作，自动给涉及的表加写锁；InnoDB支持外键也支持事务，支持的是行锁，当执行select操作时，不加任何锁，当执行增删改操作，自动给涉及的行加写锁）
+### Myisam和InnoDB存储引擎的区别
+> 在 5.1 版本之前，MyISAM 是 MySQL 的默认存储引擎
 
+1. Myisam不支持外键也不支持事务，支持的是表锁，当执行select操作时，自动给涉及的表加表锁，当执行增删改操作，自动给涉及的表加写锁；
+
+2. InnoDB支持外键也支持事务，支持的是行锁，当执行select操作时，不加任何锁，当执行增删改操作，自动给涉及的行加写锁
+
+3. 和 MyISAM 一样的是，InnoDB 存储引擎也有 **.frm文件存储表结构** 定义，但是不同的是，InnoDB 的表数据与索引数据是存储在一起的，都位于 B+ 数的叶子节点上，而 MyISAM 的表数据和索引数据是分开的。
+
+4. InnoDB 有安全的日志文件，这个日志文件用于恢复因数据库崩溃或其他情况导致的数据丢失问题，保证数据的一致性。如果宕机，MyISAM 的数据文件容易损坏，而且难以恢复。
+
+5. 查询性能上：MyISAM 要优于 InnoDB，因为 InnoDB 在查询过程中，是需要维护数据缓存，而且查询过程是先定位到行所在的数据块，然后在从数据块中定位到要查找的行；而 MyISAM 可以直接定位到数据所在的内存地址，可以直接找到数据。
 
 
 ---
 
 ## 事务四大特性  ACID
 
+### 原子性（atomicity)
+要么全部成功、要么全部失败回滚
 
-原子性（atomicity)
+### 一致性（consistency)
+一致性指的是一个事务在执行前后其状态一致。
+> 比如 A 和 B 加起来的钱一共是 1000 元，那么不管 A 和 B 之间如何转账，转多少次，事务结束后两个用户的钱加起来还得是 1000，这就是事务的一致性。
 
-一致性（consistency)
-隔离性（isolation）
+### 隔离性（isolation）
+对应下面四种隔离级别
 
-持久性（durability）
+### 持久性（durability）
+
+
 
 ## 隔离级别
 
@@ -77,6 +113,8 @@ Myisam和InnoDB存储引擎的区别？（Myisam不支持外键也不支持事�
 
 ![img](img\2021-02-18-13-58-nxkJ2Bz8itIhWKU.png)
 注：√代表可能发生，×代表不可能发生
+
+隔离级别越高，越能够保证数据的完整性和一致性，但是对并发的性能影响越大。大多数数据库的默认级别是读已提交(Read committed)，比如 Sql Server、Oracle ，但是 **MySQL 的默认隔离级别是 可重复读(repeatable-read)**。
 
 ### 
 
@@ -262,7 +300,7 @@ B+树插入要记住这几个步骤：
 > 参考：https://www.jianshu.com/p/8845ddca3b23
 
 
-## myisam  innodb  区别 ？？
+
 
 
 

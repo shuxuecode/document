@@ -169,6 +169,8 @@ ThreadLocalMap使用ThreadLocal弱引用作为key，如果一个ThreadLocal没�
 
 ## 	CAS  (Compare And Swap)
 
+> CAS是通过unsafe类的compareAndSwap方法实现的 ??
+
 CAS机制，会引发什么问题，如何解决ABA问题？（CAS会导致ABA问题，解决ABA问题是使用版本号机制）
 
 使用AtomicStampedReference解决ABA问题
@@ -186,6 +188,8 @@ state的访问方式有三种:
 getState()
 setState()
 compareAndSetState()
+
+> 在AQS内部会保存一个状态变量state，通过CAS修改该变量的值，修改成功的线程表示获取到该锁，没有修改成功，或者发现状态state已经是加锁状态，则通过一个Waiter对象封装线程，添加到等待队列中，并挂起等待被唤醒……
 
 ### 设计思想：
 

@@ -1,14 +1,5 @@
 
-## list
 
-- jvm - 5
-- spring 4
-- hashmap 2
-- mysql 3
-- redis 2
-- dubbo 5
-- springboot cloud 5
--  
 
 ### FIFO( First Input First Output)简单说就是指先进先出
 

@@ -109,6 +109,11 @@ Spring先是用构造实例化Bean对象 ，此时Spring会将这个实例化结
 
 ## 事务
 
+
+### 注解@Transactional
+
+对于@Transactional可以保证RuntimeException错误的回滚，如果想保证非RuntimeException错误的回滚，需要加上rollbackFor = Exception.class 参数。
+
 在TransactionDefinition定义
 
 ### 5种事务隔离级别  

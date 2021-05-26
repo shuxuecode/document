@@ -84,7 +84,12 @@ Kafka的可靠性，稳定性和功能特性基本满足大多数的应用场景
 1. **Producer** : 消息生产者，就是向kafka broker发消息的客户端；
 2. **Consumer** : 消息消费者，向kafka broker取消息的客户端;
 3. **Topic** : 可以理解为一个队列, 消息的分类。
-4. **Broker** : 一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic；
+4. **Broker** : 一台kafka**服务器**就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic；
+
+> broker存储topic的数据。如果某topic有N个partition，集群有N个broker，那么每个broker存储该topic的一个partition。
+> 如果某topic有N个partition，集群有(N+M)个broker，那么其中有N个broker存储该topic的一个partition，剩下的M个broker不存储该topic的partition数据。
+> 如果某topic有N个partition，集群中broker数目少于N个，那么一个broker存储该topic的一个或多个partition。在实际生产环境中，尽量避免这种情况的发生，这种情况容易导致Kafka集群数据不均衡。
+
 5. **Partition** : 为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，一个topic可以分为多个partition，每个partition是一个有序的队列。partition中的每条消息都会被分配一个有序的id（offset）。kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序；
 6. **Replication** 每一个分区都有多个副本，副本的作用是做备胎。当主分区（Leader）故障的时候会选择一个备胎（Follower）上位，成为Leader。在kafka中默认副本的最大数量是10个，且副本的数量不能大于Broker的数量，follower和leader绝对是在不同的机器，同一机器对同一个分区也只可能存放一个副本（包括自己）。
 7. **Offset**：kafka的存储文件都是按照offset.kafka来命名，用offset做名字的好处是方便查找。例如你想找位于2049的位置，只要找到2048.kafka的文件即可。当然the first offset就是00000000000.kafka。
@@ -115,11 +120,18 @@ Kafka的可靠性，稳定性和功能特性基本满足大多数的应用场景
 ### broker 副本同步？？ isr ack？？
 
 
+
+#### isr ？？
+
+
+
+
 ## 重复消费
 
 避免
 
 ## 消息丢失
+
 
 ### 怎么解决消息不丢失
 

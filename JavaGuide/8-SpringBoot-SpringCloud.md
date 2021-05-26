@@ -1,6 +1,8 @@
 ## SpringBoot主要是为了简化使用 Spring 框架的难度，简省繁重的配置。
 Spring Boot提供了各种组件的启动器（starters），开发者只要能配置好对应组件参数，Spring Boot 就会自动配置，让开发者能快速搭建依赖于 Spring 组件的 Java 项目。
 
+![](img/md-2021-05-11-01-34-51.png)
+
 ## 优点
 
 - 独立运行
@@ -23,9 +25,19 @@ Spring Boot提供了各种组件的启动器（starters），开发者只要能�
 扫描所有具有`META-INF/spring.factories`的`jar`包
 
 
+## 自定义starter的步骤？？
 
+类添加`@Configuration`
+也可以添加一些条件`@ConditionalOnClass` `@ConditionalOnMissingBean`
+
+
+---
+---
+---
 
 ## SpringCloud
+
+![](img/md-2021-05-11-01-35-01.png)
 
 ### Eureka 微服务注册与发现
 
@@ -60,7 +72,7 @@ Nacos除了服务的注册发现之外，还支持动态配置服务。
 
 ![](img/2021-04-27-16-42-17.png)
 
-### Nacos
+### Nacos ??
 - 可选择 CP 或 AP，  **raft算法???**
 
 
@@ -110,6 +122,8 @@ Nacos除了服务的注册发现之外，还支持动态配置服务。
 ---
 
 
+
+Sentinel底层滑动时间窗限流算法？？
 
 
 

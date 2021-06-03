@@ -82,10 +82,32 @@ update user set password=PASSWORD('root!') where user = 'root';
 
 
 
+---
+
+## ubuntu安装docker
+
+uname -a 
+检查系统是否支持docker
+> 需要 64 位架构的系统和Linux 3.10 内核或更高版本。
+
+安装
+
+apt install docker.io
 
 
 
 
+启动tomcat
+
+docker run --name tomcat1 -t -i -p 60022:8080 -v /data:/tomcat tomcat:8.5.23
+
+
+### 没有catalina.out
+
+/usr/local/tomcat/bin/startup.sh
+
+因为
+CMD ["catalina.sh" "run"]
 
 
 

@@ -104,13 +104,12 @@ Node节点通过解析各MySQL日志来进行一些操作，Manager节点将和�
 ### 持久性（durability）
 
 
-
 ## 隔离级别
 
-- 读未提交
-- 读提交
-- 可重复读
-- 串行化
+- 读未提交（read uncommitted RU）： 一个事务还没提交时，它做的变更就能被别的事务看到
+- 读提交（read committed RC）： 一个事务提交之后，它做的变更才会被其他事务看到。
+- 可重复读（repeatable read RR）： 一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。当然在可重复读隔离级别下，未提交变更对其他事务也是不可见的。
+- 串行化（serializable ）： 顾名思义是对于同一行记录，“写”会加“写锁”，“读”会加“读锁”。当出现读写锁冲突的时候，后访问的事务必须等前一个事务执行完成，才能继续执行。
 
 并发事务处理带来的四种问题和事务的隔离级别（丢失更新、脏读、不可重复读、幻读；读未提交、读已提交、可重复读、串行化）
 
@@ -119,7 +118,15 @@ Node节点通过解析各MySQL日志来进行一些操作，Manager节点将和�
 
 隔离级别越高，越能够保证数据的完整性和一致性，但是对并发的性能影响越大。大多数数据库的默认级别是读已提交(Read committed)，比如 Sql Server、Oracle ，但是 **MySQL 的默认隔离级别是 可重复读(repeatable-read)**。
 
-### 
+## 事务中常见的问题
+
+- **脏读（dirty read）**：就是一个A事务即便没有提交，它对数据的修改也可以被其他事务B事务看到，B事务读到了A事务还未提交的数据，这个数据有可能是错的，有可能A不想提交这个数据，这只是A事务修改数据过程中的一个中间数据，但是被B事务读到了，这种行为被称作脏读，这个数据被称为脏数据
+
+- **不可重复读（non-repeatable read）**：在A事务内，多次读取同一个数据，但是读取的过程中，B事务对这个数据进行了修改，导致此数据变化了，那么A事务再次读取的时候，数据就和第一次读取的时候不一样了，这就叫做不可重复读
+
+- **幻读（phantom read）**：A事务多次查询数据库，结果发现查询的数据条数不一样，A事务多次查询的间隔中，B事务又写入了一些符合查询条件的多条数据（这里的写入可以是update，insert，delete），A事务再查的话，就像发生了幻觉一样，怎么突然改变了这么多，这种现象这就叫做幻读
+
+> 参考文章：https://mp.weixin.qq.com/s?__biz=Mzg5OTU4ODc0Mg==&mid=2247484174&idx=1&sn=75e3dd926f4d4cc655f2d4b216b3247e&chksm=c051b4e7f7263df1c89385c0ca7ac23dd8888999132efc6155911bd099901a5fc8f5201e52e4&scene=178&cur_album_id=1783698918074040322#rd
 
 ### 幻读怎么解决？？
 
@@ -149,7 +156,7 @@ Node节点通过解析各MySQL日志来进行一些操作，Manager节点将和�
 
 ## 锁
 
-
+### 死锁
 
 ## 索引
 
@@ -325,7 +332,9 @@ B+树插入要记住这几个步骤：
 
 ## MVCC机制  （Multi-Version Concurrency Control）多版本并发控制
 
-是用来在数据库中控制并发的方法，实现对数据库的并发访问用的。在MySQL中，MVCC只在读取已提交（Read Committed）和可重复读（Repeatable Read）两个事务级别下有效。其是通过Undo日志中的版本链和ReadView一致性视图来实现的。MVCC就是在多个事务同时存在时，SELECT语句找寻到具体是版本链上的哪个版本，然后在找到的版本上返回其中所记录的数据的过程。
+是用来在数据库中控制并发的方法，实现对数据库的并发访问用的。在MySQL中，MVCC只在**读已提交（Read Committed）**和**可重复读（Repeatable Read）**两个事务级别下有效。其是通过Undo日志中的**版本链**和ReadView**一致性视图**来实现的。MVCC就是在多个事务同时存在时，SELECT语句找寻到具体是版本链上的哪个版本，然后在找到的版本上返回其中所记录的数据的过程。
+
+> 版本链是一条链表，链接的是每条数据曾经的修改记录
 
 ### MySQL InnoDB下的当前读 和 快照读
 
@@ -398,3 +407,255 @@ MySQL默认的复制即是异步的，主库在执行完客户端提交的事务
 ## todo
 
 mysql行锁最大并发数？（秒杀项目指出）
+
+
+## MySQL8.0有哪些新特性
+
+1. 默认字符集由latin1变为utf8mb4
+2. MyISAM系统表全部换成InnoDB表
+3. 自增变量持久化
+在8.0之前的版本，自增主键AUTO_INCREMENT的值如果大于max(primary key)+1，在MySQL重启后，会重置AUTO_INCREMENT=max(primary key)+1，这种现象在某些情况下会导致业务主键冲突或者其他难以发现的问题。自增主键重启重置的问题很早就被发现(https://bugs.mysql.com/bug.php?id=199)，一直到8.0才被解决，8.0版本将会对AUTO_INCREMENT值进行持久化，MySQL重启后，该值将不会改变。
+4. DDL原子化
+
+InnoDB表的DDL支持事务完整性，要么成功要么回滚，将DDL操作回滚日志写入到data dictionary 数据字典表 mysql.innodb_ddl_log 中用于回滚操作，该表是隐藏的表，通过show tables无法看到。通过设置参数，可将ddl操作日志打印输出到mysql错误日志中。
+
+mysql> set global log_error_verbosity=3;
+
+mysql> set global innodb_print_ddl_logs=1;
+
+mysql> create table t1(c int) engine=innodb;
+
+来看另外一个例子，库里只有一个t1表，drop table t1,t2;
+
+试图删除t1,t2两张表,在5.7中，执行报错，但是t1表被删除，在8.0中执行报错，但是t1表没有被删除，证明了8.0 DDL操作的原子性，要么全部成功，要么回滚。
+5. 参数修改持久化
+
+MySQL 8.0版本支持在线修改全局参数并持久化，通过加上PERSIST关键字，可以将修改的参数持久化到新的配置文件（mysqld-auto.cnf）中，重启MySQL时，可以从该配置文件获取到最新的配置参数。
+
+例如执行：
+
+set PERSIST expire_logs_days=10 ;
+
+系统会在数据目录下生成一个包含json格式的 mysqld-auto.cnf 的文件，格式化后如下所示，当 my.cnf 和 mysqld-auto.cnf 同时存在时，后者具有更高优先级。
+
+
+6. 新增降序索引
+
+MySQL在语法上很早就已经支持降序索引，但实际上创建的仍然是升序索引，
+
+如下MySQL 5.7 所示，c2字段降序，但是从show create table看c2仍然是升序。
+
+8.0可以看到，c2字段降序。
+
+再来看降序索引在执行计划中的表现，在t1表插入10万条随机数据，
+
+查看select * from t1 order by c1 , c2 desc;的执行计划。从执行计划上可以看出，
+
+5.7的扫描数100113远远大于8.0的5行，并且使用了filesort。
+
+
+
+7. group by 不再隐式排序
+
+mysql 8.0 对于group by 字段不再隐式排序，如需要排序，必须显式加上order by 子句。
+
+
+
+8. JSON特性增强
+
+MySQL 8 大幅改进了对 JSON 的支持，添加了基于路径查询参数从 JSON 字段中抽取数据的 JSON_EXTRACT() 函数，以及用于将数据分别组合到 JSON 数组和对象中的 JSON_ARRAYAGG() 和 JSON_OBJECTAGG() 聚合函数。
+
+在主从复制中，新增参数 binlog_row_value_options，
+
+控制JSON数据的传输方式，允许对于Json类型部分修改，在binlog中只记录修改的部分，减少json大数据在只有少量修改的情况下，对资源的占用。
+
+
+
+9. redo & undo & binlog 日志加密
+
+增加以下三个参数，用于控制redo、undo日志的加密。
+
+innodb_undo_log_encrypt
+
+innodb_undo_log_truncate
+
+binlog_encryption
+
+
+
+10. innodb select for update跳过锁等待
+
+select ... for update，select ... for share(8.0新增语法) 添加 NOWAIT、SKIP LOCKED语法，跳过锁等待，或者跳过锁定。
+
+在5.7及之前的版本，select...for update，如果获取不到锁，会一直等待，直到innodb_lock_wait_timeout超时。
+
+
+
+在8.0版本，通过添加nowait，skip locked语法，能够立即返回。
+
+如果查询的行已经加锁，那么nowait会立即报错返回，
+
+而skip locked也会立即返回，只是返回的结果中不包含被锁定的行。
+
+
+
+11. 增加SET_VAR语法
+
+在sql语法中增加SET_VAR语法，动态调整部分参数，有利于提升语句性能。
+
+SELECT /*+ SET_VAR(sort_buffer_size = 16M) */ id FROM test ORDER id ;
+
+INSERT /*+ SET_VAR(foreign_key_checks=OFF) */ INTO test(NAME) VALUES(1);
+
+
+
+12. 支持不可见索引
+
+使用INVISIBLE关键字在创建表或者进行表变更中设置索引是否可见。
+
+索引不可见只是在查询时优化器不使用该索引，即使使用force index，
+
+优化器也不会使用该索引，同时优化器也不会报索引不存在的错误，因为索引仍然真实存在，在必要时，也可以快速的恢复成可见。
+
+# 创建不可见索引
+
+CREATE TABLE t2(c1 INT,c2 INT,INDEX idx_c1_c2(c1,c2 DESC) invisible );
+
+# 索引可见
+
+ALTER TABLE t2 ALTER INDEX idx_c1_c2 visible;
+
+# 索引不可见
+
+ALTER TABLE t2 ALTER INDEX idx_c1_c2 invisible;
+
+
+
+13. 新增innodb_dedicated_server参数
+
+能够让InnoDB根据服务器上检测到的内存大小自动配置innodb_buffer_pool_size，innodb_log_file_size，innodb_flush_method三个参数。
+
+
+
+14. 日志分类更详细
+
+在错误信息中添加了错误信息编号[MY-010311]和错误所属子系统[Server]
+
+
+
+15. undo空间自动回收
+
+innodb_undo_log_truncate参数在8.0.2版本默认值由OFF变为ON，默认开启undo日志表空间自动回收。
+
+innodb_undo_tablespaces参数在8.0.2版本默认为2，当一个undo表空间被回收时，还有另外一个提供正常服务。
+
+innodb_max_undo_log_size参数定义了undo表空间回收的最大值，当undo表空间超过这个值，该表空间被标记为可回收。
+
+
+
+15. 增加资源组
+
+MySQL 8.0新增了一个资源组功能，用于调控线程优先级以及绑定CPU核。
+
+MySQL用户需要有 RESOURCE_GROUP_ADMIN权限才能创建、修改、删除资源组。
+
+在Linux环境下，MySQL进程需要有CAP_SYS_NICE 权限才能使用资源组完整功能。
+
+默认提供两个资源组，分别是USR_default，SYS_default
+
+创建资源组：
+
+create resource group test_resouce_group type=USER vcpu=0,1 thread_priority=5;
+
+将当前线程加入资源组：
+
+SET RESOURCE GROUP test_resouce_group;
+
+将某个线程加入资源组：
+
+SET RESOURCE GROUP test_resouce_group FOR thread_id;
+
+查看资源组里有哪些线程：
+
+select * from Performance_Schema.threads where
+
+RESOURCE_GROUP='test_resouce_group';
+
+修改资源组：
+
+alter resource group test_resouce_group vcpu = 2,3 THREAD_PRIORITY = 8;
+
+删除资源组 ：
+
+drop resource group test_resouce_group;
+
+
+
+16. 增加角色管理
+
+角色可以认为是一些权限的集合，为用户赋予统一的角色，权限的修改直接通过角色来进行，无需为每个用户单独授权。
+
+
+
+17、MySQL8.0现在支持窗口函数（over）和公用表表达式（with）
+
+毫无疑问，这是两个最重要的Post-SQL-92功能。
+
+
+
+18、DDL新增算法
+
+8.0.12的优化是，新增了一个算法 ALGORITHM=INSTANT，专门处理只需要修改元数据就可以完成的变更，这个就可以相对比较方便地直接使用了，不需要担心从库延迟。
+
+目前支持的操作是：
+
+　　1.添加新列。已知限制条件如下：
+
+　　    不能与其他不支持INSTANT算法的alter子语句合并在一起。
+
+　　    只能添加在表列的末尾。
+
+　　    不能用于innodb的压缩表（ROW_FORMAT=COMPRESSED）。
+
+　　    目标表不能包含全文索引。
+
+　　    目标表不能是临时表。
+
+　　    目标表不能是数据字典表。
+
+　　    这种添加方式下，不会计算行长度是否合适，这个计算会在发生insert或者update的时候处理。
+
+       2. 添加或者删除虚拟列。
+
+       3. 添加或者去掉列的默认值。
+
+       4. 修改 enum，set 列类型的定义（题外话，有多少人知道并在用这个？）
+
+       5. 修改索引类型。
+
+       6. 重命名表名称。
+
+20、克隆功能
+
+用于自动搭建从节点，也可用于备份innodb表，增强了MySQL InnoDB Cluster。
+
+21、其他新特性
+
+    binlog日志压缩（binlog_transaction_compression=off，binlog_transaction_compression_level_zstd=3）；
+
+    取消Query Cache；
+
+    hash join；
+
+    在线修改undo数量；
+
+    额外的admin连接，DBA专用端口；
+
+    8.0.20开始，redolog格式变化，xtrabackup备份工具目前不支持（2020-05-15）；
+
+    新增TempTable引擎；
+
+    新增double write相关参数，可以独立设置大小和存放目录，性能得到极大提升。
+
+    MySQL shell提供相关的集群管理工具集，便于MySQL集群管理。
+

@@ -151,7 +151,28 @@ CountDownLatch如果有一个线程因为某种原因无法执行countDown()，�
 ### Semaphore
 两个构造方法，当第二个参数设置为false，则不保证线程获取许可的顺序，还允许插队。设置为true时，将保证按照FIFO的顺序获取许可。
 
-#### 使用Semaphore做限流？？
+#### 使用Semaphore做限流
+
+（1）acquire();
+作用：获取一个令牌，在获取到令牌、或者被其他线程调用中断之前线程一直处于阻塞状态。
+（2）acquire(int permits);
+作用：获取一个令牌，在获取到令牌、或者被其他线程调用中断、或超时之前线程一直处于阻塞状态。
+（3）acquireUninterruptibly() 
+作用：获取一个令牌，在获取到令牌之前线程一直处于阻塞状态（忽略中断）
+（4）tryAcquire()
+作用：尝试获得令牌，返回获取令牌成功或失败，不阻塞线程。
+（5）tryAcquire(long timeout, TimeUnit unit)
+作用：尝试获得令牌，在超时时间内循环尝试获取，直到尝试获取成功或超时返回，不阻塞线程。
+（6）release()
+作用：释放一个令牌，唤醒一个获取令牌不成功的阻塞线程。
+（7）hasQueuedThreads()
+作用：等待队列里是否还存在等待线程。
+（8）getQueueLength()
+作用：获取等待队列里阻塞的线程数。
+（9）drainPermits()
+作用：清空令牌把可用令牌数置为0，返回清空令牌的数量。
+
+
 
 ## Exchange
 

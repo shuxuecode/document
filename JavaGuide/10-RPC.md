@@ -118,6 +118,7 @@ https://blog.csdn.net/u012965203/article/details/98253914
 
 ---
 
+### dubbo服务下线的过程？？
 
 
 - 读服务开启重试，写服务设置 retries=“0” ，防止数据重复，也可以做接口幂等处理

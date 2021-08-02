@@ -1,4 +1,4 @@
-package com.qding.monitor.job;
+package com.monitor;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
@@ -8,11 +8,6 @@ import com.alibaba.dubbo.registry.NotifyListener;
 import com.alibaba.dubbo.registry.RegistryService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.qding.monitor.dao.IMonitorAlarmReceiverDao;
-import com.qding.monitor.dao.MonitorDubboReceiverMapper;
-import com.qding.monitor.domain.MonitorAlarmReceiver;
-import com.qding.monitor.domain.MonitorDubboReceiver;
-import com.qding.wukong.util.MailUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -26,7 +21,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by QDHL on 2017/10/10.
  */
 @Component
 public class CheckDubboServiceJob {

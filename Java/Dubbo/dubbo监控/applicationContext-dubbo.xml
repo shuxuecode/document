@@ -8,7 +8,7 @@
 			   http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
         >
     <!-- consumer application name -->
-    <dubbo:application name="qdp-monitor"/>
+    <dubbo:application name="dubbo-monitor"/>
 
     <!-- registry address -->
     <dubbo:registry protocol="zookeeper" address="${dubbo.registry.default.address}"/>

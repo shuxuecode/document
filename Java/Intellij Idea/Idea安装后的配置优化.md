@@ -77,24 +77,51 @@ SequenceDiagram
 Settings —— Editor —— Inspections , 把不必要的代码检查关闭
 
 
-## TODO配置
+## TODO配置 —— 自定义代码模板
 
 Settings —— Editor —— Live Templates —— +号 —— Template Group 自定义一个名字 —— +号 —— Live Template 
 
 ![](img/mk-2019-09-06-15-15-43.png)
 
+## 优化导包配置
+
+Editor —— General —— Auto Import
 
 
+![](img/2021-08-31-18-03-31.png)
+
+第一个：自动导包
+第二个：自动删除未使用的包
+
+---
 
 
+## 设置tab页多行显示
+
+![](img/2021-08-31-18-15-36.png)
+
+---
 
 
+## 显示方法分割线
 
+![](img/2021-08-31-18-24-37.png)
 
+---
 
+## 优化版本控制的目录颜色展示
 
+![](img/2021-08-31-18-22-34.png)
 
+勾选即可
 
+---
+
+## 双斜杠注释改成紧跟代码头
+
+![](img/2021-08-31-18-17-49.png)
+
+![](img/2021-08-31-18-20-15.png)
 
 
 

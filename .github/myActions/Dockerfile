@@ -1,3 +1,3 @@
 FROM ubuntu:latest
 
-echo "测试打印"
+CMD echo "hello docker"

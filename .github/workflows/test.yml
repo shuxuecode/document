@@ -7,5 +7,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: ./.github/myActions
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: test
+        uses: ./.github/myActions
+      - name: echo
+        run: echo "this is my action"  

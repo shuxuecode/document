@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ./myActions
+      - uses: ./.github/myActions

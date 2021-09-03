@@ -1,0 +1,11 @@
+name: "zsx-test"
+author: mark Z
+description: "这个是描述"
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
+branding:
+  icon: 'clock'  
+  color: 'red'

@@ -3,7 +3,6 @@ package com.zhao.test.a;
 public class 不共享数据demo {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Mythread1 mythread1 = new Mythread1("A");
 		Mythread1 mythread2 = new Mythread1("B");
 		Mythread1 mythread3 = new Mythread1("C");

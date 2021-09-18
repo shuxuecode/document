@@ -1,5 +1,19 @@
 # 待处理的问题list
 
+
+
+数据库死锁怎么解决
+mysql主动复制的原理和步骤
+
+11：BeanFactory、FactoryBean 和 ApplicationContext 的区别？
+
+12：锁消除是什么？
+
+13：锁粗化是什么？
+
+
+
+
 ---
 
 ## 数据库和缓存数据一致性

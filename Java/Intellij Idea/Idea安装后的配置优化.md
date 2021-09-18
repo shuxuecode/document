@@ -123,7 +123,7 @@ Editor —— General —— Auto Import
 
 ![](img/2021-08-31-18-20-15.png)
 
-
+> 把下面的 `Block comment at first column` 也去掉勾选
 
 
 ---

@@ -8,6 +8,7 @@
   - [OOP   Object Oriented Programming  面向对象编程](#oop---object-oriented-programming--面向对象编程)
 - [Linux 命令](#linux-命令)
 - [引文 ？？？](#引文-)
+- [熔断降级开源组件：](#熔断降级开源组件)
 
 <!-- /TOC -->
 
@@ -54,4 +55,14 @@ awk
 ## 引文 ？？？
 
 ---
+
+
+
+## 熔断降级开源组件：
+
+
+Hystrix
+Sentinel
+resilience4j todo
+
 

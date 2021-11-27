@@ -72,9 +72,13 @@ docker容器的一些配置信息一般在var/lib/docker/overlay下面，我们�
 
 
 
+## --privileged
 
+```
+docker run --privileged=true
+```
 
-
+使用该参数，container内的root拥有真正的root权限。否则，container内的root只是外部的一个普通用户权限。
 
 
 

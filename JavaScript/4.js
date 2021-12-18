@@ -21,6 +21,9 @@ test().then(function(data){
     id = data;
 }).then(()=>{
     console.log('3 ', id)
+    id = '赋新的值'
+}).then(()=>{
+    console.log('4 ', id)
 })
 
 console.log('2 ', id)

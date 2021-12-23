@@ -49,7 +49,7 @@ git --version
 ![jenkins_git配置](jenkins_git.png)
 
 
-ssh-keygen -t rsa -C "zhaoshuxue@163.com" 
+ssh-keygen -t rsa -C "test@163.com" 
 
 cat /root/.ssh/id_rsa.pub
 

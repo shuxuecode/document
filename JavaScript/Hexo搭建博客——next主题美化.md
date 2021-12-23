@@ -56,8 +56,8 @@ avatar:
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  GitHub: https://github.com/zhaoshuxue || fab fa-github
-  E-Mail: mailto:zhaoshuxue@163.com || fa fa-envelope
+  GitHub: https://github.com/shuxuecode || fab fa-github
+  E-Mail: mailto:test@163.com || fa fa-envelope
 ```  
 
 ## 外链

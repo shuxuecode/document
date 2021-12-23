@@ -40,7 +40,7 @@ print(2 ** 3)
 
 # 字符串截取
 
-str = "zhaoshuxue"
+str = "shuxuecode"
 
 print (str)          # 输出字符串
 print (str[0:-1])    # 输出第一个到倒数第二个的所有字符

@@ -1,6 +1,6 @@
 > 1、本项目由maven管理
 > 2、配置中包含了本地环境的一些配置，如果在你的机子上报错，请删除这部分配置代码即可
-> 3、源码已全部发布到Github - [https://github.com/zhaoshuxue/ssm](https://github.com/zhaoshuxue/ssm)中了，欢迎下载（star）
+> 3、源码已全部发布到Github - [https://github.com/shuxuecode/ssm](https://github.com/shuxuecode/ssm)中了，欢迎下载（star）
 
 ## 一、创建maven  WEB项目，配置pom.xml文件
 

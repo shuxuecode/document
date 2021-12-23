@@ -11,11 +11,11 @@ import email
 # 第三方 SMTP 服务
 mail_host="smtp.163.com"  #设置服务器
 # 发送方信息
-mail_user="zhaoshuxue@163.com"    #用户名
+mail_user="test@163.com"    #用户名
 mail_pass=""   #口令
 
 # 收件人列表
-mail_namelist = ["634790417@qq.com"]
+mail_namelist = ["test@qq.com"]
 
 #发送邮件
 #title：标题
@@ -56,7 +56,7 @@ def checkMonitor():
 def pullMail():
     conn = imaplib.IMAP4_SSL(port = '993',host = 'imap.163.com')
     print('已连接服务器')
-    conn.login('zhaoshuxue@163.com','')
+    conn.login('test@163.com','')
     print('已登陆')
     conn.select()
 

@@ -474,7 +474,7 @@ public class App {
 
 以上代码全部上传到了github，地址为：
 
-https://github.com/zhaoshuxue/springCloud/tree/master/dubbo-spring-cloud
+https://github.com/shuxuecode/springCloud/tree/master/dubbo-spring-cloud
 
 
 ---

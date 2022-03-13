@@ -101,3 +101,9 @@ https://blog.csdn.net/zpz_123123/article/details/79149658
 https://blog.csdn.net/ywfyywq/article/details/71055044
 
 ---
+
+
+
+## Gradle下载的依赖jar包路径位置
+Mac系统默认下载到：C:/Users/(用户名)/.gradle/caches/modules-2/files-2.1
+Windows系统默认下载到：C:\Users\(用户名)\.gradle\caches\modules-2\files-2.1

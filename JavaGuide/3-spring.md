@@ -171,6 +171,12 @@ Spring先是用构造实例化Bean对象 ，此时Spring会将这个实例化结
 2. ApplicationContext是扩展，以BeanFactory为主线，通过继承的方式综合了环境、国际化、资源、事件等多条支线，自己又规定了一些扩展服务（如返回context的id，应用名称等），而所有支线都以bean服务为基础；
 
 
+## SpringMVC运行原理
+1. 客户端请求提交到DispatcherServlet
+2. 由DispatcherServlet控制器查询HandlerMapping，找到并分发到指定的Controller中。
+3. Controller调用业务逻辑处理后，返回ModelAndView
+4. DispatcherServlet查询一个或多个ViewResoler视图解析器，找到ModelAndView指定的视图
+5. 视图负责将结果显示到客户端
 
 
 

@@ -65,6 +65,29 @@ synchronized和volatile的区别（volatile是一种非锁机制，这种机制�
 
 ---
 
+
+Volatile和Synchronized四个不同点：
+1 粒度不同，前者针对变量 ，后者锁对象和类
+2 syn阻塞，volatile线程不阻塞
+3 syn保证三大特性，volatile不保证原子性
+4 syn编译器优化，volatile不优化
+
+volatile具备两种特性：
+1. 保证此变量对所有线程的可见性，指一条线程修改了这个变量的值，新值对于其他线程来说是可见的，但并不是多线程安全的。
+2. 禁止指令重排序优化。
+
+Volatile如何保证内存可见性:
+1.当写一个volatile变量时，JMM会把该线程对应的本地内存中的共享变量刷新到主内存。
+2.当读一个volatile变量时，JMM会把该线程对应的本地内存置为无效。线程接下来将从主内存中读取共享变量。
+
+同步：就是一个任务的完成需要依赖另外一个任务，只有等待被依赖的任务完成后，依赖任务才能完成。
+异步：不需要等待被依赖的任务完成，只是通知被依赖的任务要完成什么工作，只要自己任务完成了就算完成了，被依赖的任务是否完成会通知回来。（异步的特点就是通知）。打电话和发短信来比喻同步和异步操作。
+阻塞：CPU停下来等一个慢的操作完成以后，才会接着完成其他的工作。
+非阻塞：非阻塞就是在这个慢的执行时，CPU去做其他工作，等这个慢的完成后，CPU才会接着完成后续的操作。
+非阻塞会造成线程切换增加，增加CPU的使用时间能不能补偿系统的切换成本需要考虑。
+
+---
+
 ### synchronized和lock区别：
 
 1）Lock是一个接口，而synchronized是Java中的关键字，synchronized是内置的语言实现；
@@ -201,7 +224,18 @@ Unsafe类提供了硬件级别的原子操作
 ThreadLocalMap使用ThreadLocal弱引用作为key，如果一个ThreadLocal没有外部强引用引用他，那么系统gc的时候，这个ThreadLocal势必会被回收，这样的话，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry，如果当前线程迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链。
 
 
+---
 
+## fail-fast机制
+fail-fast机制是java集合(Collection)中的一种错误机制。当多个线程对同一个集合的内容进行操作时，就可能会产生fail-fast事件。例如：当某一个线程A通过iterator去遍历某集合的过程中，若该集合的内容被其他线程所改变了；那么线程A访问集合时，就会抛出ConcurrentModificationException异常，产生fail-fast事件
+
+## happens-before:
+如果两个操作之间具有happens-before 关系，那么前一个操作的结果就会对后面一个操作可见。
+1. 程序顺序规则：一个线程中的每个操作，happens- before 于该线程中的任意后续操作。
+2. 监视器锁规则：对一个监视器锁的解锁，happens- before 于随后对这个监视器锁的加锁。
+3. volatile变量规则：对一个volatile域的写，happens- before于任意后续对这个volatile域的读。
+4. 传递性：如果A happens- before B，且B happens- before C，那么A happens- before C。
+5. 线程启动规则：Thread对象的start()方法happens- before于此线程的每一个动作。
 
 
 ---

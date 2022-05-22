@@ -6,7 +6,7 @@
 <repositories>
     <repository>
         <id>aliyun-maven</id>
-        <name>aliyun-maven</name>
+        <name>阿里云maven仓库</name>
         <url>https://maven.aliyun.com/repository/public</url>
         <layout>default</layout>
         <releases>

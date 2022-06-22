@@ -1,4 +1,8 @@
 
+
+[![wakatime](https://wakatime.com/badge/user/716abeae-b591-47a3-a949-a8a52da864bf/project/c0b2fcee-ff83-471a-95a0-2005900843c6.svg)](https://wakatime.com/badge/user/716abeae-b591-47a3-a949-a8a52da864bf/project/c0b2fcee-ff83-471a-95a0-2005900843c6)
+
+
 ## 2021
 
 todo

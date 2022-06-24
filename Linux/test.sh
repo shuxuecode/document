@@ -24,9 +24,9 @@ emoji=(':art:' ':zap:' ':fire:' ':bug:' ':ambulance:' ':sparkles:' ':memo:' ':ro
 
 echo ${emoji[$(($RANDOM % 71))]}
 
-git add .
+# git add .
 
-git commit -m "${emoji[$(($RANDOM % ${#emoji[@]}))]}"
+# git commit -m "${emoji[$(($RANDOM % ${#emoji[@]}))]}"
 
 echo ${#emoji[@]}
 

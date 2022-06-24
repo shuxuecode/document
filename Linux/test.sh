@@ -26,6 +26,9 @@ echo ${emoji[$(($RANDOM % 71))]}
 
 git add .
 
-git commit -m "${emoji[$(($RANDOM % 71))]}"
+git commit -m "${emoji[$(($RANDOM % ${#emoji[@]}))]}"
+
+echo ${#emoji[@]}
+
 
 

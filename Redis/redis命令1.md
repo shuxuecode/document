@@ -24,6 +24,20 @@ pexpireat key milliseconds-timestamp   -- 设置一个key在"milliseconds-timest
 
 setex key "seconds" "value"            -- SETEX在逻辑上等价于SET和EXPIRE合并的操作，区别之处在于SETEX是一条命令，而命令的执行是原子性的，所以不会出现并发问题。
 
+## 设置生存时间
+> 生存时间（Time To Live，TTL）：在经过指定的秒数或者毫秒数之后，服务器就会自动删除生存时间为0的键
+
+- EXPIRE <key> <ttl>：用于将键key的生存时间设置为ttl秒
+- PEXPIRE <key> <ttl>：用于将键key的生存时间设置为ttl毫秒
+
+## 设置过期时间
+> 过期时间（expire time）：是一个UNIX时间戳，当键的过期时间来临时，服务器就会自动从数据库中删除这个键
+
+- EXPIREAT <key> <timestamp>：用于将键key的过期时间设置为timestamp所指定的秒数时间戳
+- PEXPIREAT <key> <timestamp>：用于将键key的过期时间设置为timestamp所指定的毫秒数时间戳
+
+**EXPIRE、PEXPIRE、EXPIREAT这几个命令的内部最终使用的都是PEXPIREAT**
+
 
 
 ---

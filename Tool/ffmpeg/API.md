@@ -14,3 +14,5 @@ ffmpeg -i "D:/tmp/测试/视频/movie.mp4" -vf scale=800:-1 D:/download/test.mp4
 
 
 ## 压缩视频的方式
+
+todo

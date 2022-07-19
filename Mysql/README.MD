@@ -21,3 +21,21 @@ mysql配置文件的修改内容如下：
 [mysqld]
 lower_case_table_names = 1
 ```
+
+
+## 查看当前线程执行情况
+
+```SQL
+show processlist;
+```
+
+- id 线程id
+- User 执行sql的账号
+- Host 执行sql的数据库的ip和端号
+- db 数据库名称
+- Command 执行命令，包括：Daemon、Query、Sleep等。
+- Time 执行sql所消耗的时间
+- State 执行状态
+- info 执行信息，里面可能包含sql信息。
+
+todo

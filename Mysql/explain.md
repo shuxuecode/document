@@ -44,6 +44,15 @@
 
 
 ### extra
+|  值 | 含义 |
+|  - | - |
+| distanct | 优化distinct操作，在找到第一匹配的元组后即停止找同样值的动作 |
+| not exists | 使用not exists来优化查询 |
+| using filesort | 使用额外操作进行排序，通常会出现在order by 或者 group by查询中 |
+| using index | 使用了覆盖索引进行查询 |
+| using temporary | MySQL需要使用临时表来处理查询，常见于排序、子查询和分组查询 |
+| using where | 需要在MySQL服务器层使用where条件来过滤数据 |
+| select tables optimized away | 直接通过索引来获得数据，不用访问表 |
 
 
 ### possible_key

@@ -10,16 +10,16 @@ rm 'spring-boot-registry/.settings/org.eclipse.wst.common.project.facet.core.pre
 
 
 
-Ìá½»¼´¿É
+æäº¤å³å¯
 
 
 ## 
 
-¶ÔÓÚ²»Ğ¡ĞÄÌá½»ÁËÃ»ÓÃµÄÎÄ¼şºó£¬
+å¯¹äºä¸å°å¿ƒæäº¤äº†æ²¡ç”¨çš„æ–‡ä»¶åï¼Œ
 
-Ö´ĞĞ  git rm --cached springBootWeb.iml  É¾³ıÎÄ¼ş
+æ‰§è¡Œ  git rm --cached springBootWeb.iml  åˆ é™¤æ–‡ä»¶
 
-Ö´ĞĞ  git rm -r --cached target/  É¾³ıÎÄ¼ş¼Ğ
+æ‰§è¡Œ  git rm -r --cached target/  åˆ é™¤æ–‡ä»¶å¤¹
 
 git add .
 git commit -m 'delete'

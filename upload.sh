@@ -38,7 +38,7 @@ git push
 
 echo -e "\033[35m 结束了，5秒后关闭 \033[0m"
 
-sleep 5
+sleep 1
 
 
 # read

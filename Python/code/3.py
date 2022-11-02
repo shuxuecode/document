@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import subprocess
-import smtplib
-from email.mime.text import MIMEText
-
 # 以下是接收邮件的库
 import imaplib
-import email
+import smtplib
+import subprocess
+from email.mime.text import MIMEText
 
 # 第三方 SMTP 服务
 mail_host="smtp.163.com"  #设置服务器

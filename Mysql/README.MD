@@ -38,4 +38,13 @@ show processlist;
 - State 执行状态
 - info 执行信息，里面可能包含sql信息。
 
-todo
+
+## group_concat函数
+
+group_concat函数，实现分组查询之后的数据进行合并，并返回一个字符串结果。
+group_concat()函数用于将多个字符串拼接成一个字符串。而MySql默认的最大拼接长度为1024个字节，一般情况下是够用的，但如果数据量特别大，就会存在java层返回内容被截断的问题，这时，为了保证拼接数据的完整性，就需要手工修改配置文件的group_concat_max_len属性值了。
+
+```sql
+group_concat（ [distinct] 要连接的字段 [order by 排序字段 asc/desc ] [separator ‘分隔符’] ）
+```
+

@@ -33,3 +33,13 @@ console.log(smalltoBIG(1000.11))
 console.log(smalltoBIG(1000.222))
 console.log(smalltoBIG(1000.3333))
 console.log(smalltoBIG(1234567890.55))
+
+
+// 数字转换为金额格式
+
+//格式化金额(后面两位小数会四舍五入)
+function moneyFormats(value){
+    let a=Number(value);  //转为数字格式
+    let b=a.toLocaleString('zh', { style: 'currency', currency: 'CNY' });
+    return b
+}

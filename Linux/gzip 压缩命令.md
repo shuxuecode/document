@@ -46,3 +46,51 @@ gzip -k file1.txt
 可以连接两个文件
 
 gzip -c file1.txt file2.txt > foo.gz
+
+
+
+# zip命令
+
+## 压缩
+
+```shell
+# 压缩单个文件
+zip demo.zip 1.log
+
+zip demo.zip 1.log 2.log
+
+# 压缩多个文件
+zip demo.zip *.file
+
+# 压缩目录为zip包 (不加r，只会打包一个文件夹)
+zip -r dir.zip dir/
+
+```
+
+
+## 查看
+
+```shell
+# 不解压,仅查看压缩包中的内容
+unzip -l demo.zip
+```
+
+```shell
+查看zip压缩包是否是完整的         
+[root@Linux ~]# zip -T  filename.zip
+test of filename.zip OK
+```
+
+## 解压
+
+```shell
+# 解压
+unzip demo.zip
+
+# 解压到指定目录
+unzip demo.zip -d /opt
+```
+
+
+
+

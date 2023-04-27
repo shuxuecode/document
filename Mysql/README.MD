@@ -48,3 +48,27 @@ group_concat()函数用于将多个字符串拼接成一个字符串。而MySql�
 group_concat（ [distinct] 要连接的字段 [order by 排序字段 asc/desc ] [separator ‘分隔符’] ）
 ```
 
+
+## Sql查询按照in语句的顺序排列
+
+- mysql写法
+```sql
+SELECT * FROM table WHERE id IN (6,5,1,4) ORDER BY FIELD(id,6,5,4,1);
+ 
+SELECT * FROM table WHERE id IN (6,5,1,4) ORDER BY INSTR(',6,5,1,4,',CONCAT(',',id,','));
+```
+
+- sqlite写法
+```sql
+SELECT * FROM table WHERE id IN('6','5','1','4') ORDER BY INSTR('6,5,1,4',id);
+```
+
+- oracle写法
+```sql
+SELECT * FROM table WHERE id IN (6,5,1,4) ORDER BY INSTR('6,5,1,4',id);
+```
+
+- sqlserver写法
+```sql
+SELECT * FROM table WHERE id IN (6,5,1,4) ORDER BY CHARINDEX(','+ id +',', ',6,5,1,4,');
+```

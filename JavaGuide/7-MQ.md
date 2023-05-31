@@ -1,7 +1,8 @@
 
 <!-- TOC -->
 
-- [各个mq的比较  *****](#各个mq的比较--)
+- [MQ](#mq)
+- [各个mq的比较  \*\*\*\*\*](#各个mq的比较--)
   - [RabbitMQ](#rabbitmq)
   - [RocketMQ](#rocketmq)
   - [Kafka](#kafka)
@@ -27,6 +28,11 @@
 
 <!-- /TOC -->
 
+
+## MQ
+- 削峰填谷
+- 异步处理
+- 服务解耦
 
 ## 各个mq的比较  *****
 
@@ -215,6 +221,8 @@ kafka同一个partition下的场景，可以保证FIFO的顺序。不同partitio
 
 Kafka 中发送1条消息的时候，可以指定(topic, partition, key) 3个参数。partiton 和 key 是可选的。如果你指定了 partition，那就是所有消息发往同1个 partition，就是有序的。并且在消费端，Kafka 保证，1个 partition 只能被1个 consumer 消费。或者你指定 key（比如 order id），具有同1个 key 的所有消息，会发往同1个 partition。也是有序的。
 
+参考文章：
+https://my.oschina.net/u/4526289/blog/9557486
 
 ## 消息积压
 

@@ -27,12 +27,19 @@ always 	在容器已经stop掉或Docker stoped/restarted的时候才重启容器
 docker update --restart=always ubuntu
 ```
 
+## 镜像改名
+
+docker tag imageId newName
+```
+docker tag abcdefg123456 python:3
+```
+
 ## 删除镜像
 
 强制删除本地镜像runoob/ubuntu:v4。
-
+```
 docker rmi -f runoob/ubuntu:v4
-
+```
 ---
 
 ## 查看docker日志

@@ -22,3 +22,12 @@ for item in list:
     print(item)
     print(item['id'])
 
+
+
+file = open('data.json', 'w')
+# file.write('test')
+# file.write('\n')
+# file.write('demo')
+# file.write('\n')
+file.write(result)
+file.close()

@@ -24,6 +24,7 @@ grant all privileges on 库名.* to '用户名'@'%';
 flush privileges;
 ```
 
+
 ### 建表
 示例
 ```SQL
@@ -49,6 +50,64 @@ CREATE TABLE `t_wx_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='小程序用户信息表';
 
 ```
+
+
+
+
+
+
+---
+---
+---
+
+## 卸载MySQL
+
+### 关闭MySQL服务
+systemctl stop mysql
+service mysql stop
+
+### 卸载相关的依赖
+sudo apt remove --purge mysql-*
+sudo apt autoremove
+
+### 清理残余文件
+查询是否还存在相关的依赖组件：
+dpkg --list | grep mysql
+
+根据剩余的包执行卸载命令
+
+
+## Ubuntu22安装MySQL5.7
+
+### 选择版本
+进入MySQL官方的Community Server选择历史版本：https://downloads.mysql.com/archives/community/
+
+
+### 下载tar包
+可以使用wget命令链接下载地址
+
+wget https://downloads.mysql.com/archives/get/p/23/file/mysql-server_5.7.36-1ubuntu18.04_amd64.deb-bundle.tar
+在目录下解压tar包
+
+tar xvf ./mysql-server_5.7.36-1ubuntu18.04_amd64.deb-bundle.tar
+解压后目录
+
+
+
+### 安装
+安装依赖lib包
+
+sudo apt-get install ./libmysql*
+sudo apt-get install libtinfo5
+安装客户端和服务端，按提示可能要先安装community版本
+
+sudo apt-get install ./mysql-community-client_5.7.36-1ubuntu18.04_amd64.deb
+sudo apt-get install ./mysql-client_5.7.36-1ubuntu18.04_amd64.deb
+sudo apt-get install ./mysql-community-server_5.7.36-1ubuntu18.04_amd64.deb
+sudo apt-get install ./mysql-server_5.7.36-1ubuntu18.04_amd64.deb 
+过程中会提示设置MySQL的密码，用户名默认root
+
+
 
 
 

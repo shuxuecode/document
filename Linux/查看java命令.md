@@ -1,7 +1,11 @@
+
+```
 ps -aux | grep java
+```
 
+```
 top -Hp pid
-
+```
 - TIME列就是各个Java线程耗费的CPU时间
 
 ## 将线程pid转化成16进制

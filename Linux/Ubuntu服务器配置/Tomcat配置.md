@@ -4,7 +4,14 @@
 
 ### JVM配置
 
+setenv.sh文件，如果不存在可以手动创建
 
+bin/setenv.sh
+
+```shell
+export JAVA_HOME=/usr/local/jdk-8.0.xxx
+
+```
 
 
 

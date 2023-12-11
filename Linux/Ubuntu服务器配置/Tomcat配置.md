@@ -26,3 +26,13 @@ docker cp 容器ID:/usr/local/tomcat/bin/catalina.sh  /docker/bin/catalina.sh
 docker cp /docker/bin/catalina.sh 容器ID:/usr/local/tomcat/bin/catalina.sh
 
 
+
+
+
+
+
+
+---
+
+查看内存占用
+free -h

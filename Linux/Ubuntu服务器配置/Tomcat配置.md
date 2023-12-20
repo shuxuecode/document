@@ -9,9 +9,19 @@ setenv.sh文件，如果不存在可以手动创建
 bin/setenv.sh
 
 ```shell
+
+
+#!/bin/bash  
+  
+# 设置JAVA_HOME路径  
 export JAVA_HOME=/usr/local/jdk-8.0.xxx
+  
+# 设置JAVA_OPTS参数  
+JAVA_OPTS="-Xms512m -Xmx1024m"
 
 ```
+
+
 
 
 

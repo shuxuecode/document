@@ -52,7 +52,11 @@ CREATE TABLE `t_wx_user` (
 ```
 
 
+### 创建索引
 
+```SQL
+CREATE INDEX index_name ON table_name (column1, column2, ...);
+```
 
 
 

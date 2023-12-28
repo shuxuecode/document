@@ -22,6 +22,9 @@ CREATE user 'root'@'%' identified with mysql_native_password by '123456';
 ```
 grant all privileges on 库名.* to '用户名'@'%';
 flush privileges;
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'USERNAME'@'ip' IDENTIFIED BY 'PASSWORD' WITH GRANT OPTION;
+
 ```
 
 

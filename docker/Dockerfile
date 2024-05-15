@@ -11,5 +11,3 @@ RUN apt-get -y install lrzsz
 EXPOSE 22
 EXPOSE 8080
 
- 
-

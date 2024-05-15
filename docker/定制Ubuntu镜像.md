@@ -54,3 +54,4 @@ docker ps -a
 docker commit 7253e2e01b4f zhaoubuntu
 
 这样在docker images 时会发现zhaoubuntu的镜像
+

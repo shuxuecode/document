@@ -5,3 +5,5 @@ target/
 .classpath
 .project
 .DS_Store
+
+*.exe

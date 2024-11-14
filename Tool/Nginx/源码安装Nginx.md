@@ -1,5 +1,9 @@
 # nginx 
 
+
+官方网站
+https://nginx.org/en/docs/configure.html
+
 ## 在nginx.exe目录，打开命令行工具
 
 ```
@@ -49,5 +53,61 @@ server {
 ---
 
 
+下载nginx源码包
 
+[下载地址](https://nginx.org/download/nginx-1.26.2.tar.gz)
+
+
+解压
+
+tar -zxvf nginx-1.26.2.tar.gz
+
+cd nginx-1.26.2
+
+创建Nginx目录
+
+mkdir /usr/share/nginx
+
+编译 `./configure`
+
+
+./configure --sbin-path=/usr/share/nginx/nginx --conf-path=/usr/share/nginx/nginx.conf --pid-path=/usr/share/nginx/nginx.pid
+
+
+
+make
+
+
+make install
+
+---
+
+
+
+Nginx 配置
+
+nginx.conf
+
+```
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" "$request_id"';
+
+    server {
+       listen 80;
+
+       location / {
+
+           add_header X-Trace-Id $request_id;
+
+           # 将自定义头 X-Trace-Id 传递给后端
+           proxy_set_header X-Trace-Id $request_id;
+
+
+           # 转发请求到 Spring Boot 服务，假设运行在 localhost:8080
+           proxy_pass http://localhost:8080;
+       }
+   }
+
+```
 

@@ -31,4 +31,6 @@ echo ${emoji[$(($RANDOM % 71))]}
 echo ${#emoji[@]}
 
 
+echo 123
+
 

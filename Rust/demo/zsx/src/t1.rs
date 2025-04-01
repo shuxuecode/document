@@ -1,4 +1,4 @@
-fn main(){
+pub(crate) fn main(){
     let a=1;
     if a==1
     {

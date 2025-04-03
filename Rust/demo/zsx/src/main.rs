@@ -8,4 +8,15 @@ fn main() {
 
     demo01::main();
 
+
+
+
+
+    println!("square(2) == {}",square(2));
+
+}
+
+
+fn square(x:i32)->i32{
+    x*x
 }

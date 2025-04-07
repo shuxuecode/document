@@ -27,7 +27,7 @@ fn demo01() {
 
 }
 
-fn add_fun(a: i32, b: i32) -> i32 {
+pub fn add_fun(a: i32, b: i32) -> i32 {
     let a = a + 1;
     let b = b + 2;
     a + b // 返回值, 函数体最后一条语句就是返回值

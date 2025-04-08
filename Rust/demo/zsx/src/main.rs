@@ -26,10 +26,18 @@ fn main() {
     // 下面这个方法的返回值类型是i32
     let res = demo_01::add_fun(1, 2);
     println!("add_fun(1,2) == {}",res);
-    
+
 }
 
 
 fn square(x:i32)->i32{
     x*x
+}
+
+
+
+
+
+fn unitTest() {
+
 }

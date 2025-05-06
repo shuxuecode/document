@@ -16,3 +16,23 @@ java -XX:+PrintFlagsFinal -version
 
 
 
+
+
+
+## Ubuntu 安装 jdk11
+
+```
+sudo apt install openjdk-11-jdk
+```
+
+
+下载
+https://cdn.azul.com/zulu/bin/zulu11.80.21-ca-jdk11.0.27-linux_x64.tar.gz
+
+
+
+https://cdn.azul.com/zulu/bin/zulu8.86.0.25-ca-jdk8.0.452-linux_x64.tar.gz
+
+
+
+

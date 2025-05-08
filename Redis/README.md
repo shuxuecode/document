@@ -55,6 +55,74 @@ Lettuce：基于Netty框架的事件驱动的通信层，其方法调用是异�
 
  
 
+## jedis 使用示例
 
+<dependency>
+    <groupId>redis.clients</groupId>
+    <artifactId>jedis</artifactId>
+    <version>4.4.3</version> <!-- 使用最新版本 -->
+</dependency>
+
+import redis.clients.jedis.Jedis;
+
+public class JedisExample {
+    public static void main(String[] args) {
+        // 创建连接
+        Jedis jedis = new Jedis("localhost", 6379); // 默认端口6379
+        
+        // 认证（如果设置了密码）
+        // jedis.auth("password");
+        
+        // 测试连接
+        System.out.println("连接成功");
+        System.out.println("服务正在运行: " + jedis.ping());
+        
+        // 关闭连接
+        jedis.close();
+    }
+}
+
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+public class JedisPoolExample {
+    public static void main(String[] args) {
+        // 配置连接池
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        poolConfig.setMaxTotal(128); // 最大连接数
+        poolConfig.setMaxIdle(32);  // 最大空闲连接数
+        poolConfig.setMinIdle(8);   // 最小空闲连接数
+        
+        // 创建连接池
+        JedisPool jedisPool = new JedisPool(poolConfig, "localhost", 6379);
+        
+        try (Jedis jedis = jedisPool.getResource()) {
+            // 执行操作
+            jedis.set("poolKey", "poolValue");
+            System.out.println(jedis.get("poolKey")); // 输出: poolValue
+        }
+        
+        // 关闭连接池
+        jedisPool.close();
+    }
+}
+
+try (Jedis jedis = jedisPool.getResource()) {
+    // 开启事务
+    Transaction tx = jedis.multi();
+    
+    try {
+        tx.set("txKey1", "value1");
+        tx.incr("counter");
+        tx.set("txKey2", "value2");
+        
+        // 执行事务
+        tx.exec();
+    } catch (Exception e) {
+        // 取消事务
+        tx.discard();
+        e.printStackTrace();
+    }
+}
 
 ---

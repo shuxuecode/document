@@ -13,4 +13,4 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("USAGE:\nmd5 example.txt")
     else:
-        print md5(sys.argv[1])
+        print(md5(sys.argv[1]))

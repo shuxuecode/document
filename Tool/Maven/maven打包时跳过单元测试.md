@@ -1,8 +1,13 @@
+
+
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+
 <build>
-	<finalName>qdp-monitor</finalName>
+	<finalName>monitor</finalName>
 
 	<plugins>
-		<!-- 指定jdk版本 -->
+		
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
@@ -13,7 +18,7 @@
 				<encoding>UTF-8</encoding>
 			</configuration>
 		</plugin>
-		<!-- 单元测试，如果之前项目中有配置的surefire插件，一定要替换成下面的形式 -->
+		
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-surefire-plugin</artifactId>
@@ -25,3 +30,5 @@
 	</plugins>
 
 </build>
+
+```

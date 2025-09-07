@@ -2,7 +2,7 @@
         <finalName>springboot-house</finalName>
 
         <plugins>
-            <!-- mybatisÉú³É²å¼þ -->
+            <!-- mybatisï¿½ï¿½ï¿½É²ï¿½ï¿½ -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -17,10 +17,10 @@
                     <execution>
                         <id>Generate MyBatis Artifacts</id>
                         <!--
-ÎÊÌâ¾ÍÊÇmybatis-generator-maven-pluginÄ¬ÈÏ°ó¶¨ÁËpackageµÄÉúÃüÖÜÆÚ£¬
-Èç¹ûÄã²»ÏëÔÚpackageºÍinstall Ö´ÐÐ²å¼þ£¬Äã¿ÉÒÔÕâÑùÅäÖÃ
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mybatis-generator-maven-pluginÄ¬ï¿½Ï°ï¿½ï¿½ï¿½packageï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½
+ï¿½ï¿½ï¿½ï¿½ã²»ï¿½ï¿½ï¿½ï¿½packageï¿½ï¿½install Ö´ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 <phase>deploy</phase>
-Ö÷ÒªÊÇphase ÐÞ¸Ä³ÉÍùºó¼´¿É
+ï¿½ï¿½Òªï¿½ï¿½phase ï¿½Þ¸Ä³ï¿½ï¿½ï¿½ï¿½ó¼´¿ï¿½
                         -->
                         <phase>deploy</phase>
                         <goals>

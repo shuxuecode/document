@@ -1,3 +1,6 @@
+
+```xml
+
 <build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<plugins>
@@ -36,3 +39,6 @@
 		</plugins>
 
 	</build>
+
+
+	```

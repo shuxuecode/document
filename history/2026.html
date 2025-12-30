@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年元旦快乐！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* 背景粒子效果 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* 标题动画 - 使用更炫酷的字体效果 */
+        .title {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            background: linear-gradient(45deg, #ff00cc, #3333ff, #00ccff, #00ffcc, #ffff00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 300% 300%;
+            animation: gradientShift 3s ease infinite, titleFloat 3s ease-in-out infinite;
+            letter-spacing: 8px;
+            position: relative;
+        }
+        
+        /* 添加发光边框效果 */
+        .title::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #ff00cc, #3333ff, #00ccff, #00ffcc, #ffff00);
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.7;
+            border-radius: 10px;
+        }
+        
+        /* 倒计时容器 */
+        .countdown-container {
+            display: flex;
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 100px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .countdown-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* 倒计时数字动画效果 */
+        .countdown-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            background: linear-gradient(45deg, #ffffff, #ff00cc, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% 200%;
+            animation: numberGlow 2s ease infinite;
+            letter-spacing: 3px;
+        }
+        
+        .countdown-label {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* 动画定义 */
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes numberGlow {
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); 
+                background-position: 0% 50%;
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 30px rgba(0, 255, 255, 0.6); 
+                background-position: 100% 50%;
+            }
+        }
+        
+        /* 飘落雪花 */
+        .snowflake {
+            position: absolute;
+            top: -20px;
+            color: #fff;
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            user-select: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 3rem;
+                letter-spacing: 4px;
+            }
+            
+            .countdown-value {
+                font-size: 2rem;
+            }
+            
+            .countdown-box {
+                min-width: 70px;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+            
+            .countdown-container {
+                gap: 10px;
+            }
+            
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+            
+            .countdown-box {
+                min-width: 60px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景粒子容器 -->
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <h1 class="title">2026年元旦快乐！</h1>
+        
+        <div class="countdown-container">
+            <div class="countdown-box">
+                <div class="countdown-value" id="days">00</div>
+                <div class="countdown-label">天</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-value" id="hours">00</div>
+                <div class="countdown-label">时</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-value" id="minutes">00</div>
+                <div class="countdown-label">分</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-value" id="seconds">00</div>
+                <div class="countdown-label">秒</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 倒计时功能
+        function updateCountdown() {
+            const targetDate = new Date('January 1, 2025 00:00:00').getTime();
+            const currentDate = new Date().getTime();
+            const difference = targetDate - currentDate;
+            
+            if (difference <= 0) {
+                document.getElementById('days').innerText = '00';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+                return;
+            }
+            
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+        
+        // 初始化倒计时
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // 创建飘落雪花（减少数量）
+        function createSnowflakes() {
+            const container = document.body;
+            const snowflakes = ['❄', '❅', '❆'];
+            
+            // 只创建15个雪花
+            for (let i = 0; i < 15; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.innerHTML = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+                snowflake.classList.add('snowflake');
+                
+                // 随机位置和大小
+                const size = Math.random() * 20 + 10;
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.fontSize = size + 'px';
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                // 随机动画时长和延迟
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
+                snowflake.style.animationDuration = duration + 's';
+                snowflake.style.animationDelay = delay + 's';
+                
+                container.appendChild(snowflake);
+                
+                // 移除雪花以避免内存泄漏
+                setTimeout(() => {
+                    snowflake.remove();
+                }, (duration + delay) * 1000);
+            }
+        }
+        
+        // 每隔一段时间创建新的雪花
+        setInterval(createSnowflakes, 1500);
+        createSnowflakes(); // 立即创建第一批雪花
+        
+        // 烟花效果
+        function createFireworks(x, y) {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffffff'];
+            const particles = 150;
+            
+            for (let i = 0; i < particles; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.borderRadius = '50%';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow = '0 0 10px currentColor, 0 0 20px currentColor';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                document.body.appendChild(particle);
+                
+                // 随机方向和速度
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 3 + 2;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed;
+                
+                // 动画
+                let posX = x;
+                let posY = y;
+                let opacity = 1;
+                const gravity = 0.05;
+                let velocityY = vy;
+                
+                const animate = () => {
+                    posX += vx;
+                    velocityY += gravity;
+                    posY += velocityY;
+                    opacity -= 0.01;
+                    
+                    particle.style.left = posX + 'px';
+                    particle.style.top = posY + 'px';
+                    particle.style.opacity = opacity;
+                    
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+        }
+        
+        // 自动在页面随机位置放烟花（更频繁）
+        function autoFireworks() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight * 0.7;
+            createFireworks(x, y);
+        }
+        
+        // 每5秒自动放一次烟花
+        setInterval(autoFireworks, 5000);
+        // 页面加载后立即放一次烟花
+        setTimeout(autoFireworks, 1000);
+        
+        // 初始化背景粒子效果
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles-js');
+            const particleCount = 100;
+            const particles = [];
+            
+            // 创建粒子
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '2px';
+                particle.style.height = '2px';
+                particle.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+                particle.style.borderRadius = '50%';
+                particle.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.7)';
+                
+                // 随机位置
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                // 随机速度
+                const vx = (Math.random() - 0.5) * 0.5;
+                const vy = (Math.random() - 0.5) * 0.5;
+                
+                particles.push({
+                    element: particle,
+                    x: x,
+                    y: y,
+                    vx: vx,
+                    vy: vy
+                });
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // 动画循环
+            function animate() {
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    // 边界检测
+                    if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+                    if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+                    
+                    p.element.style.left = p.x + 'px';
+                    p.element.style.top = p.y + 'px';
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            // 窗口大小改变时调整
+            window.addEventListener('resize', () => {
+                particles.forEach(p => {
+                    if (p.x > window.innerWidth) p.x = window.innerWidth;
+                    if (p.y > window.innerHeight) p.y = window.innerHeight;
+                });
+            });
+        }
+        
+        // 初始化粒子效果
+        initParticles();
+    </script>
+</body>
+</html>

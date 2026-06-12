@@ -82,7 +82,7 @@ function scanSourceTags() {
 }
 
 function scanInlineScripts() {
-  const scripts = document.querySelectorAll("script:not[src]");
+  const scripts = document.querySelectorAll("script:not([src])");
   for (const script of scripts) {
     const text = script.textContent;
     if (!text) continue;

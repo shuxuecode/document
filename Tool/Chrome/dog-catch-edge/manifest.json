@@ -2,26 +2,17 @@
   "manifest_version": 3,
   "name": "M3U8 Sniffer (Edge)",
   "version": "1.0.0",
-  "description": "点击图标后，在视频播放区域下方展示检测到的 m3u8 下载链接，支持一键复制",
+  "description": "自动扫描网页中的 m3u8 视频链接，在视频下方展示并支持一键复制",
   "minimum_edge_version": "88.0.0.0",
   "permissions": [
     "webRequest",
-    "storage",
-    "activeTab"
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"
-  },
-  "action": {
-    "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
-    },
-    "default_title": "点击开始检测 m3u8 链接"
   },
   "content_scripts": [
     {

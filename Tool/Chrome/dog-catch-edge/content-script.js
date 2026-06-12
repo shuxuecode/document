@@ -1,80 +1,164 @@
 /**
  * M3U8 Sniffer - Content Script
- * 在视频播放区域下方展示 m3u8 链接条，带一键复制按钮
- * 使用 Shadow DOM 隻离样式，防止页面 CSS 影响
- *
- * 重要：只有收到 background 发来的 start_sniff 消息后才开始工作，
- * 用户点击插件图标才触发检测。
+ * 页面加载完成后自动扫描网页中的 m3u8 链接
+ * 在视频下方展示链接条 + 复制按钮（始终作为普通 DOM 插入，不固定在屏幕底部）
+ * 使用 Shadow DOM 隻离样式
  */
 
 // 是否为主框架
 const isTopFrame = window.self === window.top;
 
-// 是否已激活（用户点击图标后）
-let sniffingActive = false;
-
-// 存储检测到的 m3u8 URL
+// 检测到的 m3u8 URL
 let m3u8Urls = [];
 
 // bar 实例引用
 let barInstance = null;
 
-// MutationObserver 引用
+// MutationObserver
 let observer = null;
 let debounceTimer = null;
 
-// ============ 接收 background 消息 ============
+// ============ 接收 background 消息（网络请求检测到的 URL） ============
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  // 用户点击图标 → 开始检测
-  if (message.type === "start_sniff") {
-    sniffingActive = true;
-    m3u8Urls = [];
-    removeBar();
-    initSniffing();
+  if (message.type === "m3u8_found") {
+    addUrl(message.url, message.timestamp);
+    showOrUpdateBar();
     sendResponse({ ok: true });
   }
 
-  // 检测到新的 m3u8 URL
-  if (message.type === "m3u8_found" && sniffingActive) {
-    const exists = m3u8Urls.some(item => item.url === message.url);
-    if (!exists) {
-      m3u8Urls.push({ url: message.url, timestamp: message.timestamp || Date.now() });
-      showOrUpdateBar();
-    }
-    sendResponse({ ok: true });
-  }
-
-  // 页面导航 → 清空重来
   if (message.type === "m3u8_clear") {
     m3u8Urls = [];
     removeBar();
-    // 重新初始化（如果仍在激活状态）
-    if (sniffingActive) {
-      initSniffing();
-    }
+    scanDOM();
+    fetchNetworkUrls();
+    startObserving();
     sendResponse({ ok: true });
   }
 
   return true;
 });
 
-// ============ 激活后初始化 ============
-
-function initSniffing() {
-  // 先拉取 background 中已有的 m3u8 列表
-  fetchExistingUrls();
-  // 启动 DOM 监听（处理延迟加载的视频）
-  startObserving();
+// 添加 URL（去重）
+function addUrl(url, timestamp) {
+  if (m3u8Urls.some(item => item.url === url)) return;
+  m3u8Urls.push({ url, timestamp: timestamp || Date.now() });
 }
 
-function fetchExistingUrls() {
+// ============ DOM 页面扫描 ============
+
+const M3U8_REGEX = /["']((?:(?:https?:)?\/\/)[^"'\s]*?\.(?:m3u8|m3u)(?:\?[^"'\s]*)?)["']/gi;
+
+function scanDOM() {
+  scanMediaElements();
+  scanSourceTags();
+  scanInlineScripts();
+  scanAttributes();
+
+  if (m3u8Urls.length > 0) {
+    showOrUpdateBar();
+    reportToBackground();
+  }
+}
+
+function scanMediaElements() {
+  const mediaEls = document.querySelectorAll("video, audio");
+  for (const el of mediaEls) {
+    const src = el.src || el.currentSrc;
+    if (src && looksLikeM3U8(src)) {
+      addUrl(resolveUrl(src));
+    }
+  }
+}
+
+function scanSourceTags() {
+  const sources = document.querySelectorAll("video source, audio source");
+  for (const el of sources) {
+    const src = el.src || el.getAttribute("src");
+    if (src && looksLikeM3U8(src)) {
+      addUrl(resolveUrl(src));
+    }
+  }
+}
+
+function scanInlineScripts() {
+  const scripts = document.querySelectorAll("script:not[src]");
+  for (const script of scripts) {
+    const text = script.textContent;
+    if (!text) continue;
+    let match;
+    M3U8_REGEX.lastIndex = 0;
+    while ((match = M3U8_REGEX.exec(text)) !== null) {
+      const url = match[1];
+      if (looksLikeM3U8(url)) {
+        addUrl(resolveUrl(url));
+      }
+    }
+  }
+}
+
+function scanAttributes() {
+  const attrNames = ["data-src", "data-url", "data-source", "data-playurl", "data-stream", "data-m3u8", "data-hls"];
+  const allEls = document.querySelectorAll("*");
+  for (const el of allEls) {
+    for (const attr of attrNames) {
+      const val = el.getAttribute(attr);
+      if (val && looksLikeM3U8(val)) {
+        addUrl(resolveUrl(val));
+      }
+    }
+  }
+}
+
+// 严格匹配：只认 .m3u8/.m3u 文件扩展名或明确的 format/type/src 参数
+function looksLikeM3U8(str) {
+  try {
+    const urlObj = new URL(str, window.location.href);
+    const pathname = urlObj.pathname.toLowerCase();
+    const lastSegment = pathname.split("/").pop() || "";
+    const ext = lastSegment.split(".").pop();
+    if (ext === "m3u8" || ext === "m3u") return true;
+    for (const [key, value] of urlObj.searchParams.entries()) {
+      const k = key.toLowerCase();
+      const v = value.toLowerCase();
+      if ((k === "format" || k === "type" || k === "src") && (v === "m3u8" || v === "m3u")) {
+        return true;
+      }
+    }
+    return false;
+  } catch {
+    const lower = str.toLowerCase().split("?")[0].split("#")[0];
+    return lower.endsWith(".m3u8") || lower.endsWith(".m3u");
+  }
+}
+
+function resolveUrl(url) {
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("//")) return "https:" + url;
+  try {
+    return new URL(url, window.location.href).href;
+  } catch {
+    return url;
+  }
+}
+
+function reportToBackground() {
+  for (const item of m3u8Urls) {
+    try {
+      chrome.runtime.sendMessage({ type: "add_m3u8", url: item.url });
+    } catch {}
+  }
+}
+
+function fetchNetworkUrls() {
   try {
     chrome.runtime.sendMessage({ type: "get_m3u8_list" }, function (response) {
       if (chrome.runtime.lastError) return;
       if (response && response.urls && response.urls.length > 0) {
-        m3u8Urls = response.urls;
-        showOrUpdateBar();
+        for (const item of response.urls) {
+          addUrl(item.url, item.timestamp);
+        }
+        if (m3u8Urls.length > 0) showOrUpdateBar();
       }
     });
   } catch {}
@@ -86,6 +170,7 @@ const BAR_CSS = `
 :host {
   all: initial;
   display: block;
+  position: absolute;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 13px;
   line-height: 1.5;
@@ -98,11 +183,6 @@ const BAR_CSS = `
   padding: 0;
   overflow: hidden;
   width: 100%;
-}
-
-.sniffer-bar-global {
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
-  border-top-width: 3px;
 }
 
 .sniffer-header {
@@ -235,43 +315,15 @@ const BAR_CSS = `
   background: #e94560;
   color: #fff;
 }
-
-.sniffer-empty {
-  padding: 12px;
-  text-align: center;
-  color: #888;
-  font-size: 13px;
-}
-
-.sniffer-empty .sniffer-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  background: #e94560;
-  border-radius: 50%;
-  margin-right: 6px;
-  animation: sniffer-pulse 1.2s ease-in-out infinite;
-}
-
-@keyframes sniffer-pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
 `;
 
-// 创建带 Shadow DOM 的 bar 容器
-function createBarHost(global = false) {
+function createBarHost() {
   const host = document.createElement("m3u8-sniffer-bar");
-  host.style.display = "block";
+  // 绝对定位，完全脱离页面布局流，不受 flex/grid 影响
+  host.style.position = "absolute";
   host.style.zIndex = "2147483647";
-
-  if (global) {
-    host.style.position = "fixed";
-    host.style.bottom = "0";
-    host.style.left = "0";
-    host.style.right = "0";
-    host.style.width = "100vw";
-  }
+  host.style.display = "block";
+  host.style.pointerEvents = "auto";
 
   const shadow = host.attachShadow({ mode: "open" });
   const style = document.createElement("style");
@@ -279,13 +331,14 @@ function createBarHost(global = false) {
   shadow.appendChild(style);
 
   const bar = document.createElement("div");
-  bar.className = global ? "sniffer-bar sniffer-bar-global" : "sniffer-bar";
+  bar.className = "sniffer-bar";
   shadow.appendChild(bar);
 
   return { host, shadow, bar };
 }
 
-// 查找视频元素
+// ============ 视频定位 ============
+
 function findVideoElement() {
   const videos = document.querySelectorAll("video");
   const audios = document.querySelectorAll("audio");
@@ -294,76 +347,46 @@ function findVideoElement() {
   return null;
 }
 
-// 找到适合插入 bar 的播放器容器
-function findPlayerContainer(videoEl) {
-  let current = videoEl.parentElement;
-  while (current && current !== document.body && current !== document.documentElement) {
-    const style = window.getComputedStyle(current);
-    if (style.overflow === "hidden" || style.overflowX === "hidden" || style.overflowY === "hidden") {
-      current = current.parentElement;
-      continue;
-    }
-    const rect = current.getBoundingClientRect();
-    const videoRect = videoEl.getBoundingClientRect();
-    if (rect.width >= videoRect.width * 0.8 && rect.height >= videoRect.height) {
-      return current;
-    }
-    current = current.parentElement;
-  }
-  return videoEl.parentElement || null;
-}
-
 // ============ 展示/更新 bar ============
 
 function showOrUpdateBar() {
-  if (!sniffingActive) return;
-
   const video = findVideoElement();
-
-  if (!video) {
-    if (isTopFrame) {
-      showGlobalBar();
-    }
-    return;
-  }
-
+  if (!video) return;
   showVideoBar(video);
 }
 
+// 用绝对定位将 bar 贴在视频下方，不受页面任何布局影响
 function showVideoBar(video) {
   if (barInstance) {
     renderContent(barInstance.bar, m3u8Urls);
+    positionBar(video);
     return;
   }
 
-  const container = findPlayerContainer(video);
-  if (!container) {
-    if (isTopFrame) showGlobalBar();
-    return;
-  }
+  const { host, shadow, bar } = createBarHost();
+  barInstance = { host, shadow, bar, video };
 
-  const { host, shadow, bar } = createBarHost(false);
-  barInstance = { host, shadow, bar };
-
-  if (container.nextSibling) {
-    container.parentNode.insertBefore(host, container.nextSibling);
-  } else {
-    container.parentNode.appendChild(host);
-  }
-
-  renderContent(bar, m3u8Urls);
-}
-
-function showGlobalBar() {
-  if (barInstance) {
-    renderContent(barInstance.bar, m3u8Urls);
-    return;
-  }
-
-  const { host, shadow, bar } = createBarHost(true);
-  barInstance = { host, shadow, bar };
+  // 挂到 body 上（绝对定位元素，不影响页面流）
   document.body.appendChild(host);
   renderContent(bar, m3u8Urls);
+  positionBar(video);
+}
+
+// 根据 video 的可视位置，把 bar 精确对齐到视频正下方
+function positionBar(video) {
+  if (!barInstance) return;
+  const host = barInstance.host;
+
+  const rect = video.getBoundingClientRect();
+
+  // bar 的宽度跟视频一样宽
+  host.style.width = rect.width + "px";
+
+  // left 对齐视频左边
+  host.style.left = rect.left + "px";
+
+  // top = 视频底部 + 4px 间距，紧挨视频
+  host.style.top = (rect.bottom + window.scrollY + 4) + "px";
 }
 
 function removeBar() {
@@ -378,19 +401,8 @@ function removeBar() {
 function renderContent(bar, urls) {
   bar.innerHTML = "";
 
-  if (!urls.length) {
-    // 还没检测到 m3u8，显示等待提示
-    const empty = document.createElement("div");
-    empty.className = "sniffer-empty";
-    const dot = document.createElement("span");
-    dot.className = "sniffer-dot";
-    empty.appendChild(dot);
-    empty.appendChild(document.createTextNode("正在监听 m3u8 请求，请播放视频..."));
-    bar.appendChild(empty);
-    return;
-  }
+  if (!urls.length) return;
 
-  // 标题栏
   const header = document.createElement("div");
   header.className = "sniffer-header";
 
@@ -409,7 +421,6 @@ function renderContent(bar, urls) {
   header.appendChild(closeBtn);
   bar.appendChild(header);
 
-  // 链接列表
   const list = document.createElement("div");
   list.className = "sniffer-list";
 
@@ -436,7 +447,6 @@ function renderContent(bar, urls) {
     list.appendChild(row);
   }
 
-  // 多链接时显示"复制全部"按钮
   if (urls.length > 1) {
     const copyAllRow = document.createElement("div");
     copyAllRow.className = "sniffer-copyall-row";
@@ -444,8 +454,7 @@ function renderContent(bar, urls) {
     copyAllBtn.className = "sniffer-copy-all";
     copyAllBtn.textContent = "复制全部链接";
     copyAllBtn.addEventListener("click", function () {
-      const allText = urls.map(u => u.url).join("\n");
-      copyToClipboard(allText, copyAllBtn);
+      copyToClipboard(urls.map(u => u.url).join("\n"), copyAllBtn);
     });
     copyAllRow.appendChild(copyAllBtn);
     list.appendChild(copyAllRow);
@@ -500,16 +509,20 @@ function fallbackCopy(text, btn) {
   document.body.removeChild(textarea);
 }
 
-// ============ DOM 变化监听（延迟加载的视频） ============
+// ============ DOM 变化监听 ============
 
 function startObserving() {
-  if (observer) return; // 已注册，重复点击不需要重新注册
+  if (observer) return;
 
   observer = new MutationObserver(function () {
     if (debounceTimer) clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      if (sniffingActive && !barInstance) {
+      scanMediaElements();
+      scanSourceTags();
+      scanInlineScripts();
+      if (m3u8Urls.length > 0) {
         showOrUpdateBar();
+        reportToBackground();
       }
     }, 500);
   });
@@ -518,6 +531,33 @@ function startObserving() {
     childList: true,
     subtree: true,
   });
+
+  // 滚动和窗口变化时重新定位 bar，让它始终贴在视频下方
+  window.addEventListener("scroll", onLayoutChange, true);
+  window.addEventListener("resize", onLayoutChange);
 }
 
-// 不在页面加载时自动做任何事 —— 每次点击图标都触发 start_sniff，从头开始
+let layoutTimer = null;
+function onLayoutChange() {
+  if (layoutTimer) clearTimeout(layoutTimer);
+  layoutTimer = setTimeout(() => {
+    if (barInstance && barInstance.video) {
+      positionBar(barInstance.video);
+    }
+  }, 100);
+}
+
+// ============ 初始化：页面加载完成后自动开始 ============
+
+function init() {
+  scanDOM();
+  fetchNetworkUrls();
+  startObserving();
+  if (m3u8Urls.length > 0) showOrUpdateBar();
+}
+
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  init();
+} else {
+  window.addEventListener("DOMContentLoaded", init);
+}

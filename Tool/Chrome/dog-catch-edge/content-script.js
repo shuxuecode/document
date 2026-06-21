@@ -442,9 +442,29 @@ function renderContent(bar, urls) {
     copyBtn.addEventListener("click", function () {
       copyToClipboard(item.url, copyBtn);
     });
+    // 带标题
+    const copyBtn2 = document.createElement("button");
+    copyBtn2.className = "sniffer-copy";
+    copyBtn2.textContent = "复制2";
+    copyBtn2.addEventListener("click", function () {
+      copyToClipboard(document.title + "," + item.url, copyBtn2);
+    });
+
     row.appendChild(copyBtn);
+    row.appendChild(copyBtn2);
 
     list.appendChild(row);
+  }
+
+  if (1 == 1) {
+    const copyTitleBtn = document.createElement("button");
+    copyTitleBtn.className = "sniffer-copy";
+    copyTitleBtn.textContent = "复制标题";
+    copyTitleBtn.addEventListener("click", function () {
+      copyToClipboard(document.title + ",", copyTitleBtn);
+    });
+
+    list.appendChild(copyTitleBtn);
   }
 
   if (urls.length > 1) {

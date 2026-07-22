@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Note - 设置</title>
+    <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="options-container">
+        <div class="options-header">
+            <h1>📝 GitHub Note 设置</h1>
+            <p class="subtitle">配置 GitHub 认证信息和基本参数</p>
+        </div>
+
+        <!-- 状态提示 -->
+        <div id="statusBar" class="status-bar hidden">
+            <span id="statusIcon"></span>
+            <span id="statusText"></span>
+        </div>
+
+        <!-- GitHub Token 配置 -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🔑 GitHub Token</h2>
+                <a href="https://github.com/settings/tokens/new?description=GitHub+Note+Extension&scopes=repo" 
+                   target="_blank" class="link-btn">生成新 Token ↗</a>
+            </div>
+            <p class="hint">需要一个具有 <code>repo</code> 权限的 Personal Access Token</p>
+            <div class="form-group">
+                <label for="token">Token</label>
+                <div class="input-row">
+                    <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+                    <button id="toggleToken" class="btn-icon" title="显示/隐藏">👁️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Owner 配置 -->
+        <div class="section">
+            <h2>👤 仓库所有者</h2>
+            <p class="hint">你的 GitHub 用户名或组织名称</p>
+            <div class="form-group">
+                <label for="owner">Owner</label>
+                <input type="text" id="owner" placeholder="例如：octocat" />
+            </div>
+        </div>
+
+        <!-- Repo 配置 -->
+        <div class="section">
+            <h2>📦 仓库名称</h2>
+            <p class="hint">你要操作的 GitHub 仓库名称（如 my-notes）</p>
+            <div class="form-group">
+                <label for="repo">Repo</label>
+                <input type="text" id="repo" placeholder="例如：my-notes" />
+            </div>
+        </div>
+
+        <!-- 偏好设置 -->
+        <div class="section">
+            <h2>⚡ 偏好设置</h2>
+            <div class="switch-row">
+                <div class="switch-desc">
+                    <div class="switch-label">打开弹窗时自动 Pull</div>
+                    <p class="hint">配置完整且 filePath 已设置时，打开弹窗自动拉取文件内容，无需手动点击 Pull</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="autoPull" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 连接测试 -->
+        <div class="section test-section">
+            <h2>🔍 连接测试</h2>
+            <p class="hint">验证 Token 和 Owner 是否有效</p>
+            <div class="test-row">
+                <input type="text" id="testRepo" placeholder="输入仓库名进行测试（可选）" />
+                <button id="testBtn" class="btn btn-secondary">测试连接</button>
+            </div>
+            <div id="testResult" class="test-result hidden"></div>
+        </div>
+
+        <!-- 保存按钮 -->
+        <div class="save-area">
+            <button id="saveBtn" class="btn btn-primary btn-large">💾 保存设置</button>
+            <button id="clearBtn" class="btn btn-danger btn-small">🗑️ 清除所有配置</button>
+        </div>
+
+        <!-- 附加信息 -->
+        <div class="section info-section">
+            <h2>ℹ️ 说明</h2>
+            <ul class="info-list">
+                <li><strong>Token</strong>、<strong>Owner</strong> 和 <strong>Repo</strong> 在此页面统一配置，弹窗中不再显示输入框</li>
+                <li><strong>Branch、FilePath</strong> 在弹窗中按需设置</li>
+                <li>配置信息保存在 Chrome 本地存储中，不会上传到任何服务器</li>
+                <li>如需更换 Token，直接在此页面修改并保存即可</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            &copy; <span id="footerYear"></span> shuxuecode. All rights reserved.
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="options.js"></script>
+</body>
+</html>

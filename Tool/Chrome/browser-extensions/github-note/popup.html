@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Note</title>
+    <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📝 GitHub Note</h1>
+
+        <div class="status-bar">
+            <span id="statusMsg" class="status-msg">就绪</span>
+        </div>
+
+        <!-- 配置状态栏 -->
+        <div class="config-status" id="configStatus">
+            <div class="config-info">
+                <span>Token: <strong id="tokenStatus">未设置</strong></span>
+                <span class="sep">|</span>
+                <span>Owner: <strong id="ownerStatus">未设置</strong></span>
+                <span class="sep">|</span>
+                <span>Repo: <strong id="repoStatus">未设置</strong></span>
+            </div>
+            <div class="status-actions">
+                <button id="openWindowBtn" class="btn-link" title="在可拖拉缩放的独立窗口中打开">🗗 独立窗口</button>
+                <button id="openOptionsBtn" class="btn-link">⚙️ 设置</button>
+            </div>
+        </div>
+
+        <!-- 配置区域 -->
+        <div class="section">
+            <div class="config-row">
+                <label>branch：</label>
+                <input type="text" id="branch" placeholder="分支名称（可留空使用默认分支）" />
+                <button id="updateBranch">设置</button>
+                <button id="getBranchBtn">获取分支列表</button>
+                <button id="createBranchBtn">创建新分支</button>
+            </div>
+            <div class="config-row">
+                <label>filePath：</label>
+                <input type="text" id="filePath" placeholder="文件路径，如 notes/test.md" />
+                <button id="updateFilePath">设置</button>
+                <button id="getFileBtn">获取文件列表</button>
+                <button id="renameFileBtn">重命名文件</button>
+                <button id="switchPreview">预览开/关</button>
+            </div>
+        </div>
+
+        <!-- 编辑区域 -->
+        <div class="editor-area">
+            <div class="editor-col" id="contentParent">
+                <div class="editor-wrap">
+                    <div id="lineNumbers" class="line-numbers">1</div>
+                    <textarea id="content" wrap="off" placeholder="在这里编辑笔记内容（支持 Markdown）..."></textarea>
+                </div>
+            </div>
+            <div class="preview-col" id="preview" style="display: none;">
+                <div class="preview-placeholder">预览内容将显示在这里</div>
+            </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="action-bar">
+            <button id="pullBtn" class="btn btn-primary">📥 Pull</button>
+            <button id="pushBtn" class="btn btn-success">📤 Push</button>
+            <button id="addFileBtn" class="btn btn-info">➕ AddFile</button>
+            <button id="deleteFileBtn" class="btn btn-danger">🗑️ DeleteFile</button>
+        </div>
+
+        <!-- 文件列表 -->
+        <div class="list-section">
+            <div class="list-title">📁 文件列表</div>
+            <div id="fileList" class="list-box"></div>
+        </div>
+
+        <!-- 分支列表 -->
+        <div class="list-section">
+            <div class="list-title">🌿 分支列表</div>
+            <div id="branchList" class="list-box"></div>
+        </div>
+
+        <div class="footer">
+            &copy; <span id="footerYear"></span> shuxuecode. All rights reserved.
+        </div>
+    </div>
+
+    <!-- 第三方库 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/octokat.js"></script>
+
+    <!-- 应用脚本 -->
+    <script src="utils.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

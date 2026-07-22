@@ -132,12 +132,25 @@ function renderMarkdown(text) {
 }
 
 
+// URL 协议白名单：仅允许 http/https/相对路径/锚点，拦截 javascript:/data: 等危险协议
+function sanitizeUrl(url) {
+    var probe = url.replace(/&amp;/g, '&').replace(/[\u0000-\u0020]/g, '').toLowerCase();
+    if (/^(javascript|data|vbscript|file):/.test(probe)) return '#';
+    return url;
+}
+
 // 行内格式化（粗体、斜体、链接、图片）
 function inlineFormat(text) {
+    // 先整体转义，防止笔记中的原始 HTML 注入预览区
+    text = escapeHtml(text);
     // 图片（先于链接处理）
-    text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
+    text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(match, alt, url) {
+        return '<img src="' + sanitizeUrl(url) + '" alt="' + alt + '" />';
+    });
     // 链接
-    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, label, url) {
+        return '<a href="' + sanitizeUrl(url) + '" target="_blank">' + label + '</a>';
+    });
     // 粗体
     text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');

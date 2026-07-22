@@ -50,6 +50,17 @@ function clearOptions() {
 
 
 // ===== 连接测试 =====
+
+// HTML 转义（防止 API 返回值/用户输入注入 innerHTML）
+function escapeHtml(text) {
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 function testConnection() {
     var token = document.getElementById('token').value.trim();
     var owner = document.getElementById('owner').value.trim();
@@ -67,7 +78,7 @@ function testConnection() {
     // 测试 1：验证 Token 是否有效（获取用户信息）
     fetch('https://api.github.com/user', {
         headers: {
-            'Authorization': 'token ' + token,
+            'Authorization': 'Bearer ' + token,
             'Accept': 'application/vnd.github.v3+json'
         }
     })
@@ -77,21 +88,21 @@ function testConnection() {
     })
     .then(function(user) {
         var html = '<div class="test-pass">';
-        html += '✅ Token 有效！当前用户：<strong>' + user.login + '</strong>';
+        html += '✅ Token 有效！当前用户：<strong>' + escapeHtml(user.login) + '</strong>';
         html += '</div>';
 
         // 如果填写了 owner，测试 owner 是否可访问
         if (owner) {
             return fetch('https://api.github.com/users/' + owner, {
                 headers: {
-                    'Authorization': 'token ' + token,
+                    'Authorization': 'Bearer ' + token,
                     'Accept': 'application/vnd.github.v3+json'
                 }
             }).then(function(resp) {
                 if (resp.ok) {
-                    html += '<div class="test-pass">✅ Owner "' + owner + '" 可访问</div>';
+                    html += '<div class="test-pass">✅ Owner "' + escapeHtml(owner) + '" 可访问</div>';
                 } else {
-                    html += '<div class="test-fail">⚠️ Owner "' + owner + '" 无法访问</div>';
+                    html += '<div class="test-fail">⚠️ Owner "' + escapeHtml(owner) + '" 无法访问</div>';
                 }
                 return { html: html, owner: owner, token: token };
             });
@@ -106,17 +117,17 @@ function testConnection() {
         if (testRepo && data.owner) {
             return fetch('https://api.github.com/repos/' + data.owner + '/' + testRepo, {
                 headers: {
-                    'Authorization': 'token ' + data.token,
+                    'Authorization': 'Bearer ' + data.token,
                     'Accept': 'application/vnd.github.v3+json'
                 }
             }).then(function(resp) {
                 if (resp.ok) {
                     return resp.json().then(function(repoInfo) {
-                        html += '<div class="test-pass">✅ 仓库 "' + data.owner + '/' + testRepo + '" 可访问（默认分支：' + repoInfo.default_branch + '）</div>';
+                        html += '<div class="test-pass">✅ 仓库 "' + escapeHtml(data.owner) + '/' + escapeHtml(testRepo) + '" 可访问（默认分支：' + escapeHtml(repoInfo.default_branch) + '）</div>';
                         showTestResultHtml(html);
                     });
                 } else {
-                    html += '<div class="test-fail">❌ 仓库 "' + data.owner + '/' + testRepo + '" 无法访问</div>';
+                    html += '<div class="test-fail">❌ 仓库 "' + escapeHtml(data.owner) + '/' + escapeHtml(testRepo) + '" 无法访问</div>';
                     showTestResultHtml(html);
                 }
             });

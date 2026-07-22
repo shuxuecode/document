@@ -48,8 +48,8 @@ function updateConfigStatus() {
     var statusEl = document.getElementById('configStatus');
 
     if (_cachedToken) {
-        // 完全掩码：只显示 Token 类型前缀（如 ghp_），不暴露任何真实字符
-        var prefixMatch = _cachedToken.match(/^[A-Za-z]+_/);
+        // 完全掩码：只显示 Token 类型前缀（如 ghp_、github_pat_），不暴露任何真实字符
+        var prefixMatch = _cachedToken.match(/^(github_pat_|[A-Za-z]+_)/);
         tokenEl.textContent = (prefixMatch ? prefixMatch[0] : '') + '****';
     } else {
         tokenEl.textContent = '未设置';
@@ -270,6 +270,10 @@ function renameFile(newFileName) {
                     console.error('Create new file error:', error);
                     toastr.error('创建新文件失败');
                 });
+        })
+        .catch(function(error) {
+            console.error('Fetch old file error:', error);
+            toastr.error('获取原文件失败: ' + (error.message || error));
         });
 }
 

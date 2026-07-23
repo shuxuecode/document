@@ -338,7 +338,7 @@ function expandFile(e) {
                     html += '</div>';
                 }
             });
-            $(e).parent().append(html);
+            $(e).parent().append('<div class="sub-list">' + html + '</div>');
         });
 
     $(e).prop('disabled', true);

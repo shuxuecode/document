@@ -429,6 +429,7 @@ button:disabled {
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
 }
 
 .list-box .dir-item button {
@@ -448,6 +449,10 @@ button:disabled {
 
 .list-box .sub-dir {
     margin-left: 20px;
+}
+
+.list-box .sub-list {
+    width: 100%;
 }
 
 .list-box .branch-item {

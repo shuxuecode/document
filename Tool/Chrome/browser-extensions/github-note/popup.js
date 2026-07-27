@@ -112,7 +112,6 @@ function pullContent() {
             showTitle('sha=' + sha);
             var contents = base64Decode(info.content);
             $('#content').val(contents);
-            updateLineNumbers();
             showPreview(contents);
             toastr.info('pull成功');
         })
@@ -361,7 +360,6 @@ function openFile(e) {
             showTitle('sha=' + sha);
             var contents = base64Decode(info.content);
             $('#content').val(contents);
-            updateLineNumbers();
             showPreview(contents);
             toastr.info('pull成功');
         })
@@ -487,18 +485,6 @@ function showPreview(content) {
 }
 
 
-// ===== 编辑器行号 =====
-
-function updateLineNumbers() {
-    var lines = document.getElementById('content').value.split('\n').length;
-    var text = '';
-    for (var i = 1; i <= lines; i++) {
-        text += i + '\n';
-    }
-    document.getElementById('lineNumbers').textContent = text;
-}
-
-
 // ===== 前置检查 =====
 
 function check() {
@@ -562,19 +548,10 @@ function init() {
         }
     });
 
-    // Markdown 实时预览 + 行号更新
+    // Markdown 实时预览
     $('#content').on('input', function() {
         showPreview($(this).val());
-        updateLineNumbers();
     });
-
-    // 行号随编辑区同步滚动
-    $('#content').on('scroll', function() {
-        document.getElementById('lineNumbers').scrollTop = this.scrollTop;
-    });
-
-    // 初始化行号
-    updateLineNumbers();
 
     // 打开设置页面
     $('#openOptionsBtn').on('click', function() {

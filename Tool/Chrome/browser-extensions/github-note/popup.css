@@ -268,22 +268,6 @@ button:disabled {
     box-shadow: 0 0 0 2px rgba(9, 105, 218, 0.15);
 }
 
-.line-numbers {
-    flex-shrink: 0;
-    min-width: 32px;
-    padding: 8px 6px 8px 4px;
-    background: #f6f8fa;
-    border-right: 1px solid #d0d7de;
-    color: #8b949e;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 12px;
-    line-height: 1.5;
-    text-align: right;
-    white-space: pre;
-    overflow: hidden;
-    user-select: none;
-}
-
 .editor-col textarea {
     flex: 1;
     min-width: 0;
@@ -294,7 +278,8 @@ button:disabled {
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
     font-size: 12px;
     line-height: 1.5;
-    white-space: pre;
+    white-space: pre-wrap;
+    word-break: break-word;
     resize: none;
     outline: none;
 }

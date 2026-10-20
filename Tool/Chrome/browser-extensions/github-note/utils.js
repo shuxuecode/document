@@ -175,6 +175,23 @@ function escapeHtml(text) {
 }
 
 
+// ===== 防抖（debounce）=====
+// 连续触发时只在最后一次调用停顿 delay 毫秒后才真正执行，
+// 用于 Markdown 实时预览等高频事件，避免每次击键都全量重渲染
+
+function debounce(fn, delay) {
+    var timer = null;
+    return function() {
+        var args = arguments;
+        var ctx = this;
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            fn.apply(ctx, args);
+        }, delay);
+    };
+}
+
+
 // ===== 状态提示 =====
 
 function showStatus(msg, type) {

@@ -53,11 +53,20 @@ github-note/
 
 - `storage` - 持久化保存 GitHub 配置信息
 
+## ⚠️ 安全提示
+
+- **Token 以明文存储在 `chrome.storage.local` 中**。这是 Chrome 扩展的固有限制：扩展本地存储不提供加密，任何能访问你浏览器用户数据目录的程序理论上都能读取它。
+- 建议使用**权限最小化**的 Token：
+  - Fine-grained Personal Access Token（推荐），仅授予目标仓库的 **Contents: Read and write** 权限，避免使用全仓库范围的 classic token（`repo` 全权限）。
+- 设置较短的 Token **过期时间**，到期后在设置页面重新填写即可。
+- 不再使用时，可在设置页面点击「清除配置」删除本地存储的 Token。
+- 请勿在公共/共享电脑上长期保留已配置 Token 的浏览器。
+
 ## 技术说明
 
 - 使用 Octokat.js 作为 GitHub API 客户端
 - 使用 chrome.storage.local 替代 localStorage 持久化配置
-- 内置轻量级 Markdown 渲染器，支持标题、粗体、斜体、链接、代码块、列表等
+- 内置轻量级 Markdown 渲染器，支持标题、粗体、斜体、链接、代码块、列表等；实时预览采用防抖（debounce）避免频繁全量重渲染
 - 使用 toastr 进行操作反馈提示
 
 ## License

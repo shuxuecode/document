@@ -136,20 +136,32 @@ function pushContent() {
     var text = $('#content').val();
     var config = {
         message: 'Updating file',
-        content: base64Encode(text),
-        sha: sha
+        content: base64Encode(text)
     };
+    // 有 SHA 时是更新已有文件；无 SHA 时 GitHub 会尝试创建新文件
+    if (sha) config.sha = sha;
     if ($branch) config.branch = $branch;
 
     repo.contents($filePath).add(config)
         .then(function(info) {
             console.log('File updated. new sha is', info.commit.sha);
+            // 刷新 SHA（无论更新还是新建，后续操作都需要最新 SHA）
+            if (info && info.content && info.content.sha) {
+                sha = info.content.sha;
+                showTitle('sha=' + sha);
+            }
             toastr.info('推送成功');
-            pullContent();
         })
         .catch(function(err) {
             console.error('push失败:', err);
-            toastr.error('推送失败: ' + (err.message || err));
+            var msg = err.message || String(err);
+            // 更新已有文件但缺少 SHA 时，GitHub 会报 422 提示缺少 sha
+            if (!sha && /sha/i.test(msg)) {
+                msg = '文件已存在但缺少 SHA，请先 Pull 拉取后再 Push';
+            } else {
+                msg = '推送失败: ' + msg;
+            }
+            toastr.error(msg);
         });
 }
 
@@ -179,6 +191,11 @@ function addFile() {
     repo.contents($filePath).add(config)
         .then(function(result) {
             console.log('File add success.', result);
+            // 记录新文件的 SHA，后续 Push/Delete 可直接使用
+            if (result && result.content && result.content.sha) {
+                sha = result.content.sha;
+                showTitle('sha=' + sha);
+            }
             toastr.info('添加成功');
         })
         .catch(function(error) {
@@ -201,6 +218,10 @@ function deleteFileFun() {
 
     if (!repo || !$filePath) {
         toastr.error('repo未配置');
+        return;
+    }
+    if (!sha) {
+        toastr.error('缺少文件 SHA，请先 Pull 拉取文件');
         return;
     }
 
@@ -259,6 +280,8 @@ function renameFile(newFileName) {
                             toastr.info('重命名成功');
                             $('#filePath').val(newFileName);
                             saveConfig('my_github_filepath', newFileName);
+                            // 重新拉取新文件，刷新 SHA（旧 SHA 已随旧文件删除而失效）
+                            pullContent();
                         })
                         .catch(function(err) {
                             console.error('Delete old file error:', err);
@@ -296,12 +319,12 @@ function getFileList() {
             contents.items.forEach(function(file) {
                 if (file.type === 'dir') {
                     html += '<div class="dir-item">';
-                    html += '<button class="expand-btn" style="color:blue;">展开</button>';
+                    html += '<button class="expand-btn" style="color:blue;" data-path="' + escapeHtml(file.path) + '">展开</button>';
                     html += '<span class="dir-name"> ' + escapeHtml(file.path) + '</span>';
                     html += '</div>';
                 } else {
                     html += '<div class="dir-item">';
-                    html += '<button class="open-btn">打开</button>';
+                    html += '<button class="open-btn" data-path="' + escapeHtml(file.path) + '">打开</button>';
                     html += '<span class="file-name"> ' + escapeHtml(file.path) + '</span>';
                     html += '</div>';
                 }
@@ -318,7 +341,8 @@ function getFileList() {
 // ===== ExpandFile（展开目录）=====
 
 function expandFile(e) {
-    var filePath = $(e).next().text().trim();
+    // 从 data-path 属性读取路径，避免依赖 DOM 兄弟节点结构
+    var filePath = $(e).attr('data-path') || '';
     var $branch  = $('#branch').val().trim();
 
     repo.contents(filePath).fetch({ ref: $branch })
@@ -327,17 +351,23 @@ function expandFile(e) {
             contents.items.forEach(function(file) {
                 if (file.type === 'dir') {
                     html += '<div class="dir-item sub-dir">';
-                    html += '<button class="expand-btn" style="color:blue;">展开</button>';
+                    html += '<button class="expand-btn" style="color:blue;" data-path="' + escapeHtml(file.path) + '">展开</button>';
                     html += '<span class="dir-name"> ' + escapeHtml(file.path) + '</span>';
                     html += '</div>';
                 } else {
                     html += '<div class="dir-item sub-dir">';
-                    html += '<button class="open-btn">打开</button>';
+                    html += '<button class="open-btn" data-path="' + escapeHtml(file.path) + '">打开</button>';
                     html += '<span class="file-name"> ' + escapeHtml(file.path) + '</span>';
                     html += '</div>';
                 }
             });
             $(e).parent().append('<div class="sub-list">' + html + '</div>');
+        })
+        .catch(function(err) {
+            console.error('Expand dir error:', err);
+            toastr.error('展开目录失败: ' + (err.message || err));
+            // 恢复按钮可点击状态，允许重试
+            $(e).prop('disabled', false).css({ color: 'blue' });
         });
 
     $(e).prop('disabled', true);
@@ -348,7 +378,8 @@ function expandFile(e) {
 // ===== OpenFile（打开文件）=====
 
 function openFile(e) {
-    var filePath = $(e).next().text().trim();
+    // 从 data-path 属性读取路径，避免依赖 DOM 兄弟节点结构
+    var filePath = $(e).attr('data-path') || '';
     var $branch  = $('#branch').val().trim();
 
     $('#filePath').val(filePath);
@@ -391,7 +422,7 @@ async function getBranchList() {
             var html = '';
             branches.items.forEach(function(branch) {
                 html += '<div class="branch-item">';
-                html += '<button class="choose-branch-btn">使用该分支</button>';
+                html += '<button class="choose-branch-btn" data-branch="' + escapeHtml(branch.name) + '">使用该分支</button>';
                 if (defaultBranch === branch.name) {
                     html += '<span class="branch-name branch-default"> ' + escapeHtml(branch.name) + '</span>';
                 } else {
@@ -411,7 +442,8 @@ async function getBranchList() {
 // ===== ChooseBranch（选择分支）=====
 
 function chooseBranch(e) {
-    var branch = $(e).next().text().trim();
+    // 从 data-branch 属性读取分支名，避免依赖 DOM 兄弟节点结构
+    var branch = $(e).attr('data-branch') || '';
     $('#branch').val(branch);
 }
 
@@ -490,16 +522,17 @@ function showPreview(content) {
 function check() {
     if (!_cachedToken) {
         showStatus('Token 未设置，请打开设置页面配置', 'error');
-        return;
+        return false;
     }
     if (!_cachedOwner) {
         showStatus('Owner 未设置，请打开设置页面配置', 'error');
-        return;
+        return false;
     }
     if (!_cachedRepo) {
         showStatus('Repo 未设置，请打开设置页面配置', 'error');
-        return;
+        return false;
     }
+    return true;
 }
 
 
@@ -548,10 +581,10 @@ function init() {
         }
     });
 
-    // Markdown 实时预览
-    $('#content').on('input', function() {
+    // Markdown 实时预览（防抖 250ms：停顿后才渲染，避免每次击键都全量重渲染导致输入卡顿）
+    $('#content').on('input', debounce(function() {
         showPreview($(this).val());
-    });
+    }, 250));
 
     // 打开设置页面
     $('#openOptionsBtn').on('click', function() {
@@ -577,7 +610,7 @@ function init() {
 
     // 从 chrome.storage 加载配置
     loadAllConfig(function() {
-        check();
+        if (!check()) return;
         initRepo();
         if (repo !== undefined) {
             showStatus('repo加载成功', 'ok');
